@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -29,22 +30,49 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   // Gender Dropdown button
   final genders = ["Male", "Female", "Prefer not to say"];
   String? selectedGender = null;
+  bool? isMale = null;
 
   // DateTime picker
   DateTime today = DateTime.now();
+  int prevLength = 0; // used to determine if increasing or decreasing
+  dateTimeAutoSlash(value) {
+    if (value.length < prevLength) {
+      prevLength = value.length;
+    } else if (value.length == 2 || value.length == 5) {
+      birthdayController.value = TextEditingValue(
+        text: "$value/",
+        selection: TextSelection.fromPosition(
+          TextPosition(offset: value.length + 1),
+        ),
+      );
+      prevLength = value.length + 1;
+    }
+  }
 
+  String? birthdayValidator(String? birthday) {
+    if (!Utils.validDateTime(birthday!)) {
+      return "Please enter a valid birthday (dd/mm/yyyy)";
+    }
+    return null;
+  }
 
+  // Height validator
+  String? heightValidator(String? value) {
+    if (value == null) return null;
+    int? height = int.tryParse(value);
+    return height == null || height < 0 || height > 250 // assume no one > 250cm
+        ? "Please enter a valid height"
+        : null;
+  }
 
-  // String? emailValidator(String? email) =>
-  //     email != null && !EmailValidator.validate(email)
-  //         ? 'Enter a valid email'
-  //         : null;
-  //
-  // String? passwordValidator(String? pwd) =>
-  //     pwd != null && pwd.length < 6
-  //         ? 'Password needs > 6 characters'
-  //         : null;
-  // bool obscureFlag = true;
+  // Weight validator
+  String? weightValidator(String? value) {
+    if (value == null) return null;
+    double? weight = double.tryParse(value);
+    return weight == null || weight < 0 || weight > 250 // assume no one > 250kg
+        ? "Please enter a valid weight"
+        : null;
+  }
 
   @override
   void dispose() {
@@ -68,13 +96,19 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Form(
-                  // key: formKey,
+                  key: formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                          "This page will be broken down into sequential pages for filling in different information."),
+                      const Text(
+                          "This page will be broken down into sequential "
+                          "pages for filling in different information."),
                       TextFormField(
+                        validator: (val) {
+                          return val == ""
+                              ? "Please enter your first name"
+                              : null;
+                        },
                         controller: firstNameController,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(
@@ -87,6 +121,12 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         // validator: emailValidator,
                       ),
                       TextFormField(
+                        validator: (val) {
+                          return val == ""
+                              ? "Please enter your last name"
+                              : null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: lastNameController,
                         decoration: InputDecoration(
                           labelStyle: TextStyle(
@@ -96,18 +136,46 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           labelText: "Last Name",
                         ),
                       ),
-                      TextFormField( // TODO: Make Gender a dropdownmenu
-                        controller: genderController,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color:
-                              Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "Gender",
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isMale = true;
+                                  });
+                                },
+                                child: Text("Male"),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: (isMale == null || !isMale!)
+                                      ? Colors.white
+                                      : Colors.orange,
+                                )),
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isMale = false;
+                                  });
+                                },
+                                child: Text("Female"),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: (isMale == null || isMale!)
+                                      ? Colors.white
+                                      : Colors.orange,
+                                )),
+                          ),
+                        ],
                       ),
-
                       TextFormField(
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(10),
+                          //  dd/mm/yyyy is 10 letters
+                        ],
+                        onChanged: dateTimeAutoSlash,
+                        validator: birthdayValidator,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: birthdayController,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
@@ -127,7 +195,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                               if (newDate == null)
                                 return;
                               else {
-                                final newDateStr = Utils.dateTimeToString(newDate);
+                                final newDateStr =
+                                    Utils.dateTimeToString(newDate);
                                 birthdayController.value = TextEditingValue(
                                   text: newDateStr,
                                   selection: TextSelection.fromPosition(
@@ -145,6 +214,11 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                       ),
                       TextFormField(
+                        validator: heightValidator,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(3),
+                        ],
                         controller: heightController,
                         // TODO: Limit height to 3 digits, add checks
                         decoration: InputDecoration(
@@ -156,6 +230,9 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                       ),
                       TextFormField(
+                        validator: weightValidator,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        inputFormatters: [LengthLimitingTextInputFormatter(4)],
                         controller: weightController,
                         // TODO: Round weight to 2 dp, add checks
                         decoration: InputDecoration(
@@ -192,8 +269,9 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   }
 
   Future newUserSetupCallback() async {
-    // final bool isValidInputs = formKey.currentState!.validate();
-    // if (!isValidInputs) return;
+    final bool isValidInputs = formKey.currentState!.validate();
+    isMale ?? Utils.showSnackBar("Select your gender!");
+    if (!isValidInputs) return;
 
     showDialog(
       context: context,
@@ -204,7 +282,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       final user = UserData(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
-        gender: genderController.text.trim(),
+        gender: isMale! ? "Male" : "Female",
         birthday: birthdayController.text.trim(),
         height: double.parse(heightController.text.trim()),
         weight: double.parse(weightController.text.trim()),

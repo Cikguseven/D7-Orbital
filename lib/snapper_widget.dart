@@ -36,64 +36,61 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        children: [
-          _image == null
-              ? Container(
-                  height: 500.0,
-                  width: 500.0,
-                )
-              : Image.file(
-                  File(_image!.path),
-                  height: 500.0,
-                  width: 500.0,
-                ), // Image display
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    getImage(true);
-                  },
-                  icon: Icon(Icons.camera_alt)),
-              SizedBox(
-                width: 10.0,
-              ),
-              IconButton(
-                  onPressed: () {
-                    getImage(false);
-                  },
-                  icon: Icon(Icons.insert_drive_file))
-            ],
-          ),
-          ElevatedButton.icon(
-              onPressed: AnalyseAndLogCallBack,
-              icon: Icon(Icons.edit, size: 24),
-              label: const Text(
-                "Log it",
-              )
-          ),
-        ],
+      appBar: AppBar(
+        title: Text("Snap and Log"),
       ),
-    ),
+      body: Center(
+        child: Column(
+          children: [
+            _image == null
+                ? Container(
+                    height: 500.0,
+                    width: 500.0,
+                  )
+                : Image.file(
+                    File(_image!.path),
+                    height: 500.0,
+                    width: 500.0,
+                  ), // Image display
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      getImage(true);
+                    },
+                    icon: Icon(Icons.camera_alt)),
+                SizedBox(
+                  width: 10.0,
+                ),
+                IconButton(
+                    onPressed: () {
+                      getImage(false);
+                    },
+                    icon: Icon(Icons.insert_drive_file))
+              ],
+            ),
+            ElevatedButton.icon(
+                onPressed: AnalyseAndLogCallBack,
+                icon: Icon(Icons.edit, size: 24),
+                label: const Text(
+                  "Log it",
+                )),
+          ],
+        ),
+      ),
     );
   }
 
-
   Future AnalyseAndLogCallBack() async {
-    try{
+    try {
       // TODO: Integrate a food recognition model
       if (_image == null) throw ArgumentError("No image selected");
       throw UnimplementedError("Has not been implemented");
-
-    }
-    on UnimplementedError catch (e) {
+    } on UnimplementedError catch (e) {
+      Utils.showSnackBar(e.message);
+    } on ArgumentError catch (e) {
       Utils.showSnackBar(e.message);
     }
-    on ArgumentError catch (e) {
-      Utils.showSnackBar(e.message);
-    }
-
   }
 }

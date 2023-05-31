@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/home_widget.dart';
@@ -19,7 +20,8 @@ class _AppState extends State<App> {
   static final List<String> idToMap = ["Home Page", "Snap", "Me"];
   Map<String, dynamic> screenNameToWidgetMap = {
     "Home Page": (UserData userData) => HomeWidget(user: userData),
-    "Snap": (UserData userData) => SnapperWidget(user: userData), // TODO: Fix this, i dont think the scanner widget needs this data
+    "Snap": (UserData userData) => SnapperWidget(user: userData),
+    // TODO: Fix this, i dont think the scanner widget needs this data
     // but i have to put cause of the way i change screens
     "Me": (UserData userData) => MeWidget(user: userData),
   };
@@ -45,12 +47,44 @@ class _AppState extends State<App> {
               print("5");
               return Scaffold();
             }
-            ;
+            // return CupertinoTabScaffold(
+            //   tabBar: CupertinoTabBar(
+            //     items: const [
+            //       BottomNavigationBarItem(
+            //         icon: Icon(Icons.home),
+            //         label: "Home Page",
+            //       ),
+            //       BottomNavigationBarItem(
+            //         icon: Icon(Icons.restaurant_menu_rounded),
+            //         label: "Snap",
+            //       ),
+            //       BottomNavigationBarItem(
+            //         icon: Icon(Icons.man_4_rounded),
+            //         label: "Me",
+            //       )
+            //     ],
+            //   ),
+            //   tabBuilder: (BuildContext context, int index) {
+            //     return CupertinoTabView(
+            //       builder: (BuildContext context) {
+            //         if (index == 0) { // TODO: obvious fix this
+            //           return HomeWidget(user: user.data!);
+            //         } else if (index == 1) {
+            //           return SnapperWidget(user: user.data!);
+            //         } else if (index == 2) {
+            //           return MeWidget(user: user.data!);
+            //         }
+            //         return Scaffold();
+            //       },
+            //     );
+            //   },
+            // );
             return Scaffold(
-              appBar: AppBar(
-                title: Text(idToMap[selectedScreenIdx]),
-              ),
-              body: screenNameToWidgetMap[selectedScreenName](user.data), // TODO: Fix this, this one forces every screen to use this argument
+              // appBar: AppBar(
+              //   title: Text(idToMap[selectedScreenIdx]),
+              // ),
+              body: screenNameToWidgetMap[selectedScreenName](user.data),
+              // TODO: Fix this, this one forces every screen to use this argument
               // invoke the screen to create, passing on the userdata
               bottomNavigationBar: BottomNavigationBar(
                 items: const [

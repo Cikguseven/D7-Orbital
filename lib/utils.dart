@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:my_first_flutter/user_class.dart';
 
 class Utils {
@@ -52,7 +53,7 @@ class Utils {
 
     return "$day/$month/${dt.year}";
   }
-
+  
   /// Converts the stored string taken from the database back to DT. Do not use out of context.
   static DateTime stringToDateTime(String dt) {
     int day = int.parse(dt.substring(0, 2));
@@ -62,5 +63,22 @@ class Utils {
     print("Month: $month");
     print("Year: $year");
     return DateTime(year, month, day);
+  }
+  
+  /// Checks if given string is valid date
+  static bool validDateTime(String dt) {
+    if (dt.length < 10) return false;
+    int? day = int.tryParse(dt.substring(0, 2));
+    int? month = int.tryParse(dt.substring(3, 5));
+    int? year = int.tryParse(dt.substring(6, 10));
+    DateFormat format = DateFormat("dd/MM/yyyy");
+    try { // TODO: Fix this, dont use try catch as control flow
+      DateTime finalDate = format.parseStrict("$day/$month/$year");
+      print("Final: ${Utils.dateTimeToString(finalDate)}");
+      print("Initial: $dt");
+    } on FormatException catch (e) {
+      return false;
+    }
+    return true;
   }
 }
