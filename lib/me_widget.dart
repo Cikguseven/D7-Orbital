@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 
+import 'package:my_first_flutter/csv_to_firebase.dart';
+
 class MeWidget extends StatefulWidget {
   UserData user;
 
@@ -26,6 +28,9 @@ class _MeWidgetState extends State<MeWidget> {
             /// Placeholder testing notifications
             setState(() {
               numNotifications++;
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (BuildContext context) => CSVUploadWidget())
+              );
             });
           },
           icon: const Icon(Icons.person),
@@ -41,6 +46,7 @@ class _MeWidgetState extends State<MeWidget> {
                   onPressed: () {
                     setState(() {
                       numNotifications = 0;
+
                     });
                   }),
               numNotifications != 0

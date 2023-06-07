@@ -45,6 +45,12 @@ dependencies:
   # For camera and gallery access:
   image_picker: ^0.8.7+5
 
+  # For file explorer access:
+  file_picker: ^5.3.1
+
+  # For easier csv processing, rather than my own:
+  csv: ^5.0.2
+
   # For dateFormat
   intl: ^0.17.0
 

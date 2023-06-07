@@ -7,12 +7,12 @@ import 'package:my_first_flutter/user_class.dart';
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-  static showSnackBar(String? text) {
+  static showSnackBar(String? text, {bool isBad: true}) {
     if (text == null) return;
 
     final snackBar = SnackBar(
       content: Text(text),
-      backgroundColor: Colors.red,
+      backgroundColor: isBad ? Colors.red : Colors.green,
     );
     scaffoldKey.currentState!
     ..removeCurrentSnackBar()

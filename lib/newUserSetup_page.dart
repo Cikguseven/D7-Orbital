@@ -179,7 +179,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         controller: birthdayController,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
-                            child: Icon(
+                            child: const Icon(
                               Icons.date_range,
                               size: 24,
                             ),
