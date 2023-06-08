@@ -5,18 +5,13 @@ import 'package:my_first_flutter/forgot_password_page.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
 
-
-
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickSignUp;
 
-  const LoginWidget({Key? key,
-    required this.onClickSignUp}) : super(key: key);
+  const LoginWidget({Key? key, required this.onClickSignUp}) : super(key: key);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
-
-
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
@@ -38,76 +33,84 @@ class _LoginWidgetState extends State<LoginWidget> {
         SliverFillRemaining(
           hasScrollBody: false,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                // style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                  border: OutlineInputBorder(),
-                  labelText: "Email",
-                ),
-              ),
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                  suffixIcon: GestureDetector(
-                    child: Icon(
-                      Icons.remove_red_eye,
-                      size: 24,
-                    ),
-                    onTap: () => setState(() => obscureFlag = !obscureFlag),
-                    // onTapDown: (_) => setState(() => obscureFlag = false),
-                    // onTapUp: (_) => setState(() => obscureFlag = true),
+              Utils.createVerticalSpace(18),
+              Image.asset("lib/assets/MakeItCountLogo.png"),
+              Utils.createHeadlineMedium("Make it Count", context),
+              Utils.createVerticalSpace(26),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    labelText: "Email",
                   ),
-                  border: OutlineInputBorder(),
-                  labelText: "Password",
                 ),
-                obscureText: obscureFlag, // Obscure password field
               ),
-              ElevatedButton.icon(
-                  onPressed: signInCallBack,
-                  icon: Icon(Icons.lock_open_outlined, size: 24),
-                  label: const Text(
-                    "Log in",
-                  )
-              ),
-              GestureDetector(
-                child: Text("Forgot Password?",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Theme.of(context).colorScheme.secondary,
-                )),
-                onTap: () {
-                  navigatorKey.currentState!.push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return ForgotPasswordPage();
-                      },
-                    ),
-                  );
-                },
-              ),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                  text: "Don't have an Account?",
-                  children: [
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickSignUp,
-                      text: "Sign Up",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .secondary,
+              Utils.createVerticalSpace(15),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextFormField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      child: const Icon(
+                        Icons.remove_red_eye,
+                        size: 24,
                       ),
+                      onTap: () => setState(() => obscureFlag = !obscureFlag),
                     ),
-                  ],
+                    labelText: "Password",
+                  ),
+                  obscureText: obscureFlag, // Obscure password field
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(18, 6, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  child: const Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  onTap: () {
+                    navigatorKey.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const ForgotPasswordPage();
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Utils.createVerticalSpace(20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                      MediaQuery.of(context).size.width - 15 * 2)),
+                ),
+                onPressed: signInCallBack,
+                child: const Text(
+                  "Log in",
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text("---------- or ----------",
+                    style: TextStyle(color: Colors.grey)),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                      MediaQuery.of(context).size.width - 15 * 2)),
+                ),
+                onPressed: widget.onClickSignUp,
+                child: const Text(
+                  "Sign up",
                 ),
               ),
             ],
@@ -121,7 +124,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
       print("Email: ${emailController.text.trim()}");

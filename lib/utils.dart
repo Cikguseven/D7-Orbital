@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/themes/theme_constants.dart';
 
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
@@ -80,5 +81,60 @@ class Utils {
       return false;
     }
     return true;
+  }
+
+  // ======= UI Stuff =======
+
+  /// To create a Material colour for Themedata from Hex value.
+  /// Taken from https://medium.com/@nickysong/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
+  static MaterialColor createMaterialColor(Color color) {
+    List strengths = <double>[.05];
+    Map<int, Color> swatch = {};
+    final int r = color.red, g = color.green, b = color.blue;
+
+    for (int i = 1; i < 10; i++) {
+      strengths.add(0.1 * i);
+    }
+    for (var strength in strengths) {
+      final double ds = 0.5 - strength;
+      swatch[(strength * 1000).round()] = Color.fromRGBO(
+        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+        1,
+      );
+    }
+    return MaterialColor(color.value, swatch);
+  }
+
+  /// Creates a text field that utilises headlineSmall style
+  static Text createHeadlineSmall(String text, BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.headlineSmall,
+    );
+  }
+
+  /// Creates a text field that utilises headlineMedium style
+  static Text createHeadlineMedium(String text, BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.headlineMedium,
+    );
+  }
+
+
+  /// Simple create vertical whitespace
+  static Widget createVerticalSpace(double pixels) {
+    return SizedBox(
+      height: pixels,
+    );
+  }
+
+  /// Simple create horizontal whitespace
+  static Widget createHorizontalSpace(double pixels) {
+    return SizedBox(
+      width: pixels,
+    );
   }
 }

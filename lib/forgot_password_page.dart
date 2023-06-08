@@ -34,29 +34,39 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Reset Password"),
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Reset Password"),
+      // ),
       body: SingleChildScrollView(
       child: Form(
         key: formKey,
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
-            controller: emailController,
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-              border: OutlineInputBorder(),
-              labelText: "Email",
+          Utils.createVerticalSpace(18),
+          Image.asset("lib/assets/MakeItCountLogo.png"),
+          Utils.createHeadlineMedium("Reset Password", context),
+          Utils.createVerticalSpace(26),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextFormField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                labelText: "Email",
+              ),
+              validator: emailValidator,
             ),
-            validator: emailValidator,
           ),
+          Utils.createVerticalSpace(15),
           ElevatedButton.icon(
+            style: ButtonStyle(
+              fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                  MediaQuery.of(context).size.width - 15 * 2)),
+            ),
               onPressed: sendResetEmailCallback,
               icon: Icon(Icons.email_outlined, size: 24),
               label: const Text(
-                "Reset Password",
+                "Send email",
               )
           ),
         ],
