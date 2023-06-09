@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
 import 'package:my_first_flutter/auth_widget.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/verify_email_page.dart';
