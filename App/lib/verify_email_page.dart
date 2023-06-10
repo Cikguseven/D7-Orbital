@@ -15,7 +15,6 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
-
   bool isEmailVerified = false;
   Timer? timer;
 
@@ -30,7 +29,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
       timer = Timer.periodic(
         const Duration(seconds: 3),
-        (timer) => checkEmailVerified(),
+            (timer) => checkEmailVerified(),
       );
     }
   }
@@ -42,7 +41,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   Future checkEmailVerified() async {
-    await FirebaseAuth.instance.currentUser!.reload(); // reload to reflect changes in verification status
+    await FirebaseAuth.instance.currentUser!
+        .reload(); // reload to reflect changes in verification status
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
       print("IS EMAIL VERIFIED? $isEmailVerified");
@@ -65,7 +65,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       setState(() => cooldown = 10);
       Timer.periodic(
         const Duration(seconds: 1),
-        (timer) {
+            (timer) {
           setState(() => cooldown--);
           if (cooldown <= 0) {
             canSendEmail = true;
@@ -84,28 +84,68 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     return isEmailVerified
         ? App()
         : Scaffold(
-            appBar: AppBar(
-              title: const Text("Verify Email"),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // SizedBox(height: MediaQuery.of(context).size.height / 3),
-                  Text("A verification email has been sent to:"),
-                  Text("${FirebaseAuth.instance.currentUser!.email}"),
-                  ElevatedButton.icon(
-                    onPressed: sendEmailVerification,
-                    icon: Icon(Icons.email_outlined, size: 32),
-                    label:
-                        Text("Resend email\t${cooldown > 0 ? cooldown : ""}"),
-                  ),
-                  TextButton(
-                      onPressed: () => FirebaseAuth.instance.signOut(),
-                      child: Text("Cancel"))
-                ],
+      body: Column(
+        children: [
+          Utils.createVerticalSpace(18),
+          Image.asset("lib/assets/MakeItCountLogo.png"),
+          Utils.createHeadlineMedium("Verify Email", context),
+          Utils.createVerticalSpace(80),
+          Utils.createTitleMedium(
+              "A verification email has been sent to: \n ${FirebaseAuth
+                  .instance.currentUser!.email}", context),
+          // Column(
+          //   children: [
+          //     Text(
+          //       "A verification email has been sent to:",
+          //       style: Theme
+          //           .of(context)
+          //           .textTheme
+          //           .headlineSmall
+          //           ?.copyWith(fontSize: 16),
+          //     ),
+          //     Text(
+          //       "${FirebaseAuth.instance.currentUser!.email}",
+          //       style: Theme
+          //           .of(context)
+          //           .textTheme2
+          //           .headlineSmall
+          //           ?.copyWith(fontSize: 16),
+          //     ),
+          //   ],
+          // ),
+          Utils.createVerticalSpace(80),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ElevatedButton.icon(
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                    MediaQuery
+                        .of(context)
+                        .size
+                        .width - 16 * 2),),
               ),
+              onPressed: sendEmailVerification,
+              icon: Icon(Icons.email_outlined, size: 24),
+              label:
+              Text("Resend email\t${cooldown > 0 ? cooldown : ""}"),
             ),
-          );
+          ),
+          Utils.createVerticalSpace(26),
+          TextButton(
+            onPressed: () => FirebaseAuth.instance.signOut(),
+            child: Text(
+              "Return to log in",
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: Theme
+                  .of(context)
+                  .primaryColor),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
