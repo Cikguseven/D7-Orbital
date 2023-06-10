@@ -16,22 +16,25 @@ class Utils {
       backgroundColor: isBad ? Colors.red : Colors.green,
     );
     scaffoldKey.currentState!
-    ..removeCurrentSnackBar()
-    ..showSnackBar(snackBar);
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar);
   }
-  
+
   /// Gets the current firebase authenticated user. Only use after signed in!
   static User? getAuthUser() {
     final authUser = FirebaseAuth.instance.currentUser;
     assert(authUser != null, "No currently logged in user");
     return authUser;
   }
-  
+
   /// Gets the current firebase authenticated user's data. Only use after signed in! (ASYNC)
-  static Future<UserData?> getUserData({String? uid}) async { // uid optional, if not give, takes the current logged in user
-    final docUser = FirebaseFirestore.instance.collection('userData').doc(uid ?? getAuthUser()!.uid);
+  static Future<UserData?> getUserData({String? uid}) async {
+    // uid optional, if not give, takes the current logged in user
+    final docUser = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(uid ?? getAuthUser()!.uid);
     return docUser.get().then(
-          (DocumentSnapshot doc) {
+      (DocumentSnapshot doc) {
         if (doc.exists) {
           // user has been created before, proceed to read
           print("exists");
@@ -54,7 +57,7 @@ class Utils {
 
     return "$day/$month/${dt.year}";
   }
-  
+
   /// Converts the stored string taken from the database back to DT. Do not use out of context.
   static DateTime stringToDateTime(String dt) {
     int day = int.parse(dt.substring(0, 2));
@@ -65,7 +68,7 @@ class Utils {
     print("Year: $year");
     return DateTime(year, month, day);
   }
-  
+
   /// Checks if given string is valid date
   static bool validDateTime(String dt) {
     if (dt.length < 10) return false;
@@ -73,7 +76,8 @@ class Utils {
     int? month = int.tryParse(dt.substring(3, 5));
     int? year = int.tryParse(dt.substring(6, 10));
     DateFormat format = DateFormat("dd/MM/yyyy");
-    try { // TODO: Fix this, dont use try catch as control flow
+    try {
+      // TODO: Fix this, dont use try catch as control flow
       DateTime finalDate = format.parseStrict("$day/$month/$year");
       print("Final: ${Utils.dateTimeToString(finalDate)}");
       print("Initial: $dt");
@@ -107,23 +111,45 @@ class Utils {
     return MaterialColor(color.value, swatch);
   }
 
-  /// Creates a text field that utilises headlineSmall style
-  static Text createHeadlineSmall(String text, BuildContext context) {
+  /// Creates a text field that utilises headlineSmall style. Used for smaller main text
+  static Text createHeadlineSmall(String text, BuildContext context,
+      {TextAlign align: TextAlign.center}) {
     return Text(
       text,
       style: Theme.of(context).textTheme.headlineSmall,
+      textAlign: align,
     );
   }
 
-  /// Creates a text field that utilises headlineMedium style
-  static Text createHeadlineMedium(String text, BuildContext context) {
+  /// Creates a text field that utilises headlineMedium style. Used for main text
+  static Text createHeadlineMedium(String text, BuildContext context,
+      {TextAlign align: TextAlign.center}) {
     return Text(
       text,
       style: Theme.of(context).textTheme.headlineMedium,
+      textAlign: align,
     );
   }
 
+  /// Creates a text field that utilises titleSmall style. Used for smaller regular text
+  static Text createTitleSmall(String text, BuildContext context,
+      {TextAlign align: TextAlign.center}) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.titleSmall,
+      textAlign: align,
+    );
+  }
 
+  /// Creates a text field that utilises titleSmall style. Used for regular text
+  static Text createTitleMedium(String text, BuildContext context,
+      {TextAlign align: TextAlign.center}) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.titleMedium,
+      textAlign: align,
+    );
+  }
   /// Simple create vertical whitespace
   static Widget createVerticalSpace(double pixels) {
     return SizedBox(

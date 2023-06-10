@@ -5,7 +5,7 @@ final NUS_ORANGE = Utils.createMaterialColor(const Color(0xFFEFC700));
 final NUS_BLUE = Utils.createMaterialColor(const Color(0xFF003D7C));
 final LIGHT_FRAME_BACKGROUND =
     Utils.createMaterialColor(const Color(0xFFF5F5F5));
-final INPUT_BORDER_GREY = Utils.createMaterialColor(const Color(0xFFE8E8E8));
+final INPUT_BORDER_GREY = Utils.createMaterialColor(const Color(0xFFC9C9C9));
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
@@ -22,20 +22,28 @@ ThemeData lightTheme = ThemeData(
       ),
       backgroundColor: MaterialStateProperty.all<Color>(NUS_BLUE),
       textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
-          foreground: Paint()..color = Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+          foreground: Paint()..color = Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
     ),
   ),
   textTheme: const TextTheme(
+    // Used for smaller main text
+    headlineSmall: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+
     // Used for Main Text
     headlineMedium: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
 
+    // Used for smaller regular text
+    titleSmall: TextStyle(color: Colors.black, fontSize: 14),
+
     // Used for regular text
-    headlineSmall: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-    // Used for text field text
-    labelSmall: TextStyle(color: Color(0xFF666666)), // GREY
+    titleMedium: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+
+    // Used for text fields text
+    labelSmall: TextStyle(color: Color(0xFF989898), fontSize: 14), // GREY
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
+      borderSide: BorderSide.none,
       borderRadius: BorderRadius.circular(8.0),
     ),
     filled: true,
@@ -43,7 +51,7 @@ ThemeData lightTheme = ThemeData(
     outlineBorder: BorderSide(
       color: INPUT_BORDER_GREY,
     ),
-    labelStyle: const TextStyle(color: Color(0xFF666666)),
+    labelStyle: const TextStyle(color: Color(0xFF989898), fontSize: 14),
   ),
 );
 
