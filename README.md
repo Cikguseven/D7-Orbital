@@ -1,8 +1,8 @@
-# my_first_flutter
+# Make it Count
 
-A new Flutter project.
+A comprehensive Android application for tracking your calories in a fun way! Achieve your health and fitness goals through our insights and recommendations. Connect your Fitbit for the full experience.
 
-## Getting Started
+## Flutter: Getting Started
 
 This project is a starting point for a Flutter application.
 
