@@ -56,7 +56,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 Utils.createHeadlineMedium("Make it Count", context),
                 Utils.createVerticalSpace(26),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -66,9 +66,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                     validator: emailValidator,
                   ),
                 ),
-                Utils.createVerticalSpace(15),
+                Utils.createVerticalSpace(16),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: passwordController,
                     decoration: InputDecoration(
@@ -86,9 +86,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                Utils.createVerticalSpace(15),
+                Utils.createVerticalSpace(16),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: password2Controller,
                     decoration: InputDecoration(
@@ -110,7 +110,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 15 * 2)),
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
                   onPressed: signUpCallBack,
                   child: const Text(
@@ -120,7 +120,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 Utils.createVerticalSpace(36),
                 RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 16),
+                    style: Theme.of(context).textTheme.titleMedium,
                     text: "Have an Account? ",
                     children: [
                       TextSpan(

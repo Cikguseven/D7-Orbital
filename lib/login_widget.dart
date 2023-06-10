@@ -39,7 +39,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               Utils.createHeadlineMedium("Make it Count", context),
               Utils.createVerticalSpace(26),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
@@ -47,9 +47,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
               ),
-              Utils.createVerticalSpace(15),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
+              Utils.createVerticalSpace(16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: passwordController,
                   decoration: InputDecoration(
@@ -91,7 +91,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                      MediaQuery.of(context).size.width - 15 * 2)),
+                      MediaQuery.of(context).size.width - 16 * 2)),
                 ),
                 onPressed: signInCallBack,
                 child: const Text(
@@ -106,7 +106,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                      MediaQuery.of(context).size.width - 15 * 2)),
+                      MediaQuery.of(context).size.width - 16 * 2)),
                 ),
                 onPressed: widget.onClickSignUp,
                 child: const Text(
