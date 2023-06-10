@@ -27,10 +27,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   final heightController = TextEditingController();
   final weightController = TextEditingController();
 
-  // Gender Dropdown button
-  final genders = ["Male", "Female", "Prefer not to say"];
-  String? selectedGender = null;
-  bool? isMale = null;
+  // Gender Toggle button
+  final List<bool> genderSelected = [false, false]; // Male, Female
 
   // DateTime picker
   DateTime today = DateTime.now();
@@ -87,7 +85,6 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("done is true? $done");
     return done
         ? App()
         : // TODO: fix this, abit of circular App call this, this call App but i think is a quick fix for now
@@ -98,167 +95,203 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                 child: Form(
                   key: formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                          "This page will be broken down into sequential "
-                          "pages for filling in different information."),
-                      TextFormField(
-                        validator: (val) {
-                          return val == ""
-                              ? "Please enter your first name"
-                              : null;
-                        },
-                        controller: firstNameController,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "First Name",
-                        ),
-                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // validator: emailValidator,
-                      ),
-                      TextFormField(
-                        validator: (val) {
-                          return val == ""
-                              ? "Please enter your last name"
-                              : null;
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: lastNameController,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "Last Name",
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 26, 0, 0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Utils.createHeadlineMedium("Hello!", context),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isMale = true;
-                                  });
-                                },
-                                child: Text("Male"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: (isMale == null || !isMale!)
-                                      ? Colors.white
-                                      : Colors.orange,
-                                )),
-                          ),
-                          Expanded(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isMale = false;
-                                  });
-                                },
-                                child: Text("Female"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: (isMale == null || isMale!)
-                                      ? Colors.white
-                                      : Colors.orange,
-                                )),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Utils.createHeadlineSmall(
+                              "Welcome to Make it Count!", context),
+                        ),
                       ),
-                      TextFormField(
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(10),
-                          //  dd/mm/yyyy is 10 letters
-                        ],
-                        onChanged: dateTimeAutoSlash,
-                        validator: birthdayValidator,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: birthdayController,
-                        decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                            child: const Icon(
-                              Icons.date_range,
-                              size: 24,
-                            ),
-                            onTap: () async {
-                              DateTime? newDate = await showDatePicker(
-                                context: context,
-                                initialDate: today,
-                                firstDate: DateTime(1970),
-                                lastDate: today,
-                              );
-
-                              // If click on cancel
-                              if (newDate == null)
-                                return;
-                              else {
-                                final newDateStr =
-                                    Utils.dateTimeToString(newDate);
-                                birthdayController.value = TextEditingValue(
-                                  text: newDateStr,
-                                  selection: TextSelection.fromPosition(
-                                    TextPosition(offset: newDateStr.length),
-                                  ),
-                                );
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 26, 0, 0),
+                        child: Center(
+                          child: Utils.createTitleMedium(
+                              "Let us get to know you better", context),
+                        ),
+                      ),
+                      Utils.createVerticalSpace(16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TextFormField(
+                          validator: (val) {
+                            return val == ""
+                                ? "Please enter your first name"
+                                : null;
+                          },
+                          controller: firstNameController,
+                          decoration: const InputDecoration(
+                            labelText: "First Name",
+                          ),
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                          // validator: emailValidator,
+                        ),
+                      ),
+                      Utils.createVerticalSpace(16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TextFormField(
+                          validator: (val) {
+                            return val == ""
+                                ? "Please enter your last name"
+                                : null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          controller: lastNameController,
+                          decoration: const InputDecoration(
+                            labelText: "Last Name",
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 26, 0, 0),
+                        child: Center(
+                          child: Utils.createTitleMedium(
+                              "Select the gender we should use to \n"
+                              "calculate your calorie needs:",
+                              context,
+                              align: TextAlign.center),
+                        ),
+                      ),
+                      Utils.createVerticalSpace(16),
+                      ToggleButtons(
+                        isSelected: genderSelected,
+                        onPressed: (int index) {
+                          setState(
+                            () {
+                              for (int buttonIndex = 0;
+                                  buttonIndex < genderSelected.length;
+                                  buttonIndex++) {
+                                if (buttonIndex == index) {
+                                  genderSelected[buttonIndex] = true;
+                                } else {
+                                  genderSelected[buttonIndex] = false;
+                                }
                               }
                             },
-                          ),
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "dd/mm/yyyy",
+                          );
+                        },
+                        textStyle: Theme.of(context).textTheme.titleMedium,
+                        // Text color of non-selected button
+                        color: Theme.of(context).primaryColor,
+                        // Text color of selected button
+                        selectedColor: Colors.white,
+                        // Background color of selected button
+                        fillColor: Theme.of(context).primaryColor,
+                        // Splash color when seledted
+                        splashColor: Theme.of(context).primaryColor,
+                        borderColor: Colors.black,
+                        constraints: const BoxConstraints(
+                          minHeight: 40,
+                          minWidth: 120,
                         ),
-                      ),
-                      TextFormField(
-                        validator: heightValidator,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(3),
+                        borderRadius: BorderRadius.circular(100),
+                        children: const <Text>[
+                          Text("Male"),
+                          Text("Female"),
                         ],
-                        controller: heightController,
-                        // TODO: Limit height to 3 digits, add checks
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "Height in CM",
+                      ),
+                      Utils.createVerticalSpace(16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TextFormField(
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10),
+                            //  dd/mm/yyyy is 10 letters
+                          ],
+                          onChanged: dateTimeAutoSlash,
+                          validator: birthdayValidator,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          controller: birthdayController,
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              child: const Icon(
+                                Icons.date_range,
+                                size: 24,
+                              ),
+                              onTap: () async {
+                                DateTime? newDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: today,
+                                  firstDate: DateTime(1970),
+                                  lastDate: today,
+                                );
+
+                                // If click on cancel
+                                if (newDate == null)
+                                  return;
+                                else {
+                                  final newDateStr =
+                                      Utils.dateTimeToString(newDate);
+                                  birthdayController.value = TextEditingValue(
+                                    text: newDateStr,
+                                    selection: TextSelection.fromPosition(
+                                      TextPosition(offset: newDateStr.length),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            labelText: "dd/mm/yyyy",
+                          ),
                         ),
                       ),
-                      TextFormField(
-                        validator: weightValidator,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [LengthLimitingTextInputFormatter(4)],
-                        controller: weightController,
-                        // TODO: Round weight to 2 dp, add checks
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          border: OutlineInputBorder(),
-                          labelText: "Weight in KG",
+                      Utils.createVerticalSpace(16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TextFormField(
+                          validator: heightValidator,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(3),
+                          ],
+                          controller: heightController,
+                          decoration: const InputDecoration(
+                            labelText: "Height in CM",
+                          ),
                         ),
                       ),
+                      Utils.createVerticalSpace(16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TextFormField(
+                          validator: weightValidator,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(4)
+                          ],
+                          controller: weightController,
+                          decoration: InputDecoration(
+                            labelText: "Weight in KG",
+                          ),
+                        ),
+                      ),
+                      Utils.createVerticalSpace(16),
                       ElevatedButton.icon(
                         onPressed: newUserSetupCallback,
-                        icon: Icon(Icons.person_4_rounded, size: 24),
+                        icon: const Icon(Icons.person_4_rounded, size: 24),
                         label: const Text(
                           "This is Me",
                         ),
                       ),
-                      RichText(
-                        text: TextSpan(
+                      Utils.createVerticalSpace(6),
+                      GestureDetector(
+                        child: const Text(
+                          "Cancel",
                           style: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          text: 'Cancel',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => FirebaseAuth.instance.signOut(),
+                            decoration: TextDecoration.underline,
+                            color: Colors.blueAccent,
+                          ),
                         ),
+                        onTap: () => FirebaseAuth.instance.signOut(),
                       ),
                     ],
                   ),
@@ -270,19 +303,23 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
 
   Future newUserSetupCallback() async {
     final bool isValidInputs = formKey.currentState!.validate();
-    isMale ?? Utils.showSnackBar("Select your gender!");
+    if (genderSelected.every((element) => element == false)) {
+      // all false
+      Utils.showSnackBar("Select your gender!");
+      return;
+    }
     if (!isValidInputs) return;
 
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
       final user = UserData(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
-        gender: isMale! ? "Male" : "Female",
+        gender: genderSelected[0] ? "Male" : "Female",
         birthday: birthdayController.text.trim(),
         height: double.parse(heightController.text.trim()),
         weight: double.parse(weightController.text.trim()),
@@ -291,10 +328,11 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
           .collection('userData')
           .doc(FirebaseAuth.instance.currentUser!.uid);
       await docUser.set(user.toJson());
-      setState(() {
-        done = true;
-        print("Done is now true");
-      });
+      setState(
+        () {
+          done = true;
+        },
+      );
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

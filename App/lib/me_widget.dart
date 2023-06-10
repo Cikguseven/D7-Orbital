@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -26,29 +27,33 @@ class _MeWidgetState extends State<MeWidget> {
         leading: IconButton(
           onPressed: () {
             /// Placeholder testing notifications
-            setState(() {
-              numNotifications++;
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (BuildContext context) => CSVUploadWidget())
-              );
-            });
+            setState(
+              () {
+                numNotifications++;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => CSVUploadWidget()));
+              },
+            );
           },
           icon: const Icon(Icons.person),
         ),
-        title: const Center(
-          child: Text("Make it count"),
-        ),
+        title: Text("Me"),
+        centerTitle: true,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.mail_outline_rounded),
+            onPressed: () {
+              setState(
+                () {
+                  numNotifications = 0;
+                },
+              );
+            },
+          ),
           Stack(
             children: [
-              IconButton(
-                  icon: const Icon(Icons.mail_outline_rounded),
-                  onPressed: () {
-                    setState(() {
-                      numNotifications = 0;
-
-                    });
-                  }),
               numNotifications != 0
                   ? Positioned(
                       right: 11,
@@ -73,8 +78,17 @@ class _MeWidgetState extends State<MeWidget> {
                         ),
                       ),
                     )
-                  : Container()
+                  : Container(),
             ],
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const SettingsPage()));
+            },
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
