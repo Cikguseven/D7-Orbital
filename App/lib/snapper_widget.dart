@@ -2,13 +2,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class SnapperWidget extends StatefulWidget {
-  UserData user;
+  final UserData user;
+  final List<PostData> post;
 
-  SnapperWidget({Key? key, required this.user})
+  SnapperWidget({Key? key, required this.user, required this.post})
       : super(key: key); // TODO: this is infact not required
 
   @override

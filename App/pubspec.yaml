@@ -55,6 +55,9 @@ dependencies:
   # For dateFormat
   intl: ^0.17.0
 
+  # For generating uuid
+  uuid: ^3.0.6
+
 
 dev_dependencies:
   flutter_test:

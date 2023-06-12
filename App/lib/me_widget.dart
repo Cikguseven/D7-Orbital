@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
-
 import 'package:my_first_flutter/csv_to_firebase.dart';
 
 class MeWidget extends StatefulWidget {
-  UserData user;
+  final UserData user;
+  final List<PostData> post;
 
-  MeWidget({Key? key, required this.user}) : super(key: key);
+  MeWidget({Key? key, required this.user, required this.post}) : super(key: key);
 
   @override
   State<MeWidget> createState() => _MeWidgetState();
@@ -22,6 +23,7 @@ class _MeWidgetState extends State<MeWidget> {
   Widget build(BuildContext context) {
     print(DateTime.now().year);
     print(Utils.stringToDateTime(widget.user.birthday));
+    print('a');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
