@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/home_widget.dart';
-import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/newUserSetup_page.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -18,11 +17,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static final List<String> idToMap = ["Home", "Snap", "Me"];
   Map<String, dynamic> screenNameToWidgetMap = {
-    "Home": (UserData userData, List<PostData> postData) => HomeWidget(user: userData, post: postData),
-    "Snap": (UserData userData, List<PostData> postData) => SnapperWidget(user: userData, post: postData),
+    "Home": (UserData userData) => HomeWidget(user: userData),
+    "Snap": (UserData userData) => SnapperWidget(user: userData),
     // TODO: Fix this, i dont think the scanner widget needs this data
     // but i have to put cause of the way i change screens
-    "Me": (UserData userData, List<PostData> postData) => MeWidget(user: userData, post: postData),
+    "Me": (UserData userData) => MeWidget(user: userData),
   };
 
   int selectedScreenIdx = 0;
@@ -33,16 +32,16 @@ class _AppState extends State<App> {
     print("1");
     return Scaffold(
       body: StreamBuilder(
-        stream: Stream.fromFutures([Utils.getUserData(), Utils.getPostData()]),
-        builder: (BuildContext context, [AsyncSnapshot<Object?>? user, posts]) {
+        stream: Stream.fromFuture(Utils.getUserData()),
+        builder: (BuildContext context, user) {
           print("2");
-          if (user?.data == UserData.NewUser) {
+          if (user.data == UserData.NewUser) {
             print("3");
             return NewUserSetupPage();
           } else {
             print("4");
-            print(user?.hasData);
-            if (user?.data == null) {
+            print(user.hasData);
+            if (user.data == null) {
               print("5");
               return Scaffold();
             }
@@ -82,7 +81,7 @@ class _AppState extends State<App> {
               // appBar: AppBar(
               //   title: Text(idToMap[selectedScreenIdx]),
               // ),
-              body: screenNameToWidgetMap[selectedScreenName](user?.data, posts),
+              body: screenNameToWidgetMap[selectedScreenName](user.data),
               // TODO: Fix this, this one forces every screen to use this argument
               // invoke the screen to create, passing on the userdata
               bottomNavigationBar: BottomNavigationBar(

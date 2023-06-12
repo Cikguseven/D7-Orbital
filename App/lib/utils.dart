@@ -52,8 +52,8 @@ class Utils {
   }
 
   /// Gets all current post data. Only use after signed in! (ASYNC)
-  static Future<List<PostData?>> getPostData({String? uid}) async {
-    List<PostData?> posts = [];
+  static Future<List<PostData>> getPostData({String? uid}) async {
+    List<PostData> posts = [];
     // uid optional, if not give, takes the current logged in user
     final docUser = FirebaseFirestore.instance
         .collection('userData')
@@ -61,9 +61,7 @@ class Utils {
     return docUser.get().then(
           (DocumentSnapshot doc) {
         if (doc.exists) {
-          // user has been created before, proceed to read
-          print("exists for getting posts");
-          var gotPost = FirebaseFirestore.instance.collection('posts').orderBy('date', descending: true).get().then(
+          FirebaseFirestore.instance.collection('posts').get().then(
             (querySnapshot) {
               for (var post in querySnapshot.docs) {
                 final data = post.data() as Map<String, dynamic>;
@@ -72,9 +70,9 @@ class Utils {
             }
           );
         } else {
-          // new user detected
-          print("no exists for getting posts");
+          print("no login");
         }
+        print(posts);
         return posts;
       },
       onError: (e) => print("Error getting posts: $e"),

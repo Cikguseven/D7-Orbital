@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class PostData {
   // static final postData newPost = postData(
   //     firstName: 'new',
@@ -56,7 +54,7 @@ class PostData {
     'postTime': postTime,
   };
 
-  static PostData? fromJson(Map<String, dynamic> data) {
+  static PostData fromJson(Map<String, dynamic> data) {
     return PostData(
       firstName: data['firstName'],
       lastName: data['lastName'],
@@ -70,6 +68,6 @@ class PostData {
       fats: data['fats'],
       carbs: data['carbs'],
       sugar: data['sugar'],
-      postTime: data['postTime']);
+      postTime: data['postTime'].toDate());
   }
 }

@@ -5,20 +5,18 @@ import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
-
 import 'main.dart';
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
-  final List<PostData> post;
-  HomeWidget({Key? key, required this.user, required this.post}) : super(key: key);
+
+  HomeWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  bool done = false;
   var uuid = Uuid();
 
   @override
@@ -29,19 +27,65 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Text("Make it Count"),
         ),
       ),
-      body: ListView.separated(
-        itemCount: widget.post.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container (
-            height: 100,
-            color: Colors.amber[600 - index * 20],
-            child: Center(child: Text('${widget.post[index].commentID} || ${widget.post[index].postTime}')),
-          );
+      body: StreamBuilder(
+        stream: Stream.fromFuture(Utils.getPostData()),
+        builder: (BuildContext context, posts) {
+          if (posts.hasData) {
+            print('xxxxxxxxx');
+            print(posts);
+            return ListView.separated(
+              itemCount: posts.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 100,
+                  color: Colors.amber[400],
+                  child: Center(child: Text(
+                      '${posts.data?[index].commentID} || ${posts.data?[index]
+                          .postTime}')),
+                );
+              },
+              separatorBuilder: (BuildContext context,
+                  int index) => const Divider(),
+            );
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Text("No posts")
+              )
+            );
+          };
         },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
       ),
-      bottomNavigationBar:
-      ElevatedButton.icon(
+      // body: FutureBuilder(
+      //   future: Utils.getPostData(),
+      //   builder: (BuildContext context, posts) {
+      //     if (posts.hasData) {
+      //       print('xxxxxxxxx');
+      //       print(posts.data);
+      //       return ListView.separated(
+      //         itemCount: posts.data!.length,
+      //         itemBuilder: (BuildContext context, int index) {
+      //           return Container(
+      //             height: 100,
+      //             color: Colors.amber[400],
+      //             child: Center(child: Text(
+      //                 '${posts.data?[index].commentID} || ${posts.data?[index]
+      //                     .postTime}')),
+      //           );
+      //         },
+      //         separatorBuilder: (BuildContext context,
+      //             int index) => const Divider(),
+      //       );
+      //     } else {
+      //       return Scaffold(
+      //         body: Center(
+      //           child: Text("No posts")
+      //         )
+      //       );
+      //     }
+      //   },
+      // ),
+      bottomNavigationBar: ElevatedButton.icon(
         onPressed: newPostSetupCallback,
         icon: const Icon(Icons.person_4_rounded, size: 24),
         label: const Text(
