@@ -98,30 +98,17 @@ class _MeWidgetState extends State<MeWidget> {
           children: [
             const Text(
                 "This page will contain statistics of the User. Testing CRUD..."),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Hey ${widget.user.firstName}!"),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Age: You are ${DateTime.now().year - Utils.stringToDateTime(widget.user.birthday).year} this year"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
+            Text("Age: You are ${DateTime.now().year - Utils.stringToDateTime(widget.user.birthday).year} this year"),
+            const SizedBox(height: 10,),
             Text("Height: ${widget.user.height} CM"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Weight: ${widget.user.weight} KG"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Gender: ${widget.user.gender}"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             ElevatedButton.icon(
               onPressed: () => FirebaseAuth.instance.signOut(),
               icon: const Icon(Icons.arrow_back, size: 32),

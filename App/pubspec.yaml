@@ -58,6 +58,9 @@ dependencies:
   # For generating uuid
   uuid: ^3.0.6
 
+  # For making duration readable (x minutes ago)
+  timeago: ^3.3.0
+
 
 dev_dependencies:
   flutter_test:

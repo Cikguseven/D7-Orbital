@@ -54,29 +54,15 @@ class Utils {
   /// Gets all current post data. Only use after signed in! (ASYNC)
   static Future<List<PostData>> getPostData({String? uid}) async {
     List<PostData> posts = [];
-    // uid optional, if not give, takes the current logged in user
-    final docUser = FirebaseFirestore.instance
-        .collection('userData')
-        .doc(uid ?? getAuthUser()!.uid);
-    return docUser.get().then(
-          (DocumentSnapshot doc) {
-        if (doc.exists) {
-          FirebaseFirestore.instance.collection('posts').get().then(
-            (querySnapshot) {
-              for (var post in querySnapshot.docs) {
-                final data = post.data() as Map<String, dynamic>;
-                posts.add(PostData.fromJson(data));
-              }
-            }
-          );
-        } else {
-          print("no login");
+    FirebaseFirestore.instance.collection('posts').orderBy('postTime', descending: true).snapshots().forEach(
+      (querySnapshot) {
+        for (var post in querySnapshot.docs) {
+          final data = post.data() as Map<String, dynamic>;
+          posts.add(PostData.fromJson(data));
         }
-        print(posts);
-        return posts;
-      },
-      onError: (e) => print("Error getting posts: $e"),
+      }
     );
+    return posts;
   }
 
   /// Converts Date time to string to save to database. DD/MM/YYYY

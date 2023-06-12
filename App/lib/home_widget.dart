@@ -6,18 +6,19 @@ import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
 import 'main.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
 
-  HomeWidget({Key? key, required this.user}) : super(key: key);
+  const HomeWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  var uuid = Uuid();
+  var uuid = const Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -31,60 +32,23 @@ class _HomeWidgetState extends State<HomeWidget> {
         stream: Stream.fromFuture(Utils.getPostData()),
         builder: (BuildContext context, posts) {
           if (posts.hasData) {
-            print('xxxxxxxxx');
-            print(posts);
             return ListView.separated(
               itemCount: posts.data!.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 100,
-                  color: Colors.amber[400],
-                  child: Center(child: Text(
-                      '${posts.data?[index].commentID} || ${posts.data?[index]
-                          .postTime}')),
-                );
+                return PostCard(post: posts.data![index]);
               },
               separatorBuilder: (BuildContext context,
                   int index) => const Divider(),
             );
           } else {
-            return Scaffold(
+            return const Scaffold(
               body: Center(
                 child: Text("No posts")
               )
             );
-          };
+          }
         },
       ),
-      // body: FutureBuilder(
-      //   future: Utils.getPostData(),
-      //   builder: (BuildContext context, posts) {
-      //     if (posts.hasData) {
-      //       print('xxxxxxxxx');
-      //       print(posts.data);
-      //       return ListView.separated(
-      //         itemCount: posts.data!.length,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           return Container(
-      //             height: 100,
-      //             color: Colors.amber[400],
-      //             child: Center(child: Text(
-      //                 '${posts.data?[index].commentID} || ${posts.data?[index]
-      //                     .postTime}')),
-      //           );
-      //         },
-      //         separatorBuilder: (BuildContext context,
-      //             int index) => const Divider(),
-      //       );
-      //     } else {
-      //       return Scaffold(
-      //         body: Center(
-      //           child: Text("No posts")
-      //         )
-      //       );
-      //     }
-      //   },
-      // ),
       bottomNavigationBar: ElevatedButton.icon(
         onPressed: newPostSetupCallback,
         icon: const Icon(Icons.person_4_rounded, size: 24),
@@ -130,28 +94,27 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 }
 
-// class HomeWidget extends StatelessWidget {
-//   UserData user;
-//   HomeWidget({Key? key, required this.user}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Center(
-//           child: Text("Make it count"),
-//         ),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             // SizedBox(height: MediaQuery.of(context).size.height / 3),
-//             Text("Signed in as:"),
-//             Text(user.firstName + " " + user.lastName),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+class PostCard extends StatelessWidget {
+  const PostCard({
+    super.key,
+    required this.post,
+  });
+
+  final PostData post;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Add image
+        const SizedBox(height: 5),
+        Text('${post.firstName} ${post.lastName}'),
+        const SizedBox(height: 5),
+        Text(post.caption),
+        const SizedBox(height: 5),
+        Text(timeago.format(post.postTime)),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+}
