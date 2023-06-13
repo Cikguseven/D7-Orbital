@@ -8,7 +8,7 @@ import 'package:my_first_flutter/csv_to_firebase.dart';
 class MeWidget extends StatefulWidget {
   final UserData user;
 
-  MeWidget({Key? key, required this.user}) : super(key: key);
+  const MeWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MeWidget> createState() => _MeWidgetState();
@@ -19,9 +19,6 @@ class _MeWidgetState extends State<MeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now().year);
-    print(Utils.stringToDateTime(widget.user.birthday));
-    print('a');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,13 +30,13 @@ class _MeWidgetState extends State<MeWidget> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => CSVUploadWidget()));
+                        builder: (BuildContext context) => const CSVUploadWidget()));
               },
             );
           },
           icon: const Icon(Icons.person),
         ),
-        title: Text("Me"),
+        title: const Text("Me"),
         centerTitle: true,
         actions: [
           IconButton(

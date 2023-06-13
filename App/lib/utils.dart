@@ -4,12 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/user_class.dart';
-import 'package:my_first_flutter/themes/theme_constants.dart';
 
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-  static showSnackBar(String? text, {bool isBad: true}) {
+  static showSnackBar(String? text, {bool isBad = true}) {
     if (text == null) return;
 
     final snackBar = SnackBar(
@@ -38,27 +37,25 @@ class Utils {
       (DocumentSnapshot doc) {
         if (doc.exists) {
           // user has been created before, proceed to read
-          print("exists");
           final data = doc.data() as Map<String, dynamic>;
           return UserData.fromJson(data);
         } else {
           // new user detected, create user and proceed with setup
-          print("no exists");
-          return UserData.NewUser;
+          return UserData.newUser;
         }
       },
       onError: (e) => print("Error getting document: $e"),
     );
   }
 
-  /// Gets all current post data. Only use after signed in! (ASYNC)
-  static Future<List<PostData>> getPostData({String? uid}) async {
+  /// Gets all current post data.
+  static Future<List<PostData>> getPostData() async {
     List<PostData> posts = [];
     FirebaseFirestore.instance.collection('posts').orderBy('postTime', descending: true).snapshots().forEach(
       (querySnapshot) {
         for (var post in querySnapshot.docs) {
-          final data = post.data() as Map<String, dynamic>;
-          posts.add(PostData.fromJson(data));
+          final data = post.data();
+          posts.add(PostData.fromJson(data, post.id));
         }
       }
     );
@@ -78,9 +75,6 @@ class Utils {
     int day = int.parse(dt.substring(0, 2));
     int month = int.parse(dt.substring(3, 5));
     int year = int.parse(dt.substring(6, 10));
-    print("Day: $day");
-    print("Month: $month");
-    print("Year: $year");
     return DateTime(year, month, day);
   }
 
@@ -93,10 +87,8 @@ class Utils {
     DateFormat format = DateFormat("dd/MM/yyyy");
     try {
       // TODO: Fix this, dont use try catch as control flow
-      DateTime finalDate = format.parseStrict("$day/$month/$year");
-      print("Final: ${Utils.dateTimeToString(finalDate)}");
-      print("Initial: $dt");
-    } on FormatException catch (e) {
+      format.parseStrict("$day/$month/$year");
+    } on FormatException {
       return false;
     }
     return true;
@@ -126,19 +118,9 @@ class Utils {
     return MaterialColor(color.value, swatch);
   }
 
-  /// Creates a text field that utilises headlineSmall style. Used for smaller main text
-  static Text createHeadlineSmall(String text, BuildContext context,
-      {TextAlign align: TextAlign.center}) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.headlineSmall,
-      textAlign: align,
-    );
-  }
-
-  /// Creates a text field that utilises headlineMedium style. Used for main text
+  /// Creates a text field that utilises headlineMedium style. Used for header
   static Text createHeadlineMedium(String text, BuildContext context,
-      {TextAlign align: TextAlign.center}) {
+      {TextAlign align = TextAlign.center}) {
     return Text(
       text,
       style: Theme.of(context).textTheme.headlineMedium,
@@ -146,9 +128,29 @@ class Utils {
     );
   }
 
+  /// Creates a text field that utilises headlineSmall style. Used for smaller header
+  static Text createHeadlineSmall(String text, BuildContext context,
+      {TextAlign align = TextAlign.center}) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.headlineSmall,
+      textAlign: align,
+    );
+  }
+
+  /// Creates a text field that utilises titleSmall style. Used for regular text
+  static Text createTitleMedium(String text, BuildContext context,
+      {TextAlign align = TextAlign.center}) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.titleMedium,
+      textAlign: align,
+    );
+  }
+
   /// Creates a text field that utilises titleSmall style. Used for smaller regular text
   static Text createTitleSmall(String text, BuildContext context,
-      {TextAlign align: TextAlign.center}) {
+      {TextAlign align = TextAlign.center}) {
     return Text(
       text,
       style: Theme.of(context).textTheme.titleSmall,
@@ -156,15 +158,6 @@ class Utils {
     );
   }
 
-  /// Creates a text field that utilises titleSmall style. Used for regular text
-  static Text createTitleMedium(String text, BuildContext context,
-      {TextAlign align: TextAlign.center}) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleMedium,
-      textAlign: align,
-    );
-  }
   /// Simple create vertical whitespace
   static Widget createVerticalSpace(double pixels) {
     return SizedBox(

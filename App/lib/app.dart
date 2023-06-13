@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/home_widget.dart';
 import 'package:my_first_flutter/user_class.dart';
-import 'package:my_first_flutter/newUserSetup_page.dart';
+import 'package:my_first_flutter/new_user_setup_page.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/me_widget.dart';
 import 'package:my_first_flutter/snapper_widget.dart';
 
 class App extends StatefulWidget {
-  App({Key? key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   State<App> createState() => _AppState();
@@ -29,21 +28,15 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    print("1");
     return Scaffold(
       body: StreamBuilder(
         stream: Stream.fromFuture(Utils.getUserData()),
         builder: (BuildContext context, user) {
-          print("2");
-          if (user.data == UserData.NewUser) {
-            print("3");
-            return NewUserSetupPage();
+          if (user.data == UserData.newUser) {
+            return const NewUserSetupPage();
           } else {
-            print("4");
-            print(user.hasData);
             if (user.data == null) {
-              print("5");
-              return Scaffold();
+              return const Scaffold();
             }
             // return CupertinoTabScaffold(
             //   tabBar: CupertinoTabBar(

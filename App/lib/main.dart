@@ -73,13 +73,14 @@ class MyApp extends StatelessWidget {
       //     displayColor: Colors.white70,
       //   ),
       // ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }
 
-
 class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,9 +91,9 @@ class MainPage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return VerifyEmailPage();
+              return const VerifyEmailPage();
             } else {
-              return AuthPage();
+              return const AuthPage();
             }
           }),
     );

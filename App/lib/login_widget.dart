@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/forgot_password_page.dart';
@@ -127,13 +126,10 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      print("Email: ${emailController.text.trim()}");
-      print("Password: ${passwordController.text.trim()}");
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
 
       Utils.showSnackBar(e.message);
     } finally {

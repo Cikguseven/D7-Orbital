@@ -7,7 +7,7 @@ import 'package:my_first_flutter/utils.dart';
 class SnapperWidget extends StatefulWidget {
   final UserData user;
 
-  SnapperWidget({Key? key, required this.user})
+  const SnapperWidget({Key? key, required this.user})
       : super(key: key); // TODO: this is infact not required
 
   @override
@@ -37,18 +37,17 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   void startCamera() async {
     cameras = await availableCameras().then(
-      (_cameras) {
-        cameraController = CameraController(_cameras[0], ResolutionPreset.high,
+      (cameras) {
+        cameraController = CameraController(cameras[0], ResolutionPreset.high,
             enableAudio: false)
           ..initialize().then(
             (_) {
               if (mounted) {
-                print("Mounted");
                 setState(() {}); // to refresh widget
               }
             },
           );
-        return _cameras;
+        return cameras;
       },
     );
   }
@@ -87,11 +86,9 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   @override
   Widget build(BuildContext context) {
     if (cameraController == null) {
-      print("Null");
       return const SizedBox();
     } else {
       // camera control and cameras are initialized
-      print("Not null");
       return Scaffold(
           body: Stack(
         children: [
@@ -152,7 +149,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     // );
   }
 
-  Future AnalyseAndLogCallBack() async {
+  Future analyseAndLogCallBack() async {
     try {
       // TODO: Integrate a food recognition model
       if (_image == null) throw ArgumentError("No image selected");
