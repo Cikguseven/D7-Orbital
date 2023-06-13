@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/app.dart';
-import 'csv_to_firebase.dart';
-
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
@@ -20,10 +18,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   void initState() {
     super.initState();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => const CSVUploadWidget()));
     // Won't be null cause called after valid login, which requires a created user
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     if (!isEmailVerified) {
