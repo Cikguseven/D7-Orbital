@@ -7,9 +7,7 @@ import 'package:my_first_flutter/csv_to_firebase.dart';
 
 class MeWidget extends StatefulWidget {
   final UserData user;
-
   const MeWidget({Key? key, required this.user}) : super(key: key);
-
   @override
   State<MeWidget> createState() => _MeWidgetState();
 }

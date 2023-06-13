@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/post_class.dart';
+import 'package:my_first_flutter/star_rating.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
+import 'comments.dart';
 import 'main.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -89,25 +91,10 @@ class _HomeWidgetState extends State<HomeWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      final post = PostData(
-        firstName: widget.user.firstName,
-        lastName: widget.user.lastName,
-        caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
-        location: 'Singapore',
-        postID: '',
-        rating: 5,
-        calories: 1000,
-        protein: 20.2,
-        fats: 1.1,
-        carbs: 99.3,
-        sugar: 13.3,
-        postTime: DateTime.now(),
-        likedBy: [],
-      );
       final docPost = FirebaseFirestore.instance
           .collection('posts')
           .doc(uuid.v4());
-      await docPost.set(post.toJson());
+      await docPost.set(PostData.newPost.toJson());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {
@@ -140,7 +127,7 @@ class PostCard extends StatelessWidget {
         const SizedBox(height: 5),
 
         // Like, comment and share buttons
-        SocialContainerWidget(post: post,user: user),
+        SocialContainerWidget(post: post, user: user),
         const SizedBox(height: 5),
 
         // Name container
@@ -166,6 +153,24 @@ class PostCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
+
+        // Rating container
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: StarRating(
+            rating: post.rating.toDouble(),
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // Nutritional information container
+        // Container(
+        //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        //   child: StarRating(
+        //     rating: post.rating.toDouble(),
+        //   ),
+        // ),
+        // const SizedBox(height: 10),
 
         // Post age container
         Container(
@@ -236,7 +241,13 @@ class _SocialContainerState extends State<SocialContainerWidget>{
           flex: 1,
           child: OutlinedButton.icon(
             onPressed: () {
-              // open comments page navigator psuh
+              // setState(() {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (BuildContext context) =>
+              //               CommentsWidget(post: widget.post, user: widget.user)));
+              // });
             },
             icon: const Icon(Icons.comment_rounded),
             label: Text('2'), // add number of comments

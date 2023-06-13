@@ -1,11 +1,18 @@
 class PostData {
-  // static final postData newPost = postData(
-  //     firstName: 'new',
-  //     lastName: 'user',
-  //     gender: '',
-  //     birthday: '',
-  //     height: 0.0,
-  //     weight: 0.0);
+  static final PostData newPost = PostData(
+    firstName: 'John',
+    lastName: 'Doe',
+    caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
+    location: 'Singapore',
+    postID: '',
+    rating: 5,
+    calories: 1000,
+    protein: 20.2,
+    fats: 1.1,
+    carbs: 99.3,
+    sugar: 13.3,
+    postTime: DateTime.now(),
+    likedBy: [],);
 
   final String firstName;
   final String lastName;
