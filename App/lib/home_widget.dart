@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/star_rating.dart';
+import 'package:my_first_flutter/themes/theme_constants.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
 import 'comments.dart';
 import 'main.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+import 'nutrition_widget.dart';
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
@@ -164,13 +167,20 @@ class PostCard extends StatelessWidget {
         const SizedBox(height: 10),
 
         // Nutritional information container
-        // Container(
-        //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        //   child: StarRating(
-        //     rating: post.rating.toDouble(),
-        //   ),
-        // ),
-        // const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+              builder: (BuildContext context) =>
+              NutritionWidget(post: post, user: user)));
+            },
+            child: Text("View nutritional information", style: TextStyle(color: NUS_BLUE),),
+          ),
+        ),
+        const SizedBox(height: 10),
 
         // Post age container
         Container(
@@ -241,13 +251,13 @@ class _SocialContainerState extends State<SocialContainerWidget>{
           flex: 1,
           child: OutlinedButton.icon(
             onPressed: () {
-              // setState(() {
-              //   Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (BuildContext context) =>
-              //               CommentsWidget(post: widget.post, user: widget.user)));
-              // });
+              setState(() {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            CommentsWidget(post: widget.post, user: widget.user)));
+              });
             },
             icon: const Icon(Icons.comment_rounded),
             label: Text('2'), // add number of comments
