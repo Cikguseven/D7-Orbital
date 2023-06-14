@@ -14,7 +14,7 @@ class _NutritionState extends State<NutritionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('23');
+    return const Text('23');
   }
 
 }

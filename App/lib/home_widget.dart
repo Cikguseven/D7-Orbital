@@ -1,22 +1,22 @@
-import 'dart:io';
+import 'comments_widget.dart';
+import 'main.dart';
+import 'nutrition_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/star_rating.dart';
 import 'package:my_first_flutter/themes/theme_constants.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:uuid/uuid.dart';
-import 'comments.dart';
-import 'main.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
-import 'nutrition_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
+
   const HomeWidget({Key? key, required this.user}) : super(key: key);
+
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
@@ -28,11 +28,12 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    futurePosts = Utils.getPostData();
+    futurePosts = Utils.getPosts();
   }
 
   @override
   Widget build(BuildContext context) {
+    _pullRefresh();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -64,23 +65,21 @@ class _HomeWidgetState extends State<HomeWidget> {
       return ListView.builder(
         itemCount: posts.data!.length,
         itemBuilder: (BuildContext context, int index) {
-          return PostCard(post: posts.data![index], user: widget.user,);
+          return PostCard(
+            post: posts.data![index],
+            user: widget.user,
+          );
         },
         physics: const AlwaysScrollableScrollPhysics(),
       );
     } else {
-      return const Scaffold(
-          body: Center(
-              child: Text("No posts")
-          )
-      );
+      return const Scaffold(body: Center(child: Text("No posts")));
     }
   }
 
   // Pull post data from firebase upon refresh
   Future<void> _pullRefresh() async {
-    List<PostData> freshPosts = await Utils.getPostData();
-    sleep(Duration(milliseconds: 80));
+    List<PostData> freshPosts = await Utils.getPosts();
     setState(() {
       futurePosts = Future.value(freshPosts);
     });
@@ -94,9 +93,8 @@ class _HomeWidgetState extends State<HomeWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      final docPost = FirebaseFirestore.instance
-          .collection('posts')
-          .doc(uuid.v4());
+      final docPost =
+          FirebaseFirestore.instance.collection('posts').doc(uuid.v4());
       await docPost.set(PostData.newPost.toJson());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
@@ -108,11 +106,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
 // Formatted container for posts
 class PostCard extends StatelessWidget {
-  const PostCard({
-    super.key,
-    required this.post,
-    required this.user
-  });
+  PostCard({super.key, required this.post, required this.user});
 
   final PostData post;
   final UserData user;
@@ -127,15 +121,15 @@ class PostCard extends StatelessWidget {
           width: double.infinity,
           fit: BoxFit.fitWidth,
         ),
-        const SizedBox(height: 5),
 
         // Like, comment and share buttons
-        SocialContainerWidget(post: post, user: user),
-        const SizedBox(height: 5),
+        SocialContainerWidget(
+            post: post, user: user),
+        Utils.createVerticalSpace(5),
 
         // Name container
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             '${post.firstName} ${post.lastName}',
             textAlign: TextAlign.left,
@@ -143,11 +137,11 @@ class PostCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        const SizedBox(height: 5),
+        Utils.createVerticalSpace(5),
 
         // Caption container
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             post.caption,
             textAlign: TextAlign.left,
@@ -155,36 +149,39 @@ class PostCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
-        const SizedBox(height: 10),
+        Utils.createVerticalSpace(10),
 
         // Rating container
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: StarRating(
             rating: post.rating.toDouble(),
           ),
         ),
-        const SizedBox(height: 10),
+        Utils.createVerticalSpace(10),
 
         // Nutritional information container
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: InkWell(
             onTap: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(
-              builder: (BuildContext context) =>
-              NutritionWidget(post: post, user: user)));
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          NutritionWidget(post: post, user: user)));
             },
-            child: Text("View nutritional information", style: TextStyle(color: NUS_BLUE),),
+            child: Text(
+              "View nutritional information",
+              style: TextStyle(color: NUS_BLUE),
+            ),
           ),
         ),
-        const SizedBox(height: 10),
+        Utils.createVerticalSpace(10),
 
         // Post age container
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             timeago.format(post.postTime),
             textAlign: TextAlign.left,
@@ -192,7 +189,7 @@ class PostCard extends StatelessWidget {
             style: Theme.of(context).textTheme.labelMedium,
           ),
         ),
-        const SizedBox(height: 30),
+        Utils.createVerticalSpace(30),
       ],
     );
   }
@@ -202,12 +199,16 @@ class PostCard extends StatelessWidget {
 class SocialContainerWidget extends StatefulWidget {
   final PostData post;
   final UserData user;
-  const SocialContainerWidget({Key? key, required this.post, required this.user}) : super(key: key);
+
+  const SocialContainerWidget(
+      {Key? key, required this.post, required this.user})
+      : super(key: key);
+
   @override
   State<SocialContainerWidget> createState() => _SocialContainerState();
 }
 
-class _SocialContainerState extends State<SocialContainerWidget>{
+class _SocialContainerState extends State<SocialContainerWidget> {
   late IconData likeIcon;
 
   void toggleLike() {
@@ -226,16 +227,15 @@ class _SocialContainerState extends State<SocialContainerWidget>{
 
   @override
   Widget build(BuildContext context) {
-    likeIcon = widget.post.likedBy
-        .contains(FirebaseAuth.instance.currentUser?.uid)
-        ? Icons.favorite
-        : Icons.favorite_border;
+    likeIcon =
+        widget.post.likedBy.contains(FirebaseAuth.instance.currentUser?.uid)
+            ? Icons.favorite
+            : Icons.favorite_border;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Like button
         Expanded(
-          flex: 1,
           child: OutlinedButton.icon(
             onPressed: () {
               setState(() {
@@ -248,29 +248,27 @@ class _SocialContainerState extends State<SocialContainerWidget>{
         ),
         // Comments button
         Expanded(
-          flex: 1,
           child: OutlinedButton.icon(
             onPressed: () {
               setState(() {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            CommentsWidget(post: widget.post, user: widget.user)));
+                        builder: (BuildContext context) => CommentsWidget(
+                            post: widget.post, user: widget.user)));
               });
             },
             icon: const Icon(Icons.comment_rounded),
-            label: Text('2'), // add number of comments
+            label: Text(widget.post.commentCount.toString()), // add number of comments
           ),
         ),
         Expanded(
-          flex: 1,
           child: OutlinedButton.icon(
             onPressed: () {
               // open share overlay
             },
             icon: const Icon(Icons.share),
-            label: Text('Share'), // add number of comments
+            label: const Text('Share'), // add number of comments
           ),
         ),
       ],

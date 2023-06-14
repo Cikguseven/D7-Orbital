@@ -94,9 +94,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
                   ),
                   controller: foodDBKeyController,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                Utils.createVerticalSpace(10),
                 const Text(
                   "Preview of CSV file",
                   style: TextStyle(fontWeight: FontWeight.bold),

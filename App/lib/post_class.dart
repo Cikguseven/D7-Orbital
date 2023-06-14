@@ -4,7 +4,8 @@ class PostData {
     lastName: 'Doe',
     caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
     location: 'Singapore',
-    postID: '',
+    postID: 'noID',
+    commentCount: 0,
     rating: 5,
     calories: 1000,
     protein: 20.2,
@@ -18,7 +19,8 @@ class PostData {
   final String lastName;
   final String caption;
   final String location;
-  final String postID;
+  String postID;
+  int commentCount;
   final int rating;
   final int calories;
   final double protein;
@@ -35,6 +37,7 @@ class PostData {
     required this.caption,
     required this.location,
     required this.postID,
+    required this.commentCount,
     required this.rating,
     required this.calories,
     required this.protein,
@@ -50,7 +53,7 @@ class PostData {
     'lastName': lastName,
     'caption': caption,
     'location': location,
-    'postID': postID,
+    'commentCount': commentCount,
     'rating': rating,
     'calories': calories,
     'protein': protein,
@@ -68,6 +71,7 @@ class PostData {
       caption: data['caption'],
       location: data['location'],
       postID: postID,
+      commentCount: data['commentCount'],
       rating: data['rating'],
       calories: data['calories'],
       protein: data['protein'],

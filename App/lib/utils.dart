@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:my_first_flutter/post_class.dart';
 import 'package:my_first_flutter/user_class.dart';
 
+import 'comment_class.dart';
+
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -20,14 +22,16 @@ class Utils {
       ..showSnackBar(snackBar);
   }
 
-  /// Gets the current firebase authenticated user. Only use after signed in!
+  /// Gets the current firebase authenticated user.
+  /// Only use after signed in!
   static User? getAuthUser() {
     final authUser = FirebaseAuth.instance.currentUser;
     assert(authUser != null, "No currently logged in user");
     return authUser;
   }
 
-  /// Gets the current firebase authenticated user's data. Only use after signed in! (ASYNC)
+  /// Gets the current firebase authenticated user's data.
+  /// Only use after signed in! (ASYNC)
   static Future<UserData?> getUserData({String? uid}) async {
     // uid optional, if not give, takes the current logged in user
     final docUser = FirebaseFirestore.instance
@@ -49,17 +53,52 @@ class Utils {
   }
 
   /// Gets all current post data.
-  static Future<List<PostData>> getPostData() async {
+  static Future<List<PostData>> getPosts() async {
     List<PostData> posts = [];
-    FirebaseFirestore.instance.collection('posts').orderBy('postTime', descending: true).snapshots().forEach(
+    FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('postTime', descending: true)
+        .snapshots()
+        .forEach(
       (querySnapshot) {
         for (var post in querySnapshot.docs) {
           final data = post.data();
-          posts.add(PostData.fromJson(data, post.id));
+            posts.add(PostData.fromJson(data, post.id));
         }
       }
     );
     return posts;
+  }
+
+  /// Gets all comment data from specified post.
+  static Future<List<CommentData>> getComments(String postID) async {
+    List<CommentData> comments = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postID)
+        .collection('comments')
+        .orderBy('postTime', descending: true)
+        .snapshots()
+        .forEach(
+            (querySnapshot) {
+          for (var comment in querySnapshot.docs) {
+            final data = comment.data();
+            comments.add(CommentData.fromJson(data));
+          }
+        }
+    );
+    return comments;
+  }
+
+  /// Gets the number of comments of specified post.
+  static Future<int> getCommentCount(String postID) async {
+    AggregateQuerySnapshot query = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postID)
+        .collection('comments')
+        .count()
+        .get();
+    return query.count;
   }
 
   /// Converts Date time to string to save to database. DD/MM/YYYY
@@ -70,7 +109,8 @@ class Utils {
     return "$day/$month/${dt.year}";
   }
 
-  /// Converts the stored string taken from the database back to DT. Do not use out of context.
+  /// Converts the stored string taken from the database back to DT.
+  /// Do not use out of context.
   static DateTime stringToDateTime(String dt) {
     int day = int.parse(dt.substring(0, 2));
     int month = int.parse(dt.substring(3, 5));
@@ -97,7 +137,7 @@ class Utils {
   // ======= UI Stuff =======
 
   /// To create a Material colour for Themedata from Hex value.
-  /// Taken from https://medium.com/@nickysong/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
+  /// From https://medium.com/@nickysong/creating-a-custom-color-swatch-in-flutter-554bcdcb27f3
   static MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];
     Map<int, Color> swatch = {};
@@ -118,7 +158,8 @@ class Utils {
     return MaterialColor(color.value, swatch);
   }
 
-  /// Creates a text field that utilises headlineMedium style. Used for header
+  /// Creates a text field that utilises headlineMedium style.
+  /// Used for header.
   static Text createHeadlineMedium(String text, BuildContext context,
       {TextAlign align = TextAlign.center}) {
     return Text(
@@ -128,7 +169,8 @@ class Utils {
     );
   }
 
-  /// Creates a text field that utilises headlineSmall style. Used for smaller header
+  /// Creates a text field that utilises headlineSmall style.
+  /// Used for smaller header.
   static Text createHeadlineSmall(String text, BuildContext context,
       {TextAlign align = TextAlign.center}) {
     return Text(
@@ -138,7 +180,8 @@ class Utils {
     );
   }
 
-  /// Creates a text field that utilises titleSmall style. Used for regular text
+  /// Creates a text field that utilises titleSmall style.
+  /// Used for regular text.
   static Text createTitleMedium(String text, BuildContext context,
       {TextAlign align = TextAlign.center}) {
     return Text(
@@ -148,7 +191,8 @@ class Utils {
     );
   }
 
-  /// Creates a text field that utilises titleSmall style. Used for smaller regular text
+  /// Creates a text field that utilises titleSmall style.
+  /// Used for smaller regular text.
   static Text createTitleSmall(String text, BuildContext context,
       {TextAlign align = TextAlign.center}) {
     return Text(
@@ -158,14 +202,14 @@ class Utils {
     );
   }
 
-  /// Simple create vertical whitespace
+  /// Simple create vertical whitespace.
   static Widget createVerticalSpace(double pixels) {
     return SizedBox(
       height: pixels,
     );
   }
 
-  /// Simple create horizontal whitespace
+  /// Simple create horizontal whitespace.
   static Widget createHorizontalSpace(double pixels) {
     return SizedBox(
       width: pixels,

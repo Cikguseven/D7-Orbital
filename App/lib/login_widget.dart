@@ -98,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(12),
                 child: Text("---------- or ----------",
                     style: TextStyle(color: Colors.grey)),
               ),

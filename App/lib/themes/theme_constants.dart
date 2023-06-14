@@ -14,10 +14,10 @@ ThemeData lightTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0)),
+          const EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
       shape: MaterialStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100.0),
+          borderRadius: BorderRadius.circular(100),
         ),
       ),
       backgroundColor: MaterialStateProperty.all<Color>(NUS_BLUE),
@@ -47,7 +47,7 @@ ThemeData lightTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide.none,
-      borderRadius: BorderRadius.circular(8.0),
+      borderRadius: BorderRadius.circular(8),
     ),
     filled: true,
     fillColor: Colors.white,
