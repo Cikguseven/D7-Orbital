@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/app.dart';
-
-import 'home_widget.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
@@ -23,7 +20,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     super.initState();
     // Won't be null cause called after valid login, which requires a created user
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-    print("IS EMAIL VERIFIED? $isEmailVerified");
     if (!isEmailVerified) {
       sendEmailVerification();
 
@@ -45,7 +41,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         .reload(); // reload to reflect changes in verification status
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      print("IS EMAIL VERIFIED? $isEmailVerified");
     });
 
     if (isEmailVerified) timer?.cancel();
@@ -82,7 +77,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? App()
+        ? const App()
         : Scaffold(
       body: Column(
         children: [
@@ -125,7 +120,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         .width - 16 * 2),),
               ),
               onPressed: sendEmailVerification,
-              icon: Icon(Icons.email_outlined, size: 24),
+              icon: const Icon(Icons.email_outlined, size: 24),
               label:
               Text("Resend email\t${cooldown > 0 ? cooldown : ""}"),
             ),

@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first_flutter/CheckFoodPage.dart';
 import 'package:my_first_flutter/FoodDataClass.dart';
@@ -10,9 +11,9 @@ import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class SnapperWidget extends StatefulWidget {
-  UserData user;
+  final UserData user;
 
-  SnapperWidget({Key? key, required this.user})
+  const SnapperWidget({Key? key, required this.user})
       : super(key: key); // TODO: this is infact not required
 
   @override
@@ -27,13 +28,10 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   // CameraController? cameraController;
 
   void startCamera() async {
+
     // TODO: Note. Camera library causes alog of dequeue buffer error messages
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
-    if (cameras == null)
-      print("NULL CAMERA");
-    else
-      print("HOOO");
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
@@ -42,7 +40,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       // Define the resolution to use.
       ResolutionPreset.medium,
     );
-
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
@@ -79,7 +76,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
               // Might make the picture unusually elongated
               children: [
                 CameraPreview(_controller),
-                QRScannerOverlay(overlayColour: Colors.grey),
+                const QRScannerOverlay(overlayColour: Colors.grey),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -93,19 +90,19 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                           width: MediaQuery.of(context).size.width / 2,
                           child: ElevatedButton.icon(
                             onPressed: AnalyseAndLogCallBack,
-                            icon: Icon(Icons.edit, size: 24),
+                            icon: const Icon(Icons.edit, size: 24),
                             label: const Text(
                               "Log it",
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20.0,
                         ),
                         IconButton(
                           color: Theme.of(context).primaryColor,
                           onPressed: GetImageGalleryCallBack,
-                          icon: Icon(Icons.insert_drive_file),
+                          icon: const Icon(Icons.insert_drive_file),
                         ),
                       ],
                     ),
@@ -134,8 +131,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   }
 
   Future AnalyseAndLogCallBack() async {
-    // Take the Picture in a try / catch block. If anything goes wrong,
-    // catch the error.
     try {
       // TODO: Integrate a food recognition model
       // if (_image == null) throw ArgumentError("No image selected");

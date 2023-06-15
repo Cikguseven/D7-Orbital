@@ -38,6 +38,7 @@ dependencies:
   # FIREBASE DATABASE
   cloud_firestore: ^4.6.0
   firebase_auth: ^4.5.0
+  firebase_core: ^2.13.1
 
   # Email Validator
   email_validator: ^2.0.1
@@ -58,11 +59,19 @@ dependencies:
   # For dateFormat
   intl: ^0.17.0
 
+
   # For a better dropdown button:
   dropdown_button2: ^2.1.3
 
   # For an easy to use ratings bar:
   flutter_rating_bar: ^4.0.1
+
+  # For generating uuid
+  uuid: ^3.0.6
+
+  # For making post age readable (x minutes ago)
+  timeago: ^3.3.0
+
 
 dev_dependencies:
   flutter_test:

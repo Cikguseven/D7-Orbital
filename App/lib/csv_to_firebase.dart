@@ -15,7 +15,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class CSVUploadWidget extends StatefulWidget {
-  CSVUploadWidget({Key? key}) : super(key: key);
+  const CSVUploadWidget({Key? key}) : super(key: key);
 
   @override
   State<CSVUploadWidget> createState() => _CSVUploadWidgetState();
@@ -61,7 +61,6 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
 
     setState(() {
       for (List<String> line in _csvData) {
-        print("Line: $line");
       }
       // because i return early if selectedFiles/bytes is null, wont be null
       selectedFileIdx = 0;
@@ -95,9 +94,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
                   ),
                   controller: foodDBKeyController,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                Utils.createVerticalSpace(10),
                 const Text(
                   "Preview of CSV file",
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -187,7 +184,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
                     },
                     icon: const Icon(Icons.insert_drive_file)),
                 ElevatedButton.icon(
-                    onPressed: UploadToFirebaseCallback,
+                    onPressed: uploadToFirebaseCallback,
                     icon: const Icon(Icons.upload_file_rounded, size: 24),
                     label: const Text(
                       "Upload to database",
@@ -200,7 +197,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
     );
   }
 
-  Future UploadToFirebaseCallback() async {
+  Future uploadToFirebaseCallback() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -211,20 +208,20 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
 
       if (selectedFiles == null) throw ArgumentError("No file selected");
 
-      if (foodDBCollectionPrefix.isEmpty)
+      if (foodDBCollectionPrefix.isEmpty) {
         throw ArgumentError("Please specify database prefix");
+      }
 
       final suffix = selectedFileName
           .toLowerCase()
           .replaceAll(" ", "_")
           .substring(0, selectedFileName.length - 4); // remove csv extension
-      print("suffix: $suffix");
       final db = FirebaseFirestore.instance
-          .collection(foodDBCollectionPrefix + "_" + suffix);
-      print("collection name: ${foodDBCollectionPrefix + "_" + suffix}");
+          .collection("${foodDBCollectionPrefix}_$suffix");
       final snapshot = await db.get();
-      if (snapshot.size != 0)
+      if (snapshot.size != 0) {
         throw ArgumentError("Database of that name already exists!");
+      }
 
       final headers = _csvData[0];
       final numFields = headers.length;
@@ -248,7 +245,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
       Utils.showSnackBar(e.message);
     } on Exception catch (e) {
       //  TODO: Dont catch all
-      Utils.showSnackBar(e.toString() + "\n Cancelled upload");
+      Utils.showSnackBar("$e\n Cancelled upload");
       // final collection = FirebaseFirestore.instance
       //     .collection(foodDBKeyController.text.trim());
       // final snapshots = await collection.get();

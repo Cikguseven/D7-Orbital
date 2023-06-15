@@ -1,23 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/home_widget.dart';
 import 'package:my_first_flutter/user_class.dart';
-import 'package:my_first_flutter/newUserSetup_page.dart';
+import 'package:my_first_flutter/new_user_setup_page.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/MePage.dart';
 import 'package:my_first_flutter/snapper_widget.dart';
 
 class App extends StatefulWidget {
-  App({Key? key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  static final List<String> idToMap = ["Home Page", "Snap", "Me"];
+  static final List<String> idToMap = ["Home", "Snap", "Me"];
   Map<String, dynamic> screenNameToWidgetMap = {
-    "Home Page": (UserData userData) => HomeWidget(user: userData),
+    "Home": (UserData userData) => HomeWidget(user: userData),
     "Snap": (UserData userData) => SnapperWidget(user: userData),
     // TODO: Fix this, i dont think the scanner widget needs this data
     // but i have to put cause of the way i change screens
@@ -30,12 +29,16 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<UserData?>(
+      body: StreamBuilder(
         stream: Stream.fromFuture(Utils.getUserData()),
         builder: (BuildContext context, user) {
-          if (user.data == UserData.NewUser) {
-            return NewUserSetupPage();
+          if (user.data == UserData.newUser) {
+            return const NewUserSetupPage();
           } else {
+            if (user.data == null) {
+              return const Scaffold();
+            }
+
             return Scaffold(
               // appBar: AppBar(
               //   title: Text(idToMap[selectedScreenIdx]),
@@ -47,7 +50,7 @@ class _AppState extends State<App> {
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: "Home Page",
+                    label: "Home",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.restaurant_menu_rounded),

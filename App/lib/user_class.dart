@@ -1,11 +1,12 @@
 class UserData {
-  static final UserData NewUser = UserData(
+  static final UserData newUser = UserData(
       firstName: 'new',
       lastName: 'user',
       gender: '',
       birthday: '',
       height: 0.0,
-      weight: 0.0);
+      weight: 0.0,
+  );
 
   final String firstName;
   final String lastName;
@@ -24,21 +25,22 @@ class UserData {
   });
 
   Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'lastName': lastName,
-        'gender': gender,
-        'birthday': birthday,
-        'height': height,
-        'weight': weight,
-      };
+    'firstName': firstName,
+    'lastName': lastName,
+    'gender': gender,
+    'birthday': birthday,
+    'height': height,
+    'weight': weight,
+  };
 
   static UserData? fromJson(Map<String, dynamic> data) {
     return UserData(
-        firstName: data['firstName'],
-        lastName: data['lastName'],
-        gender: data['gender'],
-        birthday: data['birthday'],
-        height: data['height'],
-        weight: data['weight']);
+      firstName: data['firstName'],
+      lastName: data['lastName'],
+      gender: data['gender'],
+      birthday: data['birthday'],
+      height: data['height'],
+      weight: data['weight'],
+    );
   }
 }

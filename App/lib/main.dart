@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/auth_widget.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -8,7 +9,9 @@ import 'package:my_first_flutter/themes/theme_constants.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // debugPaintSizeEnabled = true;
   runApp(const MyApp());
 }
@@ -73,13 +76,14 @@ class MyApp extends StatelessWidget {
       //     displayColor: Colors.white70,
       //   ),
       // ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }
 
-
 class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,9 +94,9 @@ class MainPage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return VerifyEmailPage();
+              return const VerifyEmailPage();
             } else {
-              return AuthPage();
+              return const AuthPage();
             }
           }),
     );

@@ -32,7 +32,7 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text("Settings"),
         centerTitle: true,
       ),
       body: CustomScrollView(
@@ -44,63 +44,54 @@ class SettingsPage extends StatelessWidget {
               // readable. In the main container I have multiple Containers to contain
               // a section each, and within each container also arranged in Column
               children: [
-                Container(
-                  // Account settings
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(16),
-                        child: Utils.createTitleMedium(
-                            "Account Settings", context),
-                      ),
-                      settingsTile("Configure Profile", placeholderPage),
-                      // settingsTile("Change Email/Password", placeholderPage),
-                      // settingsTile("Privacy Settings", placeholderPage),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      child: Utils.createTitleMedium(
+                          "Account Settings", context),
+                    ),
+                    settingsTile("Configure Profile", placeholderPage),
+                    settingsTile("Change Email/Password", placeholderPage),
+                    settingsTile("Privacy Settings", placeholderPage),
+                  ],
                 ),
                 Utils.createVerticalSpace(10),
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(16),
-                        child: Utils.createTitleMedium("Preferences", context),
-                      ),
-                      settingsTile("Notification", placeholderPage),
-                      settingsTile("Dark Mode", placeholderPage),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      child: Utils.createTitleMedium("Preferences", context),
+                    ),
+                    settingsTile("Notification", placeholderPage),
+                    settingsTile("Dark Mode", placeholderPage),
+                  ],
                 ),
                 Utils.createVerticalSpace(10),
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(16),
-                        child: Utils.createTitleMedium("Help", context),
-                      ),
-                      settingsTile("FAQ", placeholderPage),
-                      settingsTile("Contact Us", placeholderPage),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      child: Utils.createTitleMedium("Help", context),
+                    ),
+                    settingsTile("FAQ", placeholderPage),
+                    settingsTile("Contact Us", placeholderPage),
+                  ],
                 ),
                 Utils.createVerticalSpace(10),
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(16),
-                        child: Utils.createTitleMedium("About", context),
-                      ),
-                      settingsTile("Private Policy", placeholderPage),
-                      settingsTile("Terms of Use", placeholderPage),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.all(16),
+                      child: Utils.createTitleMedium("About", context),
+                    ),
+                    settingsTile("Private Policy", placeholderPage),
+                    settingsTile("Terms of Use", placeholderPage),
+                  ],
                 ),
                 Utils.createVerticalSpace(52),
                 ElevatedButton.icon(
