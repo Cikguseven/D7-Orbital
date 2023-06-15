@@ -33,16 +33,15 @@ class Utils {
     final docUser = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid ?? getAuthUser()!.uid);
+
     return docUser.get().then(
       (DocumentSnapshot doc) {
         if (doc.exists) {
           // user has been created before, proceed to read
-          print("exists");
           final data = doc.data() as Map<String, dynamic>;
           return UserData.fromJson(data);
         } else {
           // new user detected, create user and proceed with setup
-          print("no exists");
           return UserData.NewUser;
         }
       },

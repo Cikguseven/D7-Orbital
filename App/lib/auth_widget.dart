@@ -12,6 +12,7 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   bool isLogin = true;
+
   @override
   Widget build(BuildContext context) {
     return isLogin

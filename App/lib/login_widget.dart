@@ -7,7 +7,6 @@ import 'package:my_first_flutter/utils.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickSignUp;
-
   const LoginWidget({Key? key, required this.onClickSignUp}) : super(key: key);
 
   @override

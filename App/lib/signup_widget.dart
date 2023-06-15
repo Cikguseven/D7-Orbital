@@ -152,8 +152,6 @@ class _SignupWidgetState extends State<SignupWidget> {
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
-      print("Email: ${emailController.text.trim()}");
-      print("Password: ${passwordController.text.trim()}");
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());

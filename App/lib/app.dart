@@ -4,7 +4,7 @@ import 'package:my_first_flutter/home_widget.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/newUserSetup_page.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/me_widget.dart';
+import 'package:my_first_flutter/MePage.dart';
 import 'package:my_first_flutter/snapper_widget.dart';
 
 class App extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AppState extends State<App> {
     "Snap": (UserData userData) => SnapperWidget(user: userData),
     // TODO: Fix this, i dont think the scanner widget needs this data
     // but i have to put cause of the way i change screens
-    "Me": (UserData userData) => MeWidget(user: userData),
+    "Me": (UserData userData) => MePage(user: userData),
   };
 
   int selectedScreenIdx = 0;
@@ -29,54 +29,13 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    print("1");
     return Scaffold(
       body: StreamBuilder<UserData?>(
         stream: Stream.fromFuture(Utils.getUserData()),
         builder: (BuildContext context, user) {
-          print("2");
           if (user.data == UserData.NewUser) {
-            print("3");
             return NewUserSetupPage();
           } else {
-            print("4");
-            print(user.hasData);
-            if (user.data == null) {
-              print("5");
-              return Scaffold();
-            }
-            // return CupertinoTabScaffold(
-            //   tabBar: CupertinoTabBar(
-            //     items: const [
-            //       BottomNavigationBarItem(
-            //         icon: Icon(Icons.home),
-            //         label: "Home Page",
-            //       ),
-            //       BottomNavigationBarItem(
-            //         icon: Icon(Icons.restaurant_menu_rounded),
-            //         label: "Snap",
-            //       ),
-            //       BottomNavigationBarItem(
-            //         icon: Icon(Icons.man_4_rounded),
-            //         label: "Me",
-            //       )
-            //     ],
-            //   ),
-            //   tabBuilder: (BuildContext context, int index) {
-            //     return CupertinoTabView(
-            //       builder: (BuildContext context) {
-            //         if (index == 0) { // TODO: obvious fix this
-            //           return HomeWidget(user: user.data!);
-            //         } else if (index == 1) {
-            //           return SnapperWidget(user: user.data!);
-            //         } else if (index == 2) {
-            //           return MeWidget(user: user.data!);
-            //         }
-            //         return Scaffold();
-            //       },
-            //     );
-            //   },
-            // );
             return Scaffold(
               // appBar: AppBar(
               //   title: Text(idToMap[selectedScreenIdx]),

@@ -22,7 +22,7 @@ ThemeData lightTheme = ThemeData(
       ),
       backgroundColor: MaterialStateProperty.all<Color>(NUS_BLUE),
       textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
-          foreground: Paint()..color = Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+          foreground: Paint()..color = Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
     ),
   ),
   textTheme: const TextTheme(
