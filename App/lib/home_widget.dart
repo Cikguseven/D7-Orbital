@@ -27,13 +27,13 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void initState() {
+    _pullRefresh();
     super.initState();
     futurePosts = Utils.getPosts();
   }
 
   @override
   Widget build(BuildContext context) {
-    _pullRefresh();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
