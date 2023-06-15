@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/login_widget.dart';
 import 'package:my_first_flutter/signup_widget.dart';
 

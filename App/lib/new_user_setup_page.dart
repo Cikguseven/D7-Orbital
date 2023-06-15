@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_class.dart';
@@ -86,7 +84,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   @override
   Widget build(BuildContext context) {
     return done
-        ? App()
+        ? const App()
         : // TODO: fix this, abit of circular App call this, this call App but i think is a quick fix for now
         CustomScrollView(
             slivers: [
@@ -226,9 +224,9 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                                 );
 
                                 // If click on cancel
-                                if (newDate == null)
+                                if (newDate == null) {
                                   return;
-                                else {
+                                } else {
                                   final newDateStr =
                                       Utils.dateTimeToString(newDate);
                                   birthdayController.value = TextEditingValue(
@@ -269,7 +267,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                             LengthLimitingTextInputFormatter(4)
                           ],
                           controller: weightController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Weight in KG",
                           ),
                         ),
@@ -334,7 +332,6 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
         },
       );
     } on FirebaseAuthException catch (e) {
-      print(e);
       Utils.showSnackBar(e.message);
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);

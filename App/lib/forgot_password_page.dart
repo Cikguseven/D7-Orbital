@@ -1,5 +1,4 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/main.dart';
@@ -64,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   MediaQuery.of(context).size.width - 15 * 2)),
             ),
               onPressed: sendResetEmailCallback,
-              icon: Icon(Icons.email_outlined, size: 24),
+              icon: const Icon(Icons.email_outlined, size: 24),
               label: const Text(
                 "Send email",
               )
@@ -83,17 +82,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      print("Email: ${emailController.text.trim()}");
       await FirebaseAuth.instance.sendPasswordResetEmail(
           email: emailController.text.trim()
       );
       Utils.showSnackBar("Password reset email sent!");
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      print(e);
 
       Utils.showSnackBar(e.message);
       navigatorKey.currentState!.pop();

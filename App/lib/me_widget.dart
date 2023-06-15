@@ -3,14 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
-
 import 'package:my_first_flutter/csv_to_firebase.dart';
 
 class MeWidget extends StatefulWidget {
-  UserData user;
-
-  MeWidget({Key? key, required this.user}) : super(key: key);
-
+  final UserData user;
+  const MeWidget({Key? key, required this.user}) : super(key: key);
   @override
   State<MeWidget> createState() => _MeWidgetState();
 }
@@ -20,8 +17,6 @@ class _MeWidgetState extends State<MeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now().year);
-    print(Utils.stringToDateTime(widget.user.birthday));
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,13 +28,13 @@ class _MeWidgetState extends State<MeWidget> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => CSVUploadWidget()));
+                        builder: (BuildContext context) => const CSVUploadWidget()));
               },
             );
           },
           icon: const Icon(Icons.person),
         ),
-        title: Text("Me"),
+        title: const Text("Me"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -98,30 +93,17 @@ class _MeWidgetState extends State<MeWidget> {
           children: [
             const Text(
                 "This page will contain statistics of the User. Testing CRUD..."),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Hey ${widget.user.firstName}!"),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-                "Age: You are ${DateTime.now().year - Utils.stringToDateTime(widget.user.birthday).year} this year"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
+            Text("Age: You are ${DateTime.now().year - Utils.stringToDateTime(widget.user.birthday).year} this year"),
+            const SizedBox(height: 10,),
             Text("Height: ${widget.user.height} CM"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Weight: ${widget.user.weight} KG"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             Text("Gender: ${widget.user.gender}"),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
             ElevatedButton.icon(
               onPressed: () => FirebaseAuth.instance.signOut(),
               icon: const Icon(Icons.arrow_back, size: 32),
