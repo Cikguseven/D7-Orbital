@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAV7a-LtNCjD2o1HVwxMK5k5Z7iCXp3Gho',
-    appId: '1:937026364196:web:c16e6986b7d8b9715609b1',
-    messagingSenderId: '937026364196',
-    projectId: 'temp-d7orbiral',
-    authDomain: 'temp-d7orbiral.firebaseapp.com',
-    storageBucket: 'temp-d7orbiral.appspot.com',
-    measurementId: 'G-T29QDXW7ZF',
+    apiKey: 'AIzaSyBGJP6N2VUSrEESqlKTNZCR69lxia3OjRY',
+    appId: '1:367985387093:web:9483ca89c7293c90ac96dc',
+    messagingSenderId: '367985387093',
+    projectId: 'temp-d7orbital',
+    authDomain: 'temp-d7orbital.firebaseapp.com',
+    storageBucket: 'temp-d7orbital.appspot.com',
+    measurementId: 'G-YGZYTM7GFQ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBJs2uKSodmw6-lTMHdIhDxtFOXNoa6VH4',
-    appId: '1:937026364196:android:840fc85ddb3ed0075609b1',
-    messagingSenderId: '937026364196',
-    projectId: 'temp-d7orbiral',
-    storageBucket: 'temp-d7orbiral.appspot.com',
+    apiKey: 'AIzaSyB-OHIp9z-w-nhftT-pCWzD61KUDBHHK1Y',
+    appId: '1:367985387093:android:dc08d1649810630bac96dc',
+    messagingSenderId: '367985387093',
+    projectId: 'temp-d7orbital',
+    storageBucket: 'temp-d7orbital.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBConvdzDxuOTQPDm_3-xisr0mV8uASoaw',
-    appId: '1:937026364196:ios:ab322aef8dae16445609b1',
-    messagingSenderId: '937026364196',
-    projectId: 'temp-d7orbiral',
-    storageBucket: 'temp-d7orbiral.appspot.com',
-    iosClientId: '937026364196-9jnft545hhn9d5jhbnphb77lq43n87sg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCEpUGErRqgvZYzHRbeJlksuRvBslkSR0Q',
+    appId: '1:367985387093:ios:69c831b94aa13333ac96dc',
+    messagingSenderId: '367985387093',
+    projectId: 'temp-d7orbital',
+    storageBucket: 'temp-d7orbital.appspot.com',
+    iosClientId: '367985387093-q8965kci5v5hscc6vgu2a0tel5h6kpng.apps.googleusercontent.com',
     iosBundleId: 'com.example.myFirstFlutter',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBConvdzDxuOTQPDm_3-xisr0mV8uASoaw',
-    appId: '1:937026364196:ios:ab322aef8dae16445609b1',
-    messagingSenderId: '937026364196',
-    projectId: 'temp-d7orbiral',
-    storageBucket: 'temp-d7orbiral.appspot.com',
-    iosClientId: '937026364196-9jnft545hhn9d5jhbnphb77lq43n87sg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCEpUGErRqgvZYzHRbeJlksuRvBslkSR0Q',
+    appId: '1:367985387093:ios:69c831b94aa13333ac96dc',
+    messagingSenderId: '367985387093',
+    projectId: 'temp-d7orbital',
+    storageBucket: 'temp-d7orbital.appspot.com',
+    iosClientId: '367985387093-q8965kci5v5hscc6vgu2a0tel5h6kpng.apps.googleusercontent.com',
     iosBundleId: 'com.example.myFirstFlutter',
   );
 }
