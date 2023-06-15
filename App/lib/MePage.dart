@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_class.dart';
-import 'package:my_first_flutter/utils.dart';
 
 import 'package:my_first_flutter/csv_to_firebase.dart';
 
@@ -38,13 +36,13 @@ class _MePageState extends State<MePage> {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              CSVUploadWidget()));
+                              const CSVUploadWidget()));
                 },
               );
             },
             icon: const Icon(Icons.person),
           ),
-          title: Text("Me"),
+          title: const Text("Me"),
           centerTitle: true,
           actions: [
             IconButton(

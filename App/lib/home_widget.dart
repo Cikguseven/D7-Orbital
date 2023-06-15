@@ -80,7 +80,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
 // Formatted container for posts
 class PostCard extends StatelessWidget {
-  PostCard({super.key, required this.post, required this.user});
+  const PostCard({super.key, required this.post, required this.user});
 
   final PostData post;
   final UserData user;
