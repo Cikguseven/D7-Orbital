@@ -165,7 +165,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData),
+        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData, user: widget.user,),
       ),
     );
   }
@@ -184,7 +184,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) =>
-            CheckFoodPage(image: img, fd: FoodData.NONE),
+            CheckFoodPage(image: img, fd: FoodData.NONE, user: widget.user),
       ),
     );
   }

@@ -136,13 +136,14 @@ class _CommentsState extends State<CommentsWidget> {
         CommentData currentComment = CommentData(
             firstName: widget.user.firstName,
             lastName: widget.user.lastName,
-            comment: commentController.text.trim(),
+            comment: finalComment,
             postTime: DateTime.now());
         await docComment.set(currentComment.toJson());
         await docPost.update({'commentCount': widget.post.commentCount++});
       } on FirebaseAuthException catch (e) {
         Utils.showSnackBar(e.message);
       } finally {
+        commentController.clear();
         _pullRefresh();
         Navigator.pop(context);
       }
@@ -160,91 +161,83 @@ class TopCommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: CircleAvatar(
-                    radius: 20,
-                    // Change to user's profile photo eventually
-                    backgroundImage: AssetImage(
-                      "images/Cat.jpeg",
-                    )),
-              ),
-              Utils.createHorizontalSpace(15),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+            child: CircleAvatar(
+                radius: 20,
+                // Change to user's profile photo eventually
+                backgroundImage: AssetImage(
+                  "images/Cat.jpeg",
+                )),
+          ),
+          Utils.createHorizontalSpace(15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Name container
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Name container
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${post.firstName} ${post.lastName}',
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        Utils.createHorizontalSpace(8),
-
-                        // Post age container
-                        Text(
-                          timeago.format(post.postTime),
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ],
-                    ),
-                    Utils.createVerticalSpace(5),
-
                     Text(
-                      post.caption,
+                      '${post.firstName} ${post.lastName}',
                       textAlign: TextAlign.left,
-                      overflow: TextOverflow.visible,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    Utils.createVerticalSpace(10),
+                    Utils.createHorizontalSpace(8),
 
-                    // Rating container
-                    StarRating(
-                      rating: post.rating.toDouble(),
+                    // Post age container
+                    Text(
+                      timeago.format(post.postTime),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
-
-                    // Nutritional information container
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: InkWell(
-                    //     onTap: () {
-                    //       Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: (BuildContext context) =>
-                    //                   NutritionWidget(post: post, user: user)));
-                    //     },
-                    //     child: Text(
-                    //       "View nutritional information",
-                    //       style: TextStyle(color: NUS_BLUE),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
-              ),
-            ],
+                Utils.createVerticalSpace(5),
+
+                Text(
+                  post.caption,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.visible,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                Utils.createVerticalSpace(10),
+
+                // Rating container
+                StarRating(
+                  rating: post.rating.toDouble(),
+                ),
+
+                // Nutritional information container
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                //   child: InkWell(
+                //     onTap: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (BuildContext context) =>
+                //                   NutritionWidget(post: post, user: user)));
+                //     },
+                //     child: Text(
+                //       "View nutritional information",
+                //       style: TextStyle(color: NUS_BLUE),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
-        ),
-        Utils.createVerticalSpace(10),
-        const Divider(
-          height: 20,
-        color: Colors.blue,),
-      ],
+        ],
+      ),
     );
   }
 }

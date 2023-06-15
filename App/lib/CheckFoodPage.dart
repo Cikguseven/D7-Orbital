@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/ManualFoodSelectPage.dart';
 import 'package:my_first_flutter/ShareFoodPage.dart';
+import 'package:my_first_flutter/user_class.dart';
 import 'FoodDataClass.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -43,7 +44,8 @@ class CheckFoodPage extends StatefulWidget {
   XFile? image;
   FoodData
       fd; // Food data that was taken from firebase, used to fill up the page
-  CheckFoodPage({Key? key, required this.image, required this.fd})
+  final UserData user;
+  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user})
       : super(key: key);
 
   @override
@@ -146,7 +148,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(image: widget.image),
+                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user),
                       ),
                     );
                   },

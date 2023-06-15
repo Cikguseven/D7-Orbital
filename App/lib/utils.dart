@@ -64,7 +64,7 @@ class Utils {
       (querySnapshot) {
         for (var post in querySnapshot.docs) {
           final data = post.data();
-            posts.add(PostData.fromJson(data, post.id));
+            posts.add(PostData.fromJson(data));
         }
       }
     );
@@ -75,7 +75,7 @@ class Utils {
   static Future<List<CommentData>> getComments(String postID) async {
     List<CommentData> comments = [];
     FirebaseFirestore.instance
-        .collection('posts')
+        .collection('comments')
         .doc(postID)
         .collection('comments')
         .orderBy('postTime', descending: true)
@@ -90,17 +90,17 @@ class Utils {
     );
     return comments;
   }
-
-  /// Gets the number of comments of specified post.
-  static Future<int> getCommentCount(String postID) async {
-    AggregateQuerySnapshot query = await FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postID)
-        .collection('comments')
-        .count()
-        .get();
-    return query.count;
-  }
+  //
+  // /// Gets the number of comments of specified post.
+  // static Future<int> getCommentCount(String postID) async {
+  //   AggregateQuerySnapshot query = await FirebaseFirestore.instance
+  //       .collection('posts')
+  //       .doc(postID)
+  //       .collection('comments')
+  //       .count()
+  //       .get();
+  //   return query.count;
+  // }
 
   /// Converts Date time to string to save to database. DD/MM/YYYY
   static String dateTimeToString(DateTime dt) {
