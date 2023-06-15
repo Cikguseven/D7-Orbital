@@ -59,7 +59,6 @@ dependencies:
   # For dateFormat
   intl: ^0.17.0
 
-
   # For a better dropdown button:
   dropdown_button2: ^2.1.3
 

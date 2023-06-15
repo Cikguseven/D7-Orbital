@@ -41,14 +41,14 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Snap and Log"),
+        title: const Text("Snap and Log"),
         centerTitle: true,
       ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.fromLTRB(0, 0, 12.0, 0),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(0, 0, 12.0, 0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white,
@@ -57,7 +57,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 4,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
             ),
@@ -69,7 +69,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               // removes the ugly underline by making it nothing
               isExpanded: true,
               items: canteens
-                  .map((e) => DropdownMenuItem(child: Text(e), value: e))
+                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
               value: selectedCanteen,
               onChanged: (String? canteen) {
@@ -79,12 +79,12 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: Text("Select canteen"),
+              hint: const Text("Select canteen"),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.fromLTRB(0, 0, 12.0, 0),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(0, 0, 12.0, 0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white,
@@ -94,7 +94,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ]
                   : null,
@@ -107,7 +107,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               // removes the ugly underline by making it nothing
               isExpanded: true,
               items: canteenToStallMap[selectedCanteen]
-                  ?.map((e) => DropdownMenuItem(child: Text(e), value: e))
+                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
               value: selectedStall,
               onChanged: (String? stall) {
@@ -117,12 +117,12 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: Text("Select stall"),
+              hint: const Text("Select stall"),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.fromLTRB(0, 0, 12.0, 0),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(0, 0, 12.0, 0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white,
@@ -133,7 +133,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ],
             ),
@@ -145,7 +145,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               // removes the ugly underline by making it nothing
               isExpanded: true,
               items: stallToFoodMap[selectedStall]
-                  ?.map((e) => DropdownMenuItem(child: Text(e), value: e))
+                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
               value: selectedFood,
               onChanged: (String? food) {
@@ -155,7 +155,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: Text("Select food"),
+              hint: const Text("Select food"),
             ),
           ),
           // Utils.createVerticalSpace(MediaQuery.of(context).size.height * 2/5), // TODO: Magic number
@@ -180,10 +180,10 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 16 * 2)),
                     backgroundColor: selectedFood == null
-                        ? MaterialStatePropertyAll(Colors.grey)
+                        ? const MaterialStatePropertyAll(Colors.grey)
                         : null,
                   ),
-                  child: Text("Confirm"),
+                  child: const Text("Confirm"),
                 ),
                 Utils.createVerticalSpace(52),
               ],

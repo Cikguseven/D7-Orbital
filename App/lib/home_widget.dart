@@ -1,5 +1,4 @@
 import 'comments_widget.dart';
-import 'main.dart';
 import 'nutrition_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,13 +48,6 @@ class _HomeWidgetState extends State<HomeWidget> {
           );
         },
       ),
-      bottomNavigationBar: ElevatedButton.icon(
-        onPressed: newPostSetupCallback,
-        icon: const Icon(Icons.add, size: 24),
-        label: const Text(
-          "Test post",
-        ),
-      ),
     );
   }
 
@@ -84,29 +76,11 @@ class _HomeWidgetState extends State<HomeWidget> {
       futurePosts = Future.value(freshPosts);
     });
   }
-
-  // Submit post to firebase on button press
-  Future newPostSetupCallback() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-    try {
-      final docPost =
-          FirebaseFirestore.instance.collection('posts').doc(uuid.v4());
-      await docPost.set(PostData.newPost.toJson());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
-    } finally {
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    }
-  }
 }
 
 // Formatted container for posts
 class PostCard extends StatelessWidget {
-  PostCard({super.key, required this.post, required this.user});
+  const PostCard({super.key, required this.post, required this.user});
 
   final PostData post;
   final UserData user;

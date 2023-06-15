@@ -89,7 +89,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                           height: null,
                           width: MediaQuery.of(context).size.width / 2,
                           child: ElevatedButton.icon(
-                            onPressed: AnalyseAndLogCallBack,
+                            onPressed: analyseAndLogCallBack,
                             icon: const Icon(Icons.edit, size: 24),
                             label: const Text(
                               "Log it",
@@ -101,7 +101,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                         ),
                         IconButton(
                           color: Theme.of(context).primaryColor,
-                          onPressed: GetImageGalleryCallBack,
+                          onPressed: getImageGalleryCallBack,
                           icon: const Icon(Icons.insert_drive_file),
                         ),
                       ],
@@ -110,7 +110,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
                       child: ElevatedButton(
-                        onPressed: ManualEntryCallBack,
+                        onPressed: manualEntryCallBack,
                         child: const Text(
                           "Manual Entry",
                         ),
@@ -130,7 +130,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     );
   }
 
-  Future AnalyseAndLogCallBack() async {
+  Future analyseAndLogCallBack() async {
     try {
       // TODO: Integrate a food recognition model
       // if (_image == null) throw ArgumentError("No image selected");
@@ -154,7 +154,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     }
   }
 
-  ManualEntryCallBack() async {
+  manualEntryCallBack() async {
     FoodData selectedFoodData = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -165,12 +165,12 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData),
+        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData, user: widget.user,),
       ),
     );
   }
 
-  GetImageGalleryCallBack() async {
+  getImageGalleryCallBack() async {
     final ImagePicker picker = ImagePicker();
     XFile? image;
     image = await picker.pickImage(source: ImageSource.gallery);
@@ -184,7 +184,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) =>
-            CheckFoodPage(image: img, fd: FoodData.NONE),
+            CheckFoodPage(image: img, fd: FoodData.NONE, user: widget.user),
       ),
     );
   }

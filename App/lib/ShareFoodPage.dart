@@ -1,21 +1,32 @@
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/post_class.dart';
+import 'package:my_first_flutter/user_class.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:uuid/uuid.dart';
+
+import 'main.dart';
 
 class ShareFoodPage extends StatefulWidget {
   // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
   XFile? image;
+  final UserData user;
 
-  ShareFoodPage({Key? key, required this.image}) : super(key: key);
+  ShareFoodPage({Key? key, required this.image, required this.user})
+      : super(key: key);
 
   @override
   State<ShareFoodPage> createState() => _ShareFoodPageState();
 }
 
 class _ShareFoodPageState extends State<ShareFoodPage> {
+  var uuid = const Uuid();
   final captionController = TextEditingController();
+  late int _rating;
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +73,13 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
               direction: Axis.horizontal,
               allowHalfRating: false,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
                 Icons.star,
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                print(rating);
+                _rating = rating.toInt();
               },
             ),
           ),
@@ -79,7 +90,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
                       Expanded(
@@ -89,7 +100,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                               .style
                               ?.copyWith(
                                 backgroundColor:
-                                    MaterialStatePropertyAll(Colors.white),
+                                    const MaterialStatePropertyAll(Colors.white),
                                 textStyle: MaterialStatePropertyAll(
                                   TextStyle(
                                       foreground: Paint()
@@ -103,23 +114,18 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                             Navigator.of(context)
                                 .popUntil((route) => route.isFirst);
                             Utils.showSnackBar(
-                                "Not implemented yet!"); // TODO: Implement sharing
+                                "Not implemented yet!"); // TODO: Implement adding to diary
                           },
-                          child: Text("Add to diary"),
+                          child: const Text("Add to diary"),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
-                            Utils.showSnackBar(
-                                "Not implemented yet!"); // TODO: Implement adding to diary
-                          },
-                          child: Text("Share!"),
+                          onPressed: newPostSetupCallback,
+                          child: const Text("Share!"),
                         ),
                       ),
                     ],
@@ -132,5 +138,38 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         ],
       ),
     );
+  }
+
+  Future newPostSetupCallback() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      String id = uuid.v4();
+      final docPost = FirebaseFirestore.instance.collection('posts').doc(id);
+      final PostData newPost = PostData(
+        firstName: widget.user.firstName,
+        lastName: widget.user.lastName,
+        caption: captionController.text.trim(),
+        location: 'Singapore',
+        postID: id,
+        commentCount: 0,
+        rating: _rating,
+        calories: 883,
+        protein: 20.2,
+        fats: 1.1,
+        carbs: 99.3,
+        sugar: 13.3,
+        postTime: DateTime.now(),
+        likedBy: [],
+      );
+      await docPost.set(newPost.toJson());
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar(e.message);
+    } finally {
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    }
   }
 }

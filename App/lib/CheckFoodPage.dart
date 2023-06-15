@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/ManualFoodSelectPage.dart';
 import 'package:my_first_flutter/ShareFoodPage.dart';
+import 'package:my_first_flutter/user_class.dart';
 import 'FoodDataClass.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -10,8 +11,8 @@ Widget foodDataWidget(
     String title, String field1, String field2, BuildContext context) {
   return Container(
     // color: , // TODO: different colours for different levels
-    margin: EdgeInsets.symmetric(horizontal: 2),
-    padding: EdgeInsets.symmetric(vertical: 4),
+    margin: const EdgeInsets.symmetric(horizontal: 2),
+    padding: const EdgeInsets.symmetric(vertical: 4),
     decoration: BoxDecoration(
       border: Border.all(
         color: Colors.black,
@@ -43,7 +44,8 @@ class CheckFoodPage extends StatefulWidget {
   XFile? image;
   FoodData
       fd; // Food data that was taken from firebase, used to fill up the page
-  CheckFoodPage({Key? key, required this.image, required this.fd})
+  final UserData user;
+  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user})
       : super(key: key);
 
   @override
@@ -55,7 +57,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Snap"),
+        title: const Text("Snap"),
         centerTitle: true,
       ),
       body: Column(
@@ -76,7 +78,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           Utils.createVerticalSpace(26),
 
           // Name of Food headline text
-          Utils.createHeadlineMedium("${widget.fd.name}", context),
+          Utils.createHeadlineMedium(widget.fd.name, context),
           Utils.createVerticalSpace(26),
 
           // Nutritional information regular
@@ -121,7 +123,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     FoodData? newFD = await Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              ManualFoodSelectPage()),
+                              const ManualFoodSelectPage()),
                     );
                     setState(() {
                       if (newFD != null) {
@@ -146,7 +148,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(image: widget.image),
+                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user),
                       ),
                     );
                   },
