@@ -1,3 +1,6 @@
+// home page follows the ui of instagram and facebook, which are popular apps
+// that NUS students will be familar with the layoyut.
+
 import 'comments_widget.dart';
 import 'nutrition_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
