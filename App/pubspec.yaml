@@ -72,6 +72,8 @@ dependencies:
   # For making post age readable (x minutes ago)
   timeago: ^3.3.0
 
+  # For progress indicator:
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
