@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:my_first_flutter/main.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/app.dart';
 

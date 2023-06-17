@@ -1,6 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/FoodDataClass.dart';
+import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class ManualFoodSelectPage extends StatefulWidget {
@@ -171,8 +171,8 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                               name: selectedFood!,
                               energy: 0,
                               protein: 0,
-                              fat: 0,
-                              carb: 0,
+                              fats: 0,
+                              carbs: 0,
                               sugar: 0);
                           Navigator.pop(context, fdToReturn);
                         },

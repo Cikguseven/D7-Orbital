@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/settings_page.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/user_data.dart';
 
 import 'package:my_first_flutter/csv_to_firebase.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/home_widget.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/home_page.dart';
+import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/new_user_setup_page.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/MePage.dart';
+import 'package:my_first_flutter/me_page.dart';
 import 'package:my_first_flutter/snapper_widget.dart';
 
 class App extends StatefulWidget {
@@ -18,8 +18,6 @@ class _AppState extends State<App> {
   Map<String, dynamic> screenNameToWidgetMap = {
     "Home": (UserData userData) => HomeWidget(user: userData),
     "Snap": (UserData userData) => SnapperWidget(user: userData),
-    // TODO: Fix this, i dont think the scanner widget needs this data
-    // but i have to put cause of the way i change screens
     "Me": (UserData userData) => MePage(user: userData),
   };
 
@@ -40,12 +38,7 @@ class _AppState extends State<App> {
             }
 
             return Scaffold(
-              // appBar: AppBar(
-              //   title: Text(idToMap[selectedScreenIdx]),
-              // ),
               body: screenNameToWidgetMap[selectedScreenName](user.data),
-              // TODO: Fix this, this one forces every screen to use this argument
-              // invoke the screen to create, passing on the userdata
               bottomNavigationBar: BottomNavigationBar(
                 items: const [
                   BottomNavigationBarItem(
