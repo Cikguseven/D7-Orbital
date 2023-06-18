@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:my_first_flutter/post_class.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/post_data.dart';
+import 'package:my_first_flutter/user_data.dart';
 
-import 'comment_class.dart';
+import 'comment_data.dart';
 
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
@@ -37,7 +37,6 @@ class Utils {
     final docUser = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid ?? getAuthUser()!.uid);
-
     return docUser.get().then(
       (DocumentSnapshot doc) {
         if (doc.exists) {
@@ -75,7 +74,7 @@ class Utils {
   static Future<List<CommentData>> getComments(String postID) async {
     List<CommentData> comments = [];
     FirebaseFirestore.instance
-        .collection('comments')
+        .collection('posts')
         .doc(postID)
         .collection('comments')
         .orderBy('postTime', descending: true)
@@ -199,6 +198,15 @@ class Utils {
     return Text(
       text,
       style: Theme.of(context).textTheme.titleSmall,
+      textAlign: align,
+    );
+  }
+
+  static Text createLabelLarge(String text, BuildContext context,
+      {TextAlign align = TextAlign.center}) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.labelLarge,
       textAlign: align,
     );
   }

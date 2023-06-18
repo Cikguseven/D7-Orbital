@@ -1,16 +1,19 @@
 // home page follows the ui of instagram and facebook, which are popular apps
 // that NUS students will be familar with the layoyut.
 
-import 'comments_widget.dart';
-import 'nutrition_widget.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+import 'check_food_page.dart';
+import 'comments_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/post_class.dart';
+import 'package:my_first_flutter/post_data.dart';
+import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/star_rating.dart';
-import 'package:my_first_flutter/themes/theme_constants.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
 
@@ -38,9 +41,19 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("Make it Count"),
-        ),
+        title: const Text("Make it Count"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const SettingsPage()));
+            },
+            icon: const Icon(Icons.settings),
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: futurePosts,
@@ -93,77 +106,94 @@ class PostCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          "images/Cow.jpeg",
+        // Post image
+        Image.network(
+          post.imageURL,
           width: double.infinity,
           fit: BoxFit.fitWidth,
         ),
 
         // Like, comment and share buttons
-        SocialContainerWidget(
-            post: post, user: user),
+        SocialContainerWidget(post: post, user: user),
         Utils.createVerticalSpace(5),
 
-        // Name container
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text(
-            '${post.firstName} ${post.lastName}',
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-        Utils.createVerticalSpace(5),
-
-        // Caption container
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text(
-            post.caption,
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleSmall,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+          child: Row(
+            children: [
+              // User profile image
+              const Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: CircleAvatar(
+                    radius: 20,
+                    // Change to user's profile photo eventually
+                    backgroundImage: AssetImage(
+                      "images/Dog.jpeg",
+                    )),
+              ),
+              Utils.createHorizontalSpace(15),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Name container
+                  Text(
+                    '${post.firstName} ${post.lastName}',
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Utils.createVerticalSpace(5),
+                  // Caption container
+                  Text(
+                    post.caption,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         Utils.createVerticalSpace(10),
 
         // Rating container
-        Container(
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: StarRating(
-            rating: post.rating.toDouble(),
-          ),
-        ),
-        Utils.createVerticalSpace(10),
-
-        // Nutritional information container
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          NutritionWidget(post: post, user: user)));
-            },
-            child: Text(
-              "View nutritional information",
-              style: TextStyle(color: NUS_BLUE),
-            ),
-          ),
-        ),
-        Utils.createVerticalSpace(10),
-
-        // Post age container
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Text(
-            timeago.format(post.postTime),
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.labelMedium,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StarRating(
+                rating: post.rating.toDouble(),
+              ),
+              Utils.createVerticalSpace(10),
+              // Post age container
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  timeago.format(post.postTime),
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
+              Utils.createVerticalSpace(5),
+              // Nutritional information container
+              ExpansionTile(
+                  title: const Text(
+                    "View nutritional information",
+                    style: TextStyle(
+                        color: Color(0xFF003D7C),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  children: [
+                    // Nutrition bar
+                    allFoodDataWidget(post.calories, post.protein, post.fats,
+                        post.carbs, post.sugar, context),
+                    Utils.createVerticalSpace(15),
+                  ]),
+            ],
           ),
         ),
         Utils.createVerticalSpace(30),
@@ -229,26 +259,34 @@ class _SocialContainerState extends State<SocialContainerWidget> {
             onPressed: () {
               setState(() {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => CommentsWidget(
-                            post: widget.post, user: widget.user)));
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => CommentsWidget(
+                                post: widget.post, user: widget.user)))
+                    .then((value) => setState(() => {}));
               });
             },
             icon: const Icon(Icons.comment_rounded),
-            label: Text(widget.post.commentCount.toString()), // add number of comments
+            label: Text(
+                widget.post.commentCount.toString()), // add number of comments
           ),
         ),
+        // Share button
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {
-              // open share overlay
-            },
+            onPressed: () => _onShare(context),
             icon: const Icon(Icons.share),
             label: const Text('Share'), // add number of comments
           ),
         ),
       ],
     );
+  }
+
+  void _onShare(BuildContext context) async {
+    var file = await DefaultCacheManager().getSingleFile(widget.post.imageURL);
+    await Share.shareXFiles([XFile(file.path)],
+        text:
+            "Check out this post by ${widget.post.firstName} ${widget.post.lastName}!");
   }
 }

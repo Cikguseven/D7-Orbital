@@ -1,17 +1,17 @@
 class FoodData {
-  static final FoodData NONE = FoodData(
+  static final FoodData none = FoodData(
       name: 'NONE',
       energy: 0,
       protein: 0.0,
-      fat: 0.0,
-      carb: 0.0,
+      fats: 0.0,
+      carbs: 0.0,
       sugar: 0.0);
 
   final String name;
   final int energy; // kcal
   final double protein;
-  final double fat;
-  final double carb;
+  final double fats;
+  final double carbs;
   final double sugar;
 
 
@@ -19,8 +19,8 @@ class FoodData {
     required this.name,
     required this.energy,
     required this.protein,
-    required this.fat,
-    required this.carb,
+    required this.fats,
+    required this.carbs,
     required this.sugar,
   });
 
@@ -28,8 +28,8 @@ class FoodData {
     'name': name,
     'energy': energy,
     'protein': protein,
-    'fat': fat,
-    'carb': carb,
+    'fat': fats,
+    'carb': carbs,
     'sugar': sugar,
   };
 
@@ -38,8 +38,8 @@ class FoodData {
         name: data['name'],
         energy: data['energy'],
         protein: data['protein'],
-        fat: data['fat'],
-        carb: data['carb'],
+        fats: data['fat'],
+        carbs: data['carb'],
         sugar: data['sugar']);
   }
 
@@ -47,7 +47,7 @@ class FoodData {
 
   @override
   String toString() {
-    return "Name: $name, Energy: $energy, Protein: $protein, Fat: $fat, Carb: $carb, Sugar: $sugar";
+    return "Name: $name, Energy: $energy, Protein: $protein, Fat: $fats, Carb: $carbs, Sugar: $sugar";
   } // kcal * 4.184 = kJ
 
 

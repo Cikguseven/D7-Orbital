@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_first_flutter/CheckFoodPage.dart';
-import 'package:my_first_flutter/FoodDataClass.dart';
-import 'package:my_first_flutter/ManualFoodSelectPage.dart';
+import 'package:my_first_flutter/check_food_page.dart';
+import 'package:my_first_flutter/food_data.dart';
+import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class SnapperWidget extends StatefulWidget {
@@ -184,7 +184,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) =>
-            CheckFoodPage(image: img, fd: FoodData.NONE, user: widget.user),
+            CheckFoodPage(image: img, fd: FoodData.none, user: widget.user),
       ),
     );
   }
