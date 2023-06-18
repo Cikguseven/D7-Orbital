@@ -83,6 +83,9 @@ dependencies:
   # For retrieving and sharing post image:
   flutter_cache_manager: ^3.3.0
 
+  # For progress indicator:
+  percent_indicator: ^4.2.3
+
 
 dev_dependencies:
   flutter_test:
