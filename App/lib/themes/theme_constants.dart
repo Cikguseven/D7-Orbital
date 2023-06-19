@@ -41,8 +41,14 @@ ThemeData lightTheme = ThemeData(
     // Used for text fields text
     bodySmall: TextStyle(color: Color(0xFF989898), fontSize: 14), // GREY
 
+    // Used for nutrition value labels (e.g. Energy)
+    labelLarge: TextStyle(color: Colors.black, fontSize: 12),
+
     // Used for post age text (x minutes ago)
     labelMedium: TextStyle(color: Color(0xFF868686), fontSize: 12),
+
+    // Used for nutritional information expansion tile
+    labelSmall: TextStyle(color: Color(0xFF003D7C), fontSize: 14),
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(

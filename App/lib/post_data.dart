@@ -1,25 +1,26 @@
 class PostData {
-  static final PostData newPost = PostData(
-    firstName: 'John',
-    lastName: 'Doe',
-    caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
-    location: 'Singapore',
-    postID: 'noID',
-    commentCount: 0,
-    rating: 5,
-    calories: 1000,
-    protein: 20.2,
-    fats: 1.1,
-    carbs: 99.3,
-    sugar: 13.3,
-    postTime: DateTime.now(),
-    likedBy: [],);
+  // static final PostData newPost = PostData(
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  //   caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
+  //   location: 'Singapore',
+  //   postID: 'noID',
+  //   commentCount: 0,
+  //   rating: 5,
+  //   calories: 1000,
+  //   protein: 20.2,
+  //   fats: 1.1,
+  //   carbs: 99.3,
+  //   sugar: 13.3,
+  //   postTime: DateTime.now(),
+  //   likedBy: [],);
 
   final String firstName;
   final String lastName;
   final String caption;
   final String location;
-  String postID;
+  final String postID;
+  final String imageURL;
   int commentCount;
   final int rating;
   final int calories;
@@ -37,6 +38,7 @@ class PostData {
     required this.caption,
     required this.location,
     required this.postID,
+    required this.imageURL,
     required this.commentCount,
     required this.rating,
     required this.calories,
@@ -53,6 +55,8 @@ class PostData {
     'lastName': lastName,
     'caption': caption,
     'location': location,
+    'postID': postID,
+    'imageURL': imageURL,
     'commentCount': commentCount,
     'rating': rating,
     'calories': calories,
@@ -64,13 +68,14 @@ class PostData {
     'likedBy': likedBy,
   };
 
-  static PostData fromJson(Map<String, dynamic> data, String postID) {
+  static PostData fromJson(Map<String, dynamic> data) {
     return PostData(
       firstName: data['firstName'],
       lastName: data['lastName'],
       caption: data['caption'],
       location: data['location'],
-      postID: postID,
+      postID: data['postID'],
+      imageURL: data['imageURL'],
       commentCount: data['commentCount'],
       rating: data['rating'],
       calories: data['calories'],

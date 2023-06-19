@@ -1,17 +1,24 @@
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/ManualFoodSelectPage.dart';
-import 'package:my_first_flutter/ShareFoodPage.dart';
-import 'FoodDataClass.dart';
+import 'package:my_first_flutter/manual_food_select_page.dart';
+import 'package:my_first_flutter/share_food_page.dart';
+import 'package:my_first_flutter/user_data.dart';
+import 'food_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
 Widget foodDataWidget(
-    String title, String field1, String field2, BuildContext context) {
+    String title, double field1, String field2, bool isEnergy, BuildContext context) {
+  String unit1 = "kJ";
+  String unit2 = "kcal";
+  if (!isEnergy) {
+    unit1 = "g";
+    unit2 = "";
+  }
   return Container(
     // color: , // TODO: different colours for different levels
-    margin: EdgeInsets.symmetric(horizontal: 2),
-    padding: EdgeInsets.symmetric(vertical: 4),
+    margin: const EdgeInsets.symmetric(horizontal: 2),
+    padding: const EdgeInsets.symmetric(vertical: 4),
     decoration: BoxDecoration(
       border: Border.all(
         color: Colors.black,
@@ -22,9 +29,9 @@ Widget foodDataWidget(
       children: [
         Utils.createTitleSmall(title, context),
         Utils.createVerticalSpace(12),
-        Utils.createTitleSmall(field1, context),
+        Utils.createLabelLarge("${field1.round().toString()} $unit1", context),
         Utils.createVerticalSpace(4),
-        Utils.createTitleSmall(field2, context),
+        Utils.createLabelLarge("$field2 $unit2", context),
         Utils.createVerticalSpace(12),
         Container(
           height: 1.0,
@@ -39,11 +46,32 @@ Widget foodDataWidget(
   );
 }
 
+Widget allFoodDataWidget(
+  int calories, double protein, double fats, double carbs, double sugar, BuildContext context
+) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      foodDataWidget("Energy", calories * 4.184,
+          calories.toString(), true, context),
+      foodDataWidget(
+          "Protein", protein, "H/M/L", false, context),
+      foodDataWidget(
+          "Fat", fats, "H/M/L", false, context),
+      foodDataWidget(
+          "Carbs", carbs, "H/M/L", false, context),
+      foodDataWidget(
+          "Sugar", sugar, "H/M/L", false, context),
+    ],
+  );
+}
+
 class CheckFoodPage extends StatefulWidget {
   XFile? image;
   FoodData
       fd; // Food data that was taken from firebase, used to fill up the page
-  CheckFoodPage({Key? key, required this.image, required this.fd})
+  final UserData user;
+  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user})
       : super(key: key);
 
   @override
@@ -55,7 +83,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Snap"),
+        title: const Text("Snap"),
         centerTitle: true,
       ),
       body: Column(
@@ -76,7 +104,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           Utils.createVerticalSpace(26),
 
           // Name of Food headline text
-          Utils.createHeadlineMedium("${widget.fd.name}", context),
+          Utils.createHeadlineMedium(widget.fd.name, context),
           Utils.createVerticalSpace(26),
 
           // Nutritional information regular
@@ -88,21 +116,21 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Energy
-              foodDataWidget("Energy", "${widget.fd.energyKJ}",
-                  "${widget.fd.energy}", context),
+              foodDataWidget("Energy", widget.fd.energyKJ,
+                  "${widget.fd.energy}", true, context),
 
               // Protein
               foodDataWidget(
-                  "Protein", "${widget.fd.protein}", "H/M/L", context),
+                  "Protein", widget.fd.protein, "H/M/L", false, context),
 
               // Fat
-              foodDataWidget("Fat", "${widget.fd.fat}", "H/M/L", context),
+              foodDataWidget("Fat", widget.fd.fats, "H/M/L", false, context),
 
               // Carbs
-              foodDataWidget("Carbs", "${widget.fd.carb}", "H/M/L", context),
+              foodDataWidget("Carbs", widget.fd.carbs, "H/M/L", false, context),
 
               // Sugar
-              foodDataWidget("Sugar", "${widget.fd.sugar}", "H/M/L", context),
+              foodDataWidget("Sugar", widget.fd.sugar, "H/M/L", false, context),
             ],
           ),
           Utils.createVerticalSpace(52),
@@ -121,7 +149,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     FoodData? newFD = await Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              ManualFoodSelectPage()),
+                              const ManualFoodSelectPage()),
                     );
                     setState(() {
                       if (newFD != null) {
@@ -146,7 +174,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(image: widget.image),
+                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user),
                       ),
                     );
                   },
