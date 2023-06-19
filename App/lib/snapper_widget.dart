@@ -24,26 +24,21 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
-  // List<CameraDescription>? cameras;
-  // CameraController? cameraController;
-
   void startCamera() async {
 
-    // TODO: Note. Camera library causes alog of dequeue buffer error messages
+    final cameras = availableCameras();
+    cameras.then((cams) {
+      _controller = CameraController(
+        // Get a specific camera from the list of available cameras.
+        cams.first,
+        // Define the resolution to use.
+        ResolutionPreset.medium,
+      );
+      _initializeControllerFuture = _controller.initialize()..then((value) => print("Initilaised"));
+    });
     WidgetsFlutterBinding.ensureInitialized();
-    final cameras = await availableCameras();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      cameras.first,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
+// TODO: I CANT FIX THE RED SCREEN< ALWAYS LATE INIT ERROR
   }
-
   @override
   void dispose() {
     _controller.dispose();
@@ -52,8 +47,26 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   @override
   void initState() {
+
     startCamera();
+
     super.initState();
+// TODO: Note. Camera library causes alog of dequeue buffer error messages
+//     print("before cameras");
+//     print("After cameras");
+//     // To display the current output from the Camera,
+//     // create a CameraController.
+//     _controller = CameraController(
+//       // Get a specific camera from the list of available cameras.
+//       cameras.first,
+//       // Define the resolution to use.
+//       ResolutionPreset.medium,
+//     );
+//     print("Before contorller initialise");
+//     // Next, initialize the controller. This returns a Future.
+//     _initializeControllerFuture = _controller.initialize();
+//     sleep(Duration(milliseconds: 2000));
+//     print("After contorller initialise");
   }
 
   @override
@@ -70,6 +83,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            print("Done loading");
             // If the Future is complete, display the preview.
             return Stack(
               fit: StackFit.expand,
@@ -123,6 +137,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
             );
           } else {
             // Otherwise, display a loading indicator.
+            print("Loeading");
             return const Center(child: CircularProgressIndicator());
           }
         },
