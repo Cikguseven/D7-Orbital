@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -109,10 +108,10 @@ class _MePageState extends State<MePage> {
         padding: const EdgeInsets.all(16),
         child: Stack(
           children: [
-            Positioned(
+            const Positioned(
               right: 0,
               child: Column(
-                children: const [
+                children: [
                   CircleAvatar(
                     radius: 40,
                     child: Text("Inser img of last meal here"),
@@ -147,18 +146,18 @@ class _MePageState extends State<MePage> {
                         aspectRatio: 1,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                            padding: const MaterialStatePropertyAll(EdgeInsets.zero),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             minimumSize:
-                            MaterialStatePropertyAll(Size.infinite),
+                            const MaterialStatePropertyAll(Size.infinite),
                             foregroundColor:
-                            MaterialStatePropertyAll(Colors.black),
+                            const MaterialStatePropertyAll(Colors.black),
                             backgroundColor:
-                            MaterialStatePropertyAll(Colors.orange),
+                            const MaterialStatePropertyAll(Colors.orange),
                           ),
                           onPressed: () {
                             Utils.showSnackBar("Calories");
@@ -188,18 +187,18 @@ class _MePageState extends State<MePage> {
                         aspectRatio: 1,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            padding: MaterialStatePropertyAll(EdgeInsets.zero),
+                            padding: const MaterialStatePropertyAll(EdgeInsets.zero),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             minimumSize:
-                            MaterialStatePropertyAll(Size.infinite),
+                            const MaterialStatePropertyAll(Size.infinite),
                             foregroundColor:
-                            MaterialStatePropertyAll(Colors.black),
+                            const MaterialStatePropertyAll(Colors.black),
                             backgroundColor:
-                            MaterialStatePropertyAll(Colors.purple),
+                            const MaterialStatePropertyAll(Colors.purple),
                           ),
                           onPressed: () {
                             Utils.showSnackBar("Activity");
@@ -256,7 +255,7 @@ class _MePageState extends State<MePage> {
                             .style
                             ?.copyWith(
                           backgroundColor:
-                          MaterialStatePropertyAll(Colors.green),
+                          const MaterialStatePropertyAll(Colors.green),
                         ),
                         onPressed: () {},
                         child: const Text("Check in for +50 xp"),
@@ -274,19 +273,22 @@ class _MePageState extends State<MePage> {
                 Utils.createHeadlineSmall("Badges", context),
                 Utils.createVerticalSpace(16),
                 Row(
-                  children: const [
+                  children: [
                     // TODO: Make our own Badge class that includes original art and assign badges to userData
-                    Icon(
+                    const Icon(
                       Icons.back_hand_rounded,
                       size: 48,
                       color: Colors.blueAccent,
                     ),
-                    Icon(Icons.camera_alt, size: 48, color: Colors.deepOrange),
-                    Icon(
+                    Utils.createHorizontalSpace(20),
+                    const Icon(Icons.camera_alt, size: 48, color: Colors.deepOrange),
+                    Utils.createHorizontalSpace(20),
+                    const Icon(
                       Icons.sports_soccer_rounded,
                       size: 48,
                     ),
-                    Icon(Icons.sports_gymnastics_rounded,
+                    Utils.createHorizontalSpace(20),
+                    const Icon(Icons.sports_gymnastics_rounded,
                         size: 48, color: Colors.brown),
                   ],
                 )
