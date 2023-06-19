@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "367985387093",
-    "project_id": "temp-d7orbital",
-    "storage_bucket": "temp-d7orbital.appspot.com"
+    "project_number": "32968718280",
+    "project_id": "d7orbital-13611",
+    "storage_bucket": "d7orbital-13611.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:367985387093:android:dc08d1649810630bac96dc",
+        "mobilesdk_app_id": "1:32968718280:android:4eb491fd11a87d46cc32fd",
         "android_client_info": {
           "package_name": "com.example.make_it_count"
         }
       },
       "oauth_client": [
         {
-          "client_id": "367985387093-bfjhphoj0slc2gvrjfep35jfelel88m8.apps.googleusercontent.com",
+          "client_id": "32968718280-avohvon03sf14ao26r56bkupn662quj7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB-OHIp9z-w-nhftT-pCWzD61KUDBHHK1Y"
+          "current_key": "AIzaSyAzRLKcHqIPXEmGbRgUbISrt50PtqxiZbY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "367985387093-bfjhphoj0slc2gvrjfep35jfelel88m8.apps.googleusercontent.com",
+              "client_id": "32968718280-avohvon03sf14ao26r56bkupn662quj7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "32968718280-mi3dg3qudhi0kb6tgsudueajotb1ve09.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myFirstFlutter"
+              }
             }
           ]
         }

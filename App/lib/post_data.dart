@@ -20,6 +20,7 @@ class PostData {
   final String caption;
   final String location;
   final String postID;
+  final String imageURL;
   int commentCount;
   final int rating;
   final int calories;
@@ -37,6 +38,7 @@ class PostData {
     required this.caption,
     required this.location,
     required this.postID,
+    required this.imageURL,
     required this.commentCount,
     required this.rating,
     required this.calories,
@@ -54,6 +56,7 @@ class PostData {
     'caption': caption,
     'location': location,
     'postID': postID,
+    'imageURL': imageURL,
     'commentCount': commentCount,
     'rating': rating,
     'calories': calories,
@@ -66,14 +69,13 @@ class PostData {
   };
 
   static PostData fromJson(Map<String, dynamic> data) {
-    print(data['postID']);
-    print(data['caption']);
     return PostData(
       firstName: data['firstName'],
       lastName: data['lastName'],
       caption: data['caption'],
       location: data['location'],
       postID: data['postID'],
+      imageURL: data['imageURL'],
       commentCount: data['commentCount'],
       rating: data['rating'],
       calories: data['calories'],

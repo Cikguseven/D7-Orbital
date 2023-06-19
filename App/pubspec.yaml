@@ -56,7 +56,7 @@ dependencies:
   # For easier csv processing, rather than my own:
   csv: ^5.0.2
 
-  # For dateFormat
+  # For dateFormat:
   intl: ^0.17.0
 
   # For a better dropdown button:
@@ -65,11 +65,26 @@ dependencies:
   # For an easy to use ratings bar:
   flutter_rating_bar: ^4.0.1
 
-  # For generating uuid
+  # For generating uuid:
   uuid: ^3.0.6
 
-  # For making post age readable (x minutes ago)
+  # For making post age readable (x minutes ago):
   timeago: ^3.3.0
+
+  # For sharing posts to other applications:
+  share_plus: ^7.0.2
+
+  # For storing and uploading images:
+  firebase_storage: ^11.2.3
+
+  # For File to work:
+  universal_io: ^2.2.2
+
+  # For retrieving and sharing post image:
+  flutter_cache_manager: ^3.3.0
+
+  # For progress indicator:
+  percent_indicator: ^4.2.3
 
 
 dev_dependencies:

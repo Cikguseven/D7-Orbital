@@ -1,10 +1,13 @@
+import 'package:universal_io/io.dart' as i;
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/post_class.dart';
-import 'package:my_first_flutter/user_class.dart';
+import 'package:my_first_flutter/post_data.dart';
+import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:uuid/uuid.dart';
@@ -148,6 +151,11 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     );
     try {
       String id = uuid.v4();
+      String imagePath = 'posts/$id.jpg';
+      Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+      await ref.putFile(i.File(widget.image!.path));
+      String imageURL = await ref.getDownloadURL();
+
       final docPost = FirebaseFirestore.instance.collection('posts').doc(id);
       final PostData newPost = PostData(
         firstName: widget.user.firstName,
@@ -155,6 +163,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         caption: captionController.text.trim(),
         location: 'Singapore',
         postID: id,
+        imageURL: imageURL,
         commentCount: 0,
         rating: _rating,
         calories: 883,
