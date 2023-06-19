@@ -6,6 +6,11 @@ class UserData {
       birthday: '',
       height: 0.0,
       weight: 0.0,
+      rmr: 2000,
+      sugarIntake: 0,
+      proteinIntake: 0,
+      fatsIntake: 0,
+      carbsIntake: 0,
   );
 
   final String firstName;
@@ -14,6 +19,11 @@ class UserData {
   final String birthday;
   final double height;
   final double weight;
+  final int rmr;
+  final int sugarIntake;
+  final int proteinIntake;
+  final int fatsIntake;
+  final int carbsIntake;
 
   UserData({
     required this.firstName,
@@ -22,6 +32,11 @@ class UserData {
     required this.birthday,
     required this.height,
     required this.weight,
+    required this.rmr,
+    required this.sugarIntake,
+    required this.proteinIntake,
+    required this.fatsIntake,
+    required this.carbsIntake,
   });
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +46,11 @@ class UserData {
     'birthday': birthday,
     'height': height,
     'weight': weight,
+    'RMR': rmr,
+    'sugarIntake': sugarIntake,
+    'proteinIntake': proteinIntake,
+    'fatsIntake': fatsIntake,
+    'carbsIntake': carbsIntake,
   };
 
   static UserData? fromJson(Map<String, dynamic> data) {
@@ -41,6 +61,11 @@ class UserData {
       birthday: data['birthday'],
       height: data['height'],
       weight: data['weight'],
+      rmr: data['RMR'],
+      sugarIntake: data['sugarIntake'],
+      proteinIntake: data['proteinIntake'],
+      fatsIntake: data['fatsIntake'],
+      carbsIntake: data['carbsIntake'],
     );
   }
 }

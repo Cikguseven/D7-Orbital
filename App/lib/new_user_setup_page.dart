@@ -6,6 +6,7 @@ import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/app.dart';
+import 'package:age_calculator/age_calculator.dart';
 
 class NewUserSetupPage extends StatefulWidget {
   const NewUserSetupPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class NewUserSetupPage extends StatefulWidget {
 
 class _NewUserSetupPage extends State<NewUserSetupPage> {
   bool done = false;
+  double activityMultiplier = 1.2;
   final formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -95,7 +97,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 26, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(16, 30, 0, 0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Utils.createHeadlineMedium("Hello!", context),
@@ -110,7 +112,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 26, 0, 0),
+                        padding: const EdgeInsets.only(top: 26),
                         child: Center(
                           child: Utils.createTitleMedium(
                               "Let us get to know you better", context),
@@ -272,6 +274,83 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 26),
+                        child: Center(
+                          child: Utils.createTitleMedium(
+                              "Select your estimated activity level", context),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Sedentary'),
+                          subtitle: const Text('Little to no exercise'),
+                          value: 1.2,
+                          groupValue: activityMultiplier,
+                          onChanged: (value) {
+                            setState(() {
+                              activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Lightly active'),
+                          subtitle: const Text('Light exercise 1–3 days/week'),
+                          value: 1.375,
+                          groupValue: activityMultiplier,
+                          onChanged: (value) {
+                            setState(() {
+                              activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Moderately active'),
+                          subtitle: const Text('Moderate exercise 3-5 days/week'),
+                          value: 1.55,
+                          groupValue: activityMultiplier,
+                          onChanged: (value) {
+                            setState(() {
+                              activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Very active'),
+                          subtitle: const Text('Heavy exercise 6-7 days/week'),
+                          value: 1.725,
+                          groupValue: activityMultiplier,
+                          onChanged: (value) {
+                            setState(() {
+                              activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Extremely  active'),
+                          subtitle: const Text('Strenuous training 2 times/day'),
+                          value: 1.9,
+                          groupValue: activityMultiplier,
+                          onChanged: (value) {
+                            setState(() {
+                              activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
                       Utils.createVerticalSpace(16),
                       ElevatedButton.icon(
                         onPressed: newUserSetupCallback,
@@ -308,6 +387,40 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
     }
     if (!isValidInputs) return;
 
+    double height = double.parse(heightController.text.trim());
+    double weight = double.parse(weightController.text.trim());
+    String birthday = birthdayController.text.trim();
+    int birthYear = Utils.stringToDateTime(birthday).year;
+    int birthMonth = Utils.stringToDateTime(birthday).month;
+    int birthDay = Utils.stringToDateTime(birthday).day;
+    DateTime dtBirthday = DateTime(birthYear, birthMonth, birthDay);
+    DateDuration age = AgeCalculator.age(dtBirthday);
+    int yearsOld = age.years;
+    double baseRMR = 10 * weight + 6.25 * height - 5 * yearsOld;
+    if (genderSelected[0]) {
+      baseRMR += 5;
+    } else {
+      baseRMR -= 161;
+    }
+    int rmr = (baseRMR * activityMultiplier).round();
+    int sugarIntake = (rmr / 40).round();
+    double proteinMultiplier;
+    // unable to use switch for comparing double using ==
+    if (activityMultiplier == 1.2) {
+      proteinMultiplier = 0.8;
+    } else if (activityMultiplier == 1.375) {
+      proteinMultiplier = 0.9;
+    } else if (activityMultiplier == 1.55) {
+      proteinMultiplier = 1.0;
+    } else if (activityMultiplier == 1.725) {
+      proteinMultiplier = 1.1;
+    } else {
+      proteinMultiplier = 1.2;
+    }
+    int proteinIntake = (proteinMultiplier * weight).round();
+    int fatsIntake = (rmr / 30).round();
+    int carbsIntake = (rmr / 20 * 3).round();
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -318,9 +431,14 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
         gender: genderSelected[0] ? "Male" : "Female",
-        birthday: birthdayController.text.trim(),
-        height: double.parse(heightController.text.trim()),
-        weight: double.parse(weightController.text.trim()),
+        birthday: birthday,
+        height: height,
+        weight: weight,
+        rmr: rmr,
+        sugarIntake: sugarIntake,
+        proteinIntake: proteinIntake,
+        fatsIntake: fatsIntake,
+        carbsIntake: carbsIntake,
       );
       final docUser = FirebaseFirestore.instance
           .collection('userData')
