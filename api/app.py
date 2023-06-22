@@ -46,7 +46,3 @@ def respond():
 @app.route('/')
 def home():
     return "<h1>Welcome to D7 Orbital!</h1>"
-
-if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
