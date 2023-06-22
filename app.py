@@ -1,3 +1,4 @@
+import tensorflow.compat.v1 as tf
 import tensorflow_hub as hub
 import numpy as np
 import pandas as pd
