@@ -14,10 +14,7 @@ def respond():
     # Retrieve the name from url parameter
     imageURL = request.args.get("img", None)
 
-    # For debugging
-    print(f"image at {imageURL}")
-
-    m = hub.Module('https://tfhub.dev/google/aiy/vision/classifier/food_V1/1')
+    m = hub.KerasLayer('https://tfhub.dev/google/aiy/vision/classifier/food_V1/1')
     labelmap_url = "https://www.gstatic.com/aihub/tfhub/labelmaps/aiy_food_V1_labelmap.csv"
     input_shape = (224, 224)
 
@@ -31,8 +28,6 @@ def respond():
     output = m(images)
     predicted_index = output.numpy().argmax()
     classes = list(pd.read_csv(labelmap_url)["name"])
-    print("Prediction: ", classes[predicted_index])
-
     response = {}
 
     if not imageURL:
