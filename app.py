@@ -1,3 +1,4 @@
+import tensorflow.compat.v2 as tf
 import tensorflow_hub as hub
 import numpy as np
 import pandas as pd
@@ -46,3 +47,6 @@ def respond():
 @app.route("/")
 def index():
     return "Welcome to D7 Orbital!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
