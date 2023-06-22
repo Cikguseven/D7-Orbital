@@ -44,5 +44,5 @@ def respond():
 
 
 @app.route('/')
-def home():
+def index():
     return "<h1>Welcome to D7 Orbital!</h1>"
