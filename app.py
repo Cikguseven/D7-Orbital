@@ -1,8 +1,8 @@
-# import tensorflow_hub as hub
-# import numpy as np
-# import pandas as pd
-# import cv2
-# from skimage import io
+import tensorflow_hub as hub
+import numpy as np
+import pandas as pd
+import cv2
+from skimage import io
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -43,6 +43,6 @@ app = Flask(__name__)
 #     return jsonify(response)
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return "<h1>Welcome to D7 Orbital!</h1>"
+    return "Welcome to D7 Orbital!"
