@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'd7-orbital'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7DF9043F2D93445B9A4255567E87D055 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8F7557A795F8457980E25EE2A0EA5192 }}
