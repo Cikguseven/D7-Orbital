@@ -1,9 +1,3 @@
-import tensorflow.compat.v1 as tf
-import tensorflow_hub as hub
-import numpy as np
-import pandas as pd
-import cv2
-from skimage import io
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
