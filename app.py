@@ -44,7 +44,7 @@ def respond():
 
 
 @app.route('/')
-def index():
+def home():
     return "<h1>Welcome to D7 Orbital!</h1>"
 
 if __name__ == '__main__':
