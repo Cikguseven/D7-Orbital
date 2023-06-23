@@ -86,6 +86,7 @@ dependencies:
   # For progress indicator:
   percent_indicator: ^4.2.3
   age_calculator: ^1.0.0
+  http: ^0.13.6
 
 
 dev_dependencies:

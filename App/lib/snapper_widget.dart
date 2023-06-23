@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first_flutter/check_food_page.dart';
 import 'package:my_first_flutter/food_data.dart';
@@ -9,6 +11,10 @@ import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
+import 'package:universal_io/io.dart' as i;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
+import 'package:my_first_flutter/config/config.dart' as config;
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -23,6 +29,8 @@ class SnapperWidget extends StatefulWidget {
 class _SnapperWidgetState extends State<SnapperWidget> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+
+  var uuid = const Uuid();
 
   // List<CameraDescription>? cameras;
   // CameraController? cameraController;
@@ -62,6 +70,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       appBar: AppBar(
         title: const Text('Snap and Log'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            color: Colors.grey,
+            onPressed: getImageGalleryCallBack,
+            icon: const Icon(Icons.insert_drive_file),
+          ),
+        ],
       ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
@@ -95,14 +110,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                               "Log it",
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        IconButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: getImageGalleryCallBack,
-                          icon: const Icon(Icons.insert_drive_file),
                         ),
                       ],
                     ),
@@ -162,10 +169,11 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       ),
     );
     if (!mounted) return;
+    String id = uuid.v4();
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData, user: widget.user,),
+        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData, user: widget.user, postID: id, imageURL: config.noImageAvailable,),
       ),
     );
   }
@@ -179,12 +187,72 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     checkFood(image);
   }
 
-  void checkFood(XFile img) {
+  void checkFood(XFile image) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    String postID = uuid.v4();
+    FoodData predictedFood = FoodData.none;
+
+    // Store image on Firebase
+    String imagePath = 'posts/$postID.jpg';
+    Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+    await ref.putFile(i.File(image.path));
+    String imageURL = await ref.getDownloadURL();
+
+    print(imageURL);
+
+    // Query online food prediction model hosted on Heroku
+    Uri uri = Uri.https(config.herokuServer, "/predict", {"img": imageURL});
+    Response response = await http.get(uri);
+
+    print('a');
+    print(response);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseJson = jsonDecode(response.body);
+      var foodItem = responseJson['PREDICTION'];
+
+      print('b');
+
+      // Query nutritionix database for nutritional information of predicted food.
+      Uri nutritionix = Uri.https("www.trackapi.nutritionix.com/v2/natural/nutrients");
+      Response nutritionInfo = await http.post(nutritionix,
+        headers: {"Content-Type":"application/json", "x-app-id":config.nutritionixAppID, "x-app-key":config.nutritionixAppKey},
+        body: {"query": foodItem},);
+      print('c');
+
+      if (nutritionInfo.statusCode == 200) {
+        print('d');
+
+        Map<String, dynamic> nutritionixJson = jsonDecode(nutritionInfo.body);
+        predictedFood = FoodData(
+            name: foodItem,
+            energy: nutritionixJson['nf_calories'],
+            protein: nutritionixJson['nf_protein'],
+            fats: nutritionixJson['nf_total_fat'],
+            carbs: nutritionixJson['nf_total_carbohydrate'],
+            sugar: nutritionixJson['nf_sugars']
+        );
+      } else {
+        print('e1');
+
+        throw Exception('Unable to predict food nutrition.');
+      }
+    } else {
+      print('e2');
+
+      throw Exception('Unable to predict food nutrition.');
+    }
+    print('f');
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) =>
-            CheckFoodPage(image: img, fd: FoodData.none, user: widget.user),
+            CheckFoodPage(image: image, fd: predictedFood, user: widget.user, postID: postID, imageURL: imageURL),
       ),
     );
   }

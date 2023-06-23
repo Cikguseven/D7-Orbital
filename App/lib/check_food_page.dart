@@ -71,7 +71,9 @@ class CheckFoodPage extends StatefulWidget {
   FoodData
       fd; // Food data that was taken from firebase, used to fill up the page
   final UserData user;
-  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user})
+  final String postID;
+  final String imageURL;
+  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user, required this.postID, required this.imageURL})
       : super(key: key);
 
   @override
@@ -174,7 +176,11 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user),
+                        builder: (BuildContext context)
+                        => ShareFoodPage(image: widget.image,
+                            user: widget.user,
+                            postID: widget.postID,
+                            imageURL: widget.imageURL),
                       ),
                     );
                   },
