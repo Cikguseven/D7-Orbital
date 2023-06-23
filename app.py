@@ -3,6 +3,7 @@ import tensorflow_hub as hub
 import numpy as np
 import pandas as pd
 import cv2
+from urllib.parse import unquote
 from skimage import io
 from flask import Flask, request, jsonify
 
@@ -12,7 +13,7 @@ app = Flask(__name__)
 @app.route('/predict', methods=['GET'])
 def respond():
     # Retrieve the name from url parameter
-    imageURL = request.args.get("img", None)
+    imageURL = unquote(request.args.get("img", None))
 
     m = hub.KerasLayer('https://tfhub.dev/google/aiy/vision/classifier/food_V1/1')
     labelmap_url = "https://www.gstatic.com/aihub/tfhub/labelmaps/aiy_food_V1_labelmap.csv"
