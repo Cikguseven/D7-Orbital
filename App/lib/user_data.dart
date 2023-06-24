@@ -1,16 +1,16 @@
 class UserData {
   static final UserData newUser = UserData(
-      firstName: 'new',
-      lastName: 'user',
-      gender: '',
-      birthday: '',
-      height: 0.0,
-      weight: 0.0,
-      rmr: 2000,
-      sugarIntake: 0,
-      proteinIntake: 0,
-      fatsIntake: 0,
-      carbsIntake: 0,
+    firstName: 'new',
+    lastName: 'user',
+    gender: '',
+    birthday: '',
+    height: 0.0,
+    weight: 0.0,
+    rmr: 2000,
+    sugarIntake: 0,
+    proteinIntake: 0,
+    fatsIntake: 0,
+    carbsIntake: 0,
   );
 
   final String firstName;
@@ -40,18 +40,18 @@ class UserData {
   });
 
   Map<String, dynamic> toJson() => {
-    'firstName': firstName,
-    'lastName': lastName,
-    'gender': gender,
-    'birthday': birthday,
-    'height': height,
-    'weight': weight,
-    'RMR': rmr,
-    'sugarIntake': sugarIntake,
-    'proteinIntake': proteinIntake,
-    'fatsIntake': fatsIntake,
-    'carbsIntake': carbsIntake,
-  };
+        'firstName': firstName,
+        'lastName': lastName,
+        'gender': gender,
+        'birthday': birthday,
+        'height': height,
+        'weight': weight,
+        'RMR': rmr,
+        'sugarIntake': sugarIntake,
+        'proteinIntake': proteinIntake,
+        'fatsIntake': fatsIntake,
+        'carbsIntake': carbsIntake,
+      };
 
   static UserData? fromJson(Map<String, dynamic> data) {
     return UserData(

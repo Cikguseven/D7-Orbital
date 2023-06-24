@@ -112,10 +112,8 @@ class Classifier {
     final resizeOp = ResizeOp(shapeLength, shapeLength, ResizeMethod.BILINEAR);
 
     // #4
-    final imageProcessor = ImageProcessorBuilder()
-        .add(cropOp)
-        .add(resizeOp)
-        .build();
+    final imageProcessor =
+        ImageProcessorBuilder().add(cropOp).add(resizeOp).build();
 
     imageProcessor.process(inputTensor);
 

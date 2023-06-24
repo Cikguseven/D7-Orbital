@@ -313,7 +313,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Moderately active'),
-                          subtitle: const Text('Moderate exercise 3-5 days/week'),
+                          subtitle:
+                              const Text('Moderate exercise 3-5 days/week'),
                           value: 1.55,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
@@ -341,7 +342,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Extremely  active'),
-                          subtitle: const Text('Strenuous training 2 times/day'),
+                          subtitle:
+                              const Text('Strenuous training 2 times/day'),
                           value: 1.9,
                           groupValue: activityMultiplier,
                           onChanged: (value) {

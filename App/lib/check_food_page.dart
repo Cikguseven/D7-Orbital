@@ -14,28 +14,33 @@ Widget foodDataWidget(
   String unit = "g";
   String percentIntake = '';
 
-  switch(title) {
-    case "Energy": {
-      percentIntake = (value*100/user.rmr).toStringAsFixed(1);
-      unit = "kcal";
-      break;
-    }
-    case "Protein": {
-      percentIntake = (value*100/user.proteinIntake).toStringAsFixed(1);
-      break;
-    }
-    case "Fats": {
-      percentIntake = (value*100/user.fatsIntake).toStringAsFixed(1);
-      break;
-    }
-    case "Carbs": {
-      percentIntake = (value*100/user.carbsIntake).toStringAsFixed(1);
-      break;
-    }
-    case "Sugar": {
-      percentIntake = (value*100/user.sugarIntake).toStringAsFixed(1);
-      break;
-    }
+  switch (title) {
+    case "Energy":
+      {
+        percentIntake = (value * 100 / user.rmr).toStringAsFixed(1);
+        unit = "kcal";
+        break;
+      }
+    case "Protein":
+      {
+        percentIntake = (value * 100 / user.proteinIntake).toStringAsFixed(1);
+        break;
+      }
+    case "Fats":
+      {
+        percentIntake = (value * 100 / user.fatsIntake).toStringAsFixed(1);
+        break;
+      }
+    case "Carbs":
+      {
+        percentIntake = (value * 100 / user.carbsIntake).toStringAsFixed(1);
+        break;
+      }
+    case "Sugar":
+      {
+        percentIntake = (value * 100 / user.sugarIntake).toStringAsFixed(1);
+        break;
+      }
   }
 
   return Container(
@@ -68,9 +73,8 @@ Widget foodDataWidget(
   );
 }
 
-Widget allFoodDataWidget(
-  int calories, double protein, double fats, double carbs, double sugar, UserData user, BuildContext context
-) {
+Widget allFoodDataWidget(int calories, double protein, double fats,
+    double carbs, double sugar, UserData user, BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -90,7 +94,14 @@ class CheckFoodPage extends StatefulWidget {
   final UserData user;
   final String postID;
   final String imageURL;
-  CheckFoodPage({Key? key, required this.image, required this.fd, required this.user, required this.postID, required this.imageURL})
+
+  CheckFoodPage(
+      {Key? key,
+      required this.image,
+      required this.fd,
+      required this.user,
+      required this.postID,
+      required this.imageURL})
       : super(key: key);
 
   @override
@@ -131,7 +142,8 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           Utils.createVerticalSpace(16),
 
           // Nutrition bar
-          allFoodDataWidget(widget.fd.energy, widget.fd.protein, widget.fd.fats, widget.fd.carbs, widget.fd.sugar, widget.user, context),
+          allFoodDataWidget(widget.fd.energy, widget.fd.protein, widget.fd.fats,
+              widget.fd.carbs, widget.fd.sugar, widget.user, context),
 
           // Elevated button (Edit food item)
           Expanded(
@@ -172,8 +184,8 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context)
-                        => ShareFoodPage(image: widget.image,
+                        builder: (BuildContext context) => ShareFoodPage(
+                            image: widget.image,
                             user: widget.user,
                             postID: widget.postID,
                             imageURL: widget.imageURL),
