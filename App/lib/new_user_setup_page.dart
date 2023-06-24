@@ -286,7 +286,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Sedentary'),
                           subtitle: const Text('Little to no exercise'),
-                          value: 1.2,
+                          value: ActivityLevel["SEDENTARY"],
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -300,7 +300,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Lightly active'),
                           subtitle: const Text('Light exercise 1–3 days/week'),
-                          value: 1.375,
+                          value: ActivityLevel["LIGHTLY_ACTIVE"],
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -314,7 +314,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Moderately active'),
                           subtitle: const Text('Moderate exercise 3-5 days/week'),
-                          value: 1.55,
+                          value: ActivityLevel["MODERATELY_ACTIVE"],
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -328,7 +328,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Very active'),
                           subtitle: const Text('Heavy exercise 6-7 days/week'),
-                          value: 1.725,
+                          value: ActivityLevel["VERY_ACTIVE"],
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -342,7 +342,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Extremely  active'),
                           subtitle: const Text('Strenuous training 2 times/day'),
-                          value: 1.9,
+                          value: ActivityLevel["EXTREMELY_ACTIVE"],
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -427,6 +427,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
+      Utils.firebaseSetupNewUser();
+
       final user = UserData(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),

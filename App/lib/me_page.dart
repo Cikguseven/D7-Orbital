@@ -36,17 +36,17 @@ class _MePageState extends State<MePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            /// Placeholder testing notifications
-            setState(
-                  () {
-                numNotifications++;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                        const CSVUploadWidget()));
-              },
-            );
+            // /// Placeholder testing notifications
+            // setState(
+            //       () {
+            //     numNotifications++;
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (BuildContext context) =>
+            //             const CSVUploadWidget()));
+            //   },
+            // );
           },
           icon: const Icon(Icons.person),
         ),

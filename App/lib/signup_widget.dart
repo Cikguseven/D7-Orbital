@@ -152,9 +152,11 @@ class _SignupWidgetState extends State<SignupWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+      // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //     email: emailController.text.trim(),
+      //     password: passwordController.text.trim());
+      await Utils.firebaseCreateUser(
+          emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {

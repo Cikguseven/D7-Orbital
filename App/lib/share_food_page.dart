@@ -1,3 +1,4 @@
+import 'package:my_first_flutter/food_data.dart';
 import 'package:universal_io/io.dart' as i;
 
 import 'package:camera/camera.dart';
@@ -14,12 +15,14 @@ import 'package:uuid/uuid.dart';
 
 import 'main.dart';
 
+// TODO: 2 bugs: Cannot take null rating and cannot take null picture
+
 class ShareFoodPage extends StatefulWidget {
   // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
   XFile? image;
   final UserData user;
-
-  ShareFoodPage({Key? key, required this.image, required this.user})
+  FoodData fd;
+  ShareFoodPage({Key? key, required this.image, required this.user, required this.fd})
       : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class ShareFoodPage extends StatefulWidget {
 class _ShareFoodPageState extends State<ShareFoodPage> {
   var uuid = const Uuid();
   final captionController = TextEditingController();
-  late int _rating;
+  int _rating = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
           Center(
             child: RatingBar.builder(
               itemSize: MediaQuery.of(context).size.width / 7,
-              initialRating: 0,
+              initialRating: 3,
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: false,
@@ -166,11 +169,11 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         imageURL: imageURL,
         commentCount: 0,
         rating: _rating,
-        calories: 883,
-        protein: 20.2,
-        fats: 1.1,
-        carbs: 99.3,
-        sugar: 13.3,
+        calories: widget.fd.energy,
+        protein: widget.fd.protein,
+        fats: widget.fd.fats,
+        carbs: widget.fd.carbs,
+        sugar: widget.fd.sugar,
         postTime: DateTime.now(),
         likedBy: [],
       );

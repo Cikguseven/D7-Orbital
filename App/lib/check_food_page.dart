@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/share_food_page.dart';
 import 'package:my_first_flutter/user_data.dart';
-import 'food_data.dart';
+import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
 Widget foodDataWidget(
@@ -174,7 +174,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user),
+                        builder: (BuildContext context) => ShareFoodPage(image: widget.image, user: widget.user, fd: widget.fd),
                       ),
                     );
                   },

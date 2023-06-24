@@ -22,6 +22,24 @@ class Utils {
       ..showSnackBar(snackBar);
   }
 
+  /// Signs into firebase
+  static firebaseSignIn(String email, String password) {
+    return FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password);
+  }
+
+  /// Creates firebase auth user
+  static firebaseCreateUser(String email, String password) {
+    return FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password);
+  }
+
+  /// Setups new user data, putting into firebase
+  static firebaseSetupNewUser(UserData user) {
+
+  }
   /// Gets the current firebase authenticated user.
   /// Only use after signed in!
   static User? getAuthUser() {

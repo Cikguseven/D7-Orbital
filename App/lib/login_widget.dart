@@ -6,6 +6,7 @@ import 'package:my_first_flutter/utils.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickSignUp;
+
   const LoginWidget({Key? key, required this.onClickSignUp}) : super(key: key);
 
   @override
@@ -125,11 +126,12 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+      // await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //     email: emailController.text.trim(),
+      //     password: passwordController.text.trim());
+      await Utils.firebaseSignIn(
+          emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-
       Utils.showSnackBar(e.message);
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
