@@ -24,7 +24,7 @@ class CommentsWidget extends StatefulWidget {
 
 class _CommentsState extends State<CommentsWidget> {
   final commentController = TextEditingController();
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
   late Future<List<CommentData>> futureComments;
 
   String? commentValidator(String? comment) =>

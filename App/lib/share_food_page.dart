@@ -26,7 +26,7 @@ class ShareFoodPage extends StatefulWidget {
 }
 
 class _ShareFoodPageState extends State<ShareFoodPage> {
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
   final captionController = TextEditingController();
   late int _rating;
 

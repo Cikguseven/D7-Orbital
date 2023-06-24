@@ -1,8 +1,4 @@
-// home page follows the ui of instagram and facebook, which are popular apps
-// that NUS students will be familar with the layoyut.
-
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-
 import 'check_food_page.dart';
 import 'comments_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,7 +23,7 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
   late Future<List<PostData>> futurePosts;
 
   @override

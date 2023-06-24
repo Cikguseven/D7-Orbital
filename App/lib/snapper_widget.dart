@@ -11,10 +11,14 @@ import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart' as i;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:my_first_flutter/config/config.dart' as config;
+import 'classifier.dart';
+import 'package:image/image.dart' as img;
+
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -30,14 +34,14 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
 
   // List<CameraDescription>? cameras;
   // CameraController? cameraController;
 
   void startCamera() async {
 
-    // TODO: Note. Camera library causes alog of dequeue buffer error messages
+    // TODO: Note. Camera library causes a lot of dequeue buffer error messages
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
     // To display the current output from the Camera,
@@ -204,25 +208,17 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
     print(imageURL);
 
-    // Query online food prediction model hosted on Heroku
-    Uri uri = Uri.https(config.herokuServer, "/predict", {"img": imageURL});
-    Response response = await http.get(uri);
+    Classifier? classifier = await Classifier.loadWith(labelsFileName: 'assets/labels.txt', modelFileName: 'food-classifier.tflite');
+    img.Image imageInput = img.decodeImage(File(image.path).readAsBytesSync())!;
+    String? foodItem = classifier?.predict(imageInput);
 
-    print('a');
-    print(response);
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> responseJson = jsonDecode(response.body);
-      var foodItem = responseJson['PREDICTION'];
-
-      print('b');
-
-      // Query nutritionix database for nutritional information of predicted food.
-      Uri nutritionix = Uri.https("www.trackapi.nutritionix.com/v2/natural/nutrients");
+    // Query nutritionix database for nutritional information of predicted food.
+    if (foodItem != null) {
+      Uri nutritionix = Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
+      String query = jsonEncode({"query": foodItem});
       Response nutritionInfo = await http.post(nutritionix,
         headers: {"Content-Type":"application/json", "x-app-id":config.nutritionixAppID, "x-app-key":config.nutritionixAppKey},
-        body: {"query": foodItem},);
-      print('c');
+        body: query,);
 
       if (nutritionInfo.statusCode == 200) {
         print('d');
