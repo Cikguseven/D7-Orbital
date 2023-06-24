@@ -82,7 +82,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       body: Column(
         children: [
           Utils.createVerticalSpace(18),
-          Image.asset("lib/assets/MakeItCountLogo.png"),
+          Image.asset("assets/MakeItCountLogo.png"),
           Utils.createHeadlineMedium("Verify Email", context),
           Utils.createVerticalSpace(80),
           Utils.createTitleMedium(
