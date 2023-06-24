@@ -6,6 +6,7 @@ import 'package:my_first_flutter/utils.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickSignUp;
+
   const LoginWidget({Key? key, required this.onClickSignUp}) : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(
             children: [
               Utils.createVerticalSpace(18),
-              Image.asset("lib/assets/MakeItCountLogo.png"),
+              Image.asset("assets/MakeItCountLogo.png"),
               Utils.createHeadlineMedium("Make it Count", context),
               Utils.createVerticalSpace(26),
               Container(
@@ -129,7 +130,6 @@ class _LoginWidgetState extends State<LoginWidget> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-
       Utils.showSnackBar(e.message);
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);

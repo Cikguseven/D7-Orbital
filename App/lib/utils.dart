@@ -59,14 +59,12 @@ class Utils {
         .collection('posts')
         .orderBy('postTime', descending: true)
         .snapshots()
-        .forEach(
-      (querySnapshot) {
-        for (var post in querySnapshot.docs) {
-          final data = post.data();
-            posts.add(PostData.fromJson(data));
-        }
+        .forEach((querySnapshot) {
+      for (var post in querySnapshot.docs) {
+        final data = post.data();
+        posts.add(PostData.fromJson(data));
       }
-    );
+    });
     return posts;
   }
 
@@ -79,16 +77,15 @@ class Utils {
         .collection('comments')
         .orderBy('postTime', descending: true)
         .snapshots()
-        .forEach(
-            (querySnapshot) {
-          for (var comment in querySnapshot.docs) {
-            final data = comment.data();
-            comments.add(CommentData.fromJson(data));
-          }
-        }
-    );
+        .forEach((querySnapshot) {
+      for (var comment in querySnapshot.docs) {
+        final data = comment.data();
+        comments.add(CommentData.fromJson(data));
+      }
+    });
     return comments;
   }
+
   //
   // /// Gets the number of comments of specified post.
   // static Future<int> getCommentCount(String postID) async {

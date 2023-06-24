@@ -52,7 +52,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Column(
               children: [
                 Utils.createVerticalSpace(18),
-                Image.asset("lib/assets/MakeItCountLogo.png"),
+                Image.asset("assets/MakeItCountLogo.png"),
                 Utils.createHeadlineMedium("Make it Count", context),
                 Utils.createVerticalSpace(26),
                 Container(

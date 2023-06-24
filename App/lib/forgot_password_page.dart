@@ -4,21 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
 
-
-
 class ForgotPasswordPage extends StatefulWidget {
-
-  const ForgotPasswordPage({Key? key,}) : super(key: key);
+  const ForgotPasswordPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
-
-
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+
   String? emailValidator(String? email) =>
       email != null && !EmailValidator.validate(email)
           ? 'Enter a valid email'
@@ -37,41 +35,40 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       //   title: const Text("Reset Password"),
       // ),
       body: SingleChildScrollView(
-      child: Form(
-        key: formKey,
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Utils.createVerticalSpace(18),
-          Image.asset("lib/assets/MakeItCountLogo.png"),
-          Utils.createHeadlineMedium("Reset Password", context),
-          Utils.createVerticalSpace(26),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: "Email",
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Utils.createVerticalSpace(18),
+              Image.asset("assets/MakeItCountLogo.png"),
+              Utils.createHeadlineMedium("Reset Password", context),
+              Utils.createVerticalSpace(26),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    labelText: "Email",
+                  ),
+                  validator: emailValidator,
+                ),
               ),
-              validator: emailValidator,
-            ),
+              Utils.createVerticalSpace(15),
+              ElevatedButton.icon(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 15 * 2)),
+                  ),
+                  onPressed: sendResetEmailCallback,
+                  icon: const Icon(Icons.email_outlined, size: 24),
+                  label: const Text(
+                    "Send email",
+                  )),
+            ],
           ),
-          Utils.createVerticalSpace(15),
-          ElevatedButton.icon(
-            style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                  MediaQuery.of(context).size.width - 15 * 2)),
-            ),
-              onPressed: sendResetEmailCallback,
-              icon: const Icon(Icons.email_outlined, size: 24),
-              label: const Text(
-                "Send email",
-              )
-          ),
-        ],
+        ),
       ),
-    ),
-    ),
     );
   }
 
@@ -85,13 +82,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: emailController.text.trim()
-      );
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text.trim());
       Utils.showSnackBar("Password reset email sent!");
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-
       Utils.showSnackBar(e.message);
       navigatorKey.currentState!.pop();
     }

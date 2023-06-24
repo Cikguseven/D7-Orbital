@@ -17,7 +17,10 @@ class QRScannerOverlay extends StatelessWidget {
     //     MediaQuery.of(context).size.height < 400)
     //     ? 200.0
     //     : 330.0;
-    double scanArea = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height) * 4/5;
+    double scanArea = min(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height) *
+        4 /
+        5;
     return Stack(children: [
       // ColorFiltered(
       //   colorFilter: ColorFilter.mode(
