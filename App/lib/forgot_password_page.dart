@@ -40,10 +40,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Utils.createVerticalSpace(18),
-              Image.asset("assets/MakeItCountLogo.png"),
+              Utils.createVerticalSpace(60),
+              Image.asset("assets/NewLogoNoBG.png"),
+              Utils.createVerticalSpace(50),
               Utils.createHeadlineMedium("Reset Password", context),
-              Utils.createVerticalSpace(26),
+              Utils.createVerticalSpace(25),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextFormField(
@@ -54,7 +55,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   validator: emailValidator,
                 ),
               ),
-              Utils.createVerticalSpace(15),
+              Utils.createVerticalSpace(35),
               ElevatedButton.icon(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
