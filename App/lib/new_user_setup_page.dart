@@ -313,6 +313,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Moderately active'),
+
                           subtitle: const Text('Moderate exercise 3-5 days/week'),
                           value: ActivityLevel["MODERATELY_ACTIVE"],
                           groupValue: activityMultiplier,
@@ -427,8 +428,6 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      Utils.firebaseSetupNewUser();
-
       final user = UserData(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),

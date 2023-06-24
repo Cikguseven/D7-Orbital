@@ -29,17 +29,17 @@ class UserData {
   List<DayLog> diary;
 
   // Goal, separate collection
-  Goal goal;
+  Goal? goal;
 
   // Miscellaneous
   List<Badge> badgesEarned;
   int experience;
   int level;
-  // final int rmr;
-  // final int sugarIntake;
-  // final int proteinIntake;
-  // final int fatsIntake;
-  // final int carbsIntake;
+  final int rmr;
+  final int sugarIntake;
+  final int proteinIntake;
+  final int fatsIntake;
+  final int carbsIntake;
 
   UserData({
     required this.firstName,
@@ -48,26 +48,25 @@ class UserData {
     required this.birthday,
     required this.height,
     required this.weight,
-    // required this.rmr,
-    // required this.sugarIntake,
-    // required this.proteinIntake,
-    // required this.fatsIntake,
-    // required this.carbsIntake,
-  });
+    required this.rmr,
+    required this.sugarIntake,
+    required this.proteinIntake,
+    required this.fatsIntake,
+    required this.carbsIntake,
+  }) : diary = List.empty(), goal = null, badgesEarned = List.empty(), experience = 0, level = 1;
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'firstName': firstName,
         'lastName': lastName,
         'gender': gender,
         'birthday': birthday,
         'height': height,
         'weight': weight,
-        'RMR': rmr,
-        'sugarIntake': sugarIntake,
-        'proteinIntake': proteinIntake,
-        'fatsIntake': fatsIntake,
-        'carbsIntake': carbsIntake,
+        // 'RMR': rmr,
+        // 'sugarIntake': sugarIntake,
+        // 'proteinIntake': proteinIntake,
+        // 'fatsIntake': fatsIntake,
+        // 'carbsIntake': carbsIntake,
       };
 
   static UserData? fromJson(Map<String, dynamic> data) {

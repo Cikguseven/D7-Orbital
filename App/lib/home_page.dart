@@ -1,8 +1,4 @@
-// home page follows the ui of instagram and facebook, which are popular apps
-// that NUS students will be familar with the layoyut.
-
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-
 import 'check_food_page.dart';
 import 'comments_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,44 +23,44 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
   late Future<List<PostData>> futurePosts;
 
   @override
   void initState() {
-    _pullRefresh();
+    // _pullRefresh();
+    // futurePosts = Utils.getPosts();
     super.initState();
-    futurePosts = Utils.getPosts();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Make it Count"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const SettingsPage()));
-            },
-            icon: const Icon(Icons.settings),
-          ),
-        ],
-      ),
-      body: FutureBuilder(
-        future: futurePosts,
-        builder: (BuildContext context, posts) {
-          return RefreshIndicator(
-            onRefresh: _pullRefresh,
-            child: _listView(posts),
+    return StreamBuilder(
+        stream: Stream.fromFuture(Utils.getPosts()),
+        builder: (context, posts) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("Make it Count"),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const SettingsPage()));
+                  },
+                  icon: const Icon(Icons.settings),
+                ),
+              ],
+            ),
+            body: RefreshIndicator(
+              onRefresh: _pullRefresh,
+              child: _listView(posts),
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 
   // List view of posts loaded on refresh
@@ -190,7 +186,7 @@ class PostCard extends StatelessWidget {
                   children: [
                     // Nutrition bar
                     allFoodDataWidget(post.calories, post.protein, post.fats,
-                        post.carbs, post.sugar, context),
+                        post.carbs, post.sugar, user, context),
                     Utils.createVerticalSpace(15),
                   ]),
             ],

@@ -31,7 +31,6 @@ class PostData {
   final DateTime postTime;
   final List<String> likedBy;
 
-
   PostData({
     required this.firstName,
     required this.lastName,
@@ -51,22 +50,22 @@ class PostData {
   });
 
   Map<String, dynamic> toJson() => {
-    'firstName': firstName,
-    'lastName': lastName,
-    'caption': caption,
-    'location': location,
-    'postID': postID,
-    'imageURL': imageURL,
-    'commentCount': commentCount,
-    'rating': rating,
-    'calories': calories,
-    'protein': protein,
-    'fats': fats,
-    'carbs': carbs,
-    'sugar': sugar,
-    'postTime': postTime,
-    'likedBy': likedBy,
-  };
+        'firstName': firstName,
+        'lastName': lastName,
+        'caption': caption,
+        'location': location,
+        'postID': postID,
+        'imageURL': imageURL,
+        'commentCount': commentCount,
+        'rating': rating,
+        'calories': calories,
+        'protein': protein,
+        'fats': fats,
+        'carbs': carbs,
+        'sugar': sugar,
+        'postTime': postTime,
+        'likedBy': likedBy,
+      };
 
   static PostData fromJson(Map<String, dynamic> data) {
     return PostData(

@@ -96,7 +96,8 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
-                        offset: const Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ]
                   : null,
@@ -136,7 +137,8 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
-                        offset: const Offset(0, 3), // changes position of shadow
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
             ),

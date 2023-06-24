@@ -49,8 +49,8 @@ class SettingsPage extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium(
-                          "Account Settings", context),
+                      child:
+                          Utils.createTitleMedium("Account Settings", context),
                     ),
                     settingsTile("Configure Profile", placeholderPage),
                     settingsTile("Change Email/Password", placeholderPage),

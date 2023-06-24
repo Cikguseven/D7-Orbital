@@ -1,11 +1,9 @@
 import 'package:my_first_flutter/food_data.dart';
-import 'package:universal_io/io.dart' as i;
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/post_data.dart';
 import 'package:my_first_flutter/user_data.dart';
@@ -21,8 +19,19 @@ class ShareFoodPage extends StatefulWidget {
   // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
   XFile? image;
   final UserData user;
+
   FoodData fd;
-  ShareFoodPage({Key? key, required this.image, required this.user, required this.fd})
+
+  final String postID;
+  final String imageURL;
+
+  ShareFoodPage(
+      {Key? key,
+      required this.image,
+      required this.user,
+      required this.fd,
+      required this.postID,
+      required this.imageURL})
       : super(key: key);
 
   @override
@@ -30,7 +39,7 @@ class ShareFoodPage extends StatefulWidget {
 }
 
 class _ShareFoodPageState extends State<ShareFoodPage> {
-  var uuid = const Uuid();
+  Uuid uuid = const Uuid();
   final captionController = TextEditingController();
   int _rating = 3;
 
@@ -105,8 +114,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                               .elevatedButtonTheme
                               .style
                               ?.copyWith(
-                                backgroundColor:
-                                    const MaterialStatePropertyAll(Colors.white),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    Colors.white),
                                 textStyle: MaterialStatePropertyAll(
                                   TextStyle(
                                       foreground: Paint()
@@ -153,20 +162,15 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      String id = uuid.v4();
-      String imagePath = 'posts/$id.jpg';
-      Reference ref = FirebaseStorage.instance.ref().child(imagePath);
-      await ref.putFile(i.File(widget.image!.path));
-      String imageURL = await ref.getDownloadURL();
-
-      final docPost = FirebaseFirestore.instance.collection('posts').doc(id);
+      final docPost =
+          FirebaseFirestore.instance.collection('posts').doc(widget.postID);
       final PostData newPost = PostData(
         firstName: widget.user.firstName,
         lastName: widget.user.lastName,
         caption: captionController.text.trim(),
         location: 'Singapore',
-        postID: id,
-        imageURL: imageURL,
+        postID: widget.postID,
+        imageURL: widget.imageURL,
         commentCount: 0,
         rating: _rating,
         calories: widget.fd.energy,
