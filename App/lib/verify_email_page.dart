@@ -81,10 +81,11 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         : Scaffold(
             body: Column(
               children: [
-                Utils.createVerticalSpace(18),
-                Image.asset("assets/MakeItCountLogo.png"),
+                Utils.createVerticalSpace(60),
+                Image.asset("assets/NewLogoNoBG.png"),
+                Utils.createVerticalSpace(60),
                 Utils.createHeadlineMedium("Verify Email", context),
-                Utils.createVerticalSpace(80),
+                Utils.createVerticalSpace(70),
                 Utils.createTitleMedium(
                     "A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}",
                     context),

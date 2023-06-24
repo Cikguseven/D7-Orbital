@@ -33,10 +33,9 @@ class _LoginWidgetState extends State<LoginWidget> {
           hasScrollBody: false,
           child: Column(
             children: [
-              Utils.createVerticalSpace(18),
-              Image.asset("assets/MakeItCountLogo.png"),
-              Utils.createHeadlineMedium("Make it Count", context),
-              Utils.createVerticalSpace(26),
+              Utils.createVerticalSpace(60),
+              Image.asset("assets/NewLogoNoBG.png"),
+              Utils.createVerticalSpace(50),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
