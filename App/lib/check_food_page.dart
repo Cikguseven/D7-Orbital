@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +10,34 @@ import 'food_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
 Widget foodDataWidget(
-    String title, double field1, String field2, bool isEnergy, BuildContext context) {
-  String unit1 = "kJ";
-  String unit2 = "kcal";
-  if (!isEnergy) {
-    unit1 = "g";
-    unit2 = "";
+    String title, dynamic value, UserData user, BuildContext context) {
+  String unit = "g";
+  String percentIntake = '';
+
+  switch(title) {
+    case "Energy": {
+      percentIntake = (value*100/user.rmr).toStringAsFixed(1);
+      unit = "kcal";
+      break;
+    }
+    case "Protein": {
+      percentIntake = (value*100/user.proteinIntake).toStringAsFixed(1);
+      break;
+    }
+    case "Fats": {
+      percentIntake = (value*100/user.fatsIntake).toStringAsFixed(1);
+      break;
+    }
+    case "Carbs": {
+      percentIntake = (value*100/user.carbsIntake).toStringAsFixed(1);
+      break;
+    }
+    case "Sugar": {
+      percentIntake = (value*100/user.sugarIntake).toStringAsFixed(1);
+      break;
+    }
   }
+
   return Container(
     // color: , // TODO: different colours for different levels
     margin: const EdgeInsets.symmetric(horizontal: 2),
@@ -29,17 +52,16 @@ Widget foodDataWidget(
       children: [
         Utils.createTitleSmall(title, context),
         Utils.createVerticalSpace(12),
-        Utils.createLabelLarge("${field1.round().toString()} $unit1", context),
-        Utils.createVerticalSpace(4),
-        Utils.createLabelLarge("$field2 $unit2", context),
-        Utils.createVerticalSpace(12),
+        Utils.createLabelLarge("${value.round().toString()} $unit", context),
+        Utils.createVerticalSpace(10),
         Container(
           height: 1.0,
           width: 62,
           color: Colors.black,
         ),
-        Utils.createVerticalSpace(4),
-        Utils.createTitleSmall("temp%", context),
+        Utils.createVerticalSpace(5),
+        Utils.createTitleSmall("${percentIntake}%", context),
+        Utils.createVerticalSpace(5),
         // TODO: Have a global access to user so we can get his information from any page in the app, useful here for calculating % target
       ],
     ),
@@ -47,21 +69,16 @@ Widget foodDataWidget(
 }
 
 Widget allFoodDataWidget(
-  int calories, double protein, double fats, double carbs, double sugar, BuildContext context
+  int calories, double protein, double fats, double carbs, double sugar, UserData user, BuildContext context
 ) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      foodDataWidget("Energy", calories * 4.184,
-          calories.toString(), true, context),
-      foodDataWidget(
-          "Protein", protein, "H/M/L", false, context),
-      foodDataWidget(
-          "Fat", fats, "H/M/L", false, context),
-      foodDataWidget(
-          "Carbs", carbs, "H/M/L", false, context),
-      foodDataWidget(
-          "Sugar", sugar, "H/M/L", false, context),
+      foodDataWidget("Energy", calories, user, context),
+      foodDataWidget("Protein", protein, user, context),
+      foodDataWidget("Fats", fats, user, context),
+      foodDataWidget("Carbs", carbs, user, context),
+      foodDataWidget("Sugar", sugar, user, context),
     ],
   );
 }
@@ -114,28 +131,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           Utils.createVerticalSpace(16),
 
           // Nutrition bar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Energy
-              foodDataWidget("Energy", widget.fd.energyKJ,
-                  "${widget.fd.energy}", true, context),
-
-              // Protein
-              foodDataWidget(
-                  "Protein", widget.fd.protein, "H/M/L", false, context),
-
-              // Fat
-              foodDataWidget("Fat", widget.fd.fats, "H/M/L", false, context),
-
-              // Carbs
-              foodDataWidget("Carbs", widget.fd.carbs, "H/M/L", false, context),
-
-              // Sugar
-              foodDataWidget("Sugar", widget.fd.sugar, "H/M/L", false, context),
-            ],
-          ),
-          Utils.createVerticalSpace(52),
+          allFoodDataWidget(widget.fd.energy, widget.fd.protein, widget.fd.fats, widget.fd.carbs, widget.fd.sugar, widget.user, context),
 
           // Elevated button (Edit food item)
           Expanded(
@@ -188,7 +184,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     "Confirm",
                   ),
                 ),
-                Utils.createVerticalSpace(52),
+                Utils.createVerticalSpace(42),
               ],
             ),
           ),

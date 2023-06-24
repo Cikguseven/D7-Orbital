@@ -11,7 +11,6 @@ import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart' as i;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
@@ -206,13 +205,12 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     await ref.putFile(i.File(image.path));
     String imageURL = await ref.getDownloadURL();
 
-    print(imageURL);
-
+    // Load AI classifier and obtain prediction of food from image
     Classifier? classifier = await Classifier.loadWith(labelsFileName: 'assets/labels.txt', modelFileName: 'food-classifier.tflite');
     img.Image imageInput = img.decodeImage(File(image.path).readAsBytesSync())!;
     String? foodItem = classifier?.predict(imageInput);
 
-    // Query nutritionix database for nutritional information of predicted food.
+    // Nutritionix api to query nutritional information of predicted food.
     if (foodItem != null) {
       Uri nutritionix = Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
       String query = jsonEncode({"query": foodItem});
@@ -221,28 +219,17 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         body: query,);
 
       if (nutritionInfo.statusCode == 200) {
-        print('d');
-
         Map<String, dynamic> nutritionixJson = jsonDecode(nutritionInfo.body);
         predictedFood = FoodData(
             name: foodItem,
-            energy: nutritionixJson['nf_calories'],
-            protein: nutritionixJson['nf_protein'],
-            fats: nutritionixJson['nf_total_fat'],
-            carbs: nutritionixJson['nf_total_carbohydrate'],
-            sugar: nutritionixJson['nf_sugars']
+            energy: nutritionixJson['foods'][0]['nf_calories'].toInt(),
+            protein: nutritionixJson['foods'][0]['nf_protein'].toDouble(),
+            fats: nutritionixJson['foods'][0]['nf_total_fat'].toDouble(),
+            carbs: nutritionixJson['foods'][0]['nf_total_carbohydrate'].toDouble(),
+            sugar: nutritionixJson['foods'][0]['nf_sugars'].toDouble(),
         );
-      } else {
-        print('e1');
-
-        throw Exception('Unable to predict food nutrition.');
       }
-    } else {
-      print('e2');
-
-      throw Exception('Unable to predict food nutrition.');
     }
-    print('f');
 
     Navigator.push(
       context,

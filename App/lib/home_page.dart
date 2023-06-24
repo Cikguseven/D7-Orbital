@@ -186,7 +186,7 @@ class PostCard extends StatelessWidget {
                   children: [
                     // Nutrition bar
                     allFoodDataWidget(post.calories, post.protein, post.fats,
-                        post.carbs, post.sugar, context),
+                        post.carbs, post.sugar, user, context),
                     Utils.createVerticalSpace(15),
                   ]),
             ],

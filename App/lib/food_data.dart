@@ -45,10 +45,8 @@ class FoodData {
 
   double get energyKJ => energy * 4.184;
 
-  @override
-  String toString() {
-    return "Name: $name, Energy: $energy, Protein: $protein, Fat: $fats, Carb: $carbs, Sugar: $sugar";
-  } // kcal * 4.184 = kJ
-
-
+  // @override
+  // String toString() {
+  //   return "Name: $name, Energy: $energy, Protein: $protein, Fat: $fats, Carb: $carbs, Sugar: $sugar";
+  // } // kcal * 4.184 = kJ
 }

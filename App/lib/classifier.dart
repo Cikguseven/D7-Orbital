@@ -1,10 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
-
 import 'classifier_category.dart';
 import 'classifier_model.dart';
 
@@ -44,15 +42,9 @@ class Classifier {
     final inputShape = interpreter.getInputTensor(0).shape;
     final outputShape = interpreter.getOutputTensor(0).shape;
 
-    debugPrint('Input shape: $inputShape');
-    debugPrint('Output shape: $outputShape');
-
     // Get input and output type from the model
     final inputType = interpreter.getInputTensor(0).type;
     final outputType = interpreter.getOutputTensor(0).type;
-
-    debugPrint('Input type: $inputType');
-    debugPrint('Output type: $outputType');
 
     return ClassifierModel(
       interpreter: interpreter,
@@ -73,18 +65,8 @@ class Classifier {
   }
 
   String predict(Image image) {
-    debugPrint(
-      'Image: ${image.width}x${image.height}, '
-          'size: ${image.length} bytes',
-    );
-
     // Load the image and convert it to TensorImage for TensorFlow Input
     final inputImage = _preProcessInput(image);
-
-    debugPrint(
-      'Pre-processed image: ${inputImage.width}x${inputImage.height}, '
-          'size: ${inputImage.buffer.lengthInBytes} bytes',
-    );
 
     // Define the output buffer
     final outputBuffer = TensorBuffer.createFixedSize(
@@ -130,9 +112,6 @@ class Classifier {
     final resizeOp = ResizeOp(shapeLength, shapeLength, ResizeMethod.BILINEAR);
 
     // #4
-    final normalizeOp = NormalizeOp(127.5, 127.5);
-
-    // #5
     final imageProcessor = ImageProcessorBuilder()
         .add(cropOp)
         .add(resizeOp)
@@ -140,7 +119,7 @@ class Classifier {
 
     imageProcessor.process(inputTensor);
 
-    // #6
+    // #5
     return inputTensor;
   }
 }

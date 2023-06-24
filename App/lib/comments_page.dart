@@ -107,7 +107,7 @@ class _CommentsState extends State<CommentsWidget> {
         itemCount: comments.data.length + 1,
         itemBuilder: (BuildContext context, int index) {
           if (index == 0) {
-            return TopCommentCard(post: widget.post);
+            return TopCommentCard(post: widget.post, user: widget.user);
           }
           return CommentCard(
             comment: comments.data![index - 1],
@@ -166,9 +166,11 @@ class TopCommentCard extends StatelessWidget {
   const TopCommentCard({
     super.key,
     required this.post,
+    required this.user,
   });
 
   final PostData post;
+  final UserData user;
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +240,7 @@ class TopCommentCard extends StatelessWidget {
 
                 // Nutrition bar
                 allFoodDataWidget(
-                  post.calories, post.protein, post.fats, post.carbs, post.sugar, context
+                  post.calories, post.protein, post.fats, post.carbs, post.sugar, user, context
                 ),
               ],
             ),
@@ -264,7 +266,7 @@ class CommentCard extends StatelessWidget {
               radius: 20,
               // Change to user's profile photo eventually
               backgroundImage: AssetImage(
-                "images/Cat.jpeg",
+                "images/Dog.jpeg",
               )),
         ),
         Expanded(
