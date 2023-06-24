@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '32968718280',
     projectId: 'd7orbital-13611',
     storageBucket: 'd7orbital-13611.appspot.com',
-    iosClientId: '32968718280-mi3dg3qudhi0kb6tgsudueajotb1ve09.apps.googleusercontent.com',
+    iosClientId:
+        '32968718280-mi3dg3qudhi0kb6tgsudueajotb1ve09.apps.googleusercontent.com',
     iosBundleId: 'com.example.myFirstFlutter',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '32968718280',
     projectId: 'd7orbital-13611',
     storageBucket: 'd7orbital-13611.appspot.com',
-    iosClientId: '32968718280-mi3dg3qudhi0kb6tgsudueajotb1ve09.apps.googleusercontent.com',
+    iosClientId:
+        '32968718280-mi3dg3qudhi0kb6tgsudueajotb1ve09.apps.googleusercontent.com',
     iosBundleId: 'com.example.myFirstFlutter',
   );
 }

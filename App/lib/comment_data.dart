@@ -2,7 +2,8 @@ class CommentData {
   static final CommentData newComment = CommentData(
     firstName: 'John',
     lastName: 'Doe',
-    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
+    comment:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
     postTime: DateTime.now(),
   );
 
@@ -10,7 +11,6 @@ class CommentData {
   final String lastName;
   final String comment;
   final DateTime postTime;
-
 
   CommentData({
     required this.firstName,
@@ -20,11 +20,11 @@ class CommentData {
   });
 
   Map<String, dynamic> toJson() => {
-    'firstName': firstName,
-    'lastName': lastName,
-    'comment': comment,
-    'postTime': postTime,
-  };
+        'firstName': firstName,
+        'lastName': lastName,
+        'comment': comment,
+        'postTime': postTime,
+      };
 
   static CommentData fromJson(Map<String, dynamic> data) {
     return CommentData(

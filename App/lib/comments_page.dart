@@ -239,9 +239,8 @@ class TopCommentCard extends StatelessWidget {
                 Utils.createVerticalSpace(15),
 
                 // Nutrition bar
-                allFoodDataWidget(
-                  post.calories, post.protein, post.fats, post.carbs, post.sugar, user, context
-                ),
+                allFoodDataWidget(post.calories, post.protein, post.fats,
+                    post.carbs, post.sugar, user, context),
               ],
             ),
           ],

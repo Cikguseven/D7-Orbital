@@ -25,10 +25,10 @@ class _MePageState extends State<MePage> {
     String greetings = now.hour < 3
         ? "Good Night"
         : now.hour < 12
-        ? "Good Morning"
-        : now.hour < 18
-        ? "Good Afternoon"
-        : "Good Evening";
+            ? "Good Morning"
+            : now.hour < 18
+                ? "Good Afternoon"
+                : "Good Evening";
 
     Text onTrackIndicator; // TODO: How to track on track or not?
 
@@ -38,13 +38,13 @@ class _MePageState extends State<MePage> {
           onPressed: () {
             /// Placeholder testing notifications
             setState(
-                  () {
+              () {
                 numNotifications++;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
-                        const CSVUploadWidget()));
+                            const CSVUploadWidget()));
               },
             );
           },
@@ -57,7 +57,7 @@ class _MePageState extends State<MePage> {
             icon: const Icon(Icons.mail_outline_rounded),
             onPressed: () {
               setState(
-                    () {
+                () {
                   numNotifications = 0;
                 },
               );
@@ -67,28 +67,28 @@ class _MePageState extends State<MePage> {
             children: [
               numNotifications != 0
                   ? Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 14,
-                    minHeight: 14,
-                  ),
-                  child: Text(
-                    '$numNotifications',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
+                      right: 11,
+                      top: 11,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: Text(
+                          '$numNotifications',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                   : Container(),
             ],
           ), // Notifications
@@ -123,7 +123,7 @@ class _MePageState extends State<MePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Utils.createHeadlineSmall(
-                  // Limit the length of name displayed to 10
+                    // Limit the length of name displayed to 10
                     "$greetings\n${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!",
                     context,
                     align: TextAlign.start),
@@ -133,8 +133,8 @@ class _MePageState extends State<MePage> {
                 Text(
                   "You are on track!",
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.lightGreen,
-                  ),
+                        color: Colors.lightGreen,
+                      ),
                 ),
                 Utils.createVerticalSpace(26),
                 Row(
@@ -146,18 +146,19 @@ class _MePageState extends State<MePage> {
                         aspectRatio: 1,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                            padding:
+                                const MaterialStatePropertyAll(EdgeInsets.zero),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             minimumSize:
-                            const MaterialStatePropertyAll(Size.infinite),
+                                const MaterialStatePropertyAll(Size.infinite),
                             foregroundColor:
-                            const MaterialStatePropertyAll(Colors.black),
+                                const MaterialStatePropertyAll(Colors.black),
                             backgroundColor:
-                            const MaterialStatePropertyAll(Colors.orange),
+                                const MaterialStatePropertyAll(Colors.orange),
                           ),
                           onPressed: () {
                             Utils.showSnackBar("Calories");
@@ -173,7 +174,7 @@ class _MePageState extends State<MePage> {
                               size: 48,
                             ),
                             footer:
-                            Utils.createTitleSmall("Curr/Goal", context),
+                                Utils.createTitleSmall("Curr/Goal", context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -187,18 +188,19 @@ class _MePageState extends State<MePage> {
                         aspectRatio: 1,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                            padding:
+                                const MaterialStatePropertyAll(EdgeInsets.zero),
                             shape: MaterialStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             minimumSize:
-                            const MaterialStatePropertyAll(Size.infinite),
+                                const MaterialStatePropertyAll(Size.infinite),
                             foregroundColor:
-                            const MaterialStatePropertyAll(Colors.black),
+                                const MaterialStatePropertyAll(Colors.black),
                             backgroundColor:
-                            const MaterialStatePropertyAll(Colors.purple),
+                                const MaterialStatePropertyAll(Colors.purple),
                           ),
                           onPressed: () {
                             Utils.showSnackBar("Activity");
@@ -214,7 +216,7 @@ class _MePageState extends State<MePage> {
                               size: 48,
                             ),
                             footer:
-                            Utils.createTitleSmall("Curr/Goal", context),
+                                Utils.createTitleSmall("Curr/Goal", context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -254,9 +256,9 @@ class _MePageState extends State<MePage> {
                             .elevatedButtonTheme
                             .style
                             ?.copyWith(
-                          backgroundColor:
-                          const MaterialStatePropertyAll(Colors.green),
-                        ),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll(Colors.green),
+                            ),
                         onPressed: () {},
                         child: const Text("Check in for +50 xp"),
                       ),
@@ -281,7 +283,8 @@ class _MePageState extends State<MePage> {
                       color: Colors.blueAccent,
                     ),
                     Utils.createHorizontalSpace(20),
-                    const Icon(Icons.camera_alt, size: 48, color: Colors.deepOrange),
+                    const Icon(Icons.camera_alt,
+                        size: 48, color: Colors.deepOrange),
                     Utils.createHorizontalSpace(20),
                     const Icon(
                       Icons.sports_soccer_rounded,

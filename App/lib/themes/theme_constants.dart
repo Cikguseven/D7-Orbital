@@ -21,8 +21,12 @@ ThemeData lightTheme = ThemeData(
         ),
       ),
       backgroundColor: MaterialStateProperty.all<Color>(NUS_BLUE),
-      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
-          foreground: Paint()..color = Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+      textStyle: MaterialStateProperty.all<TextStyle>(
+        TextStyle(
+            foreground: Paint()..color = Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+      ),
     ),
   ),
   textTheme: const TextTheme(
@@ -30,16 +34,19 @@ ThemeData lightTheme = ThemeData(
     headlineMedium: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
 
     // Used for smaller header
-    headlineSmall: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+    headlineSmall: TextStyle(
+        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
 
     // Used for regular text
-    titleMedium: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+    titleMedium: TextStyle(
+        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
 
     // Used for smaller regular text
     titleSmall: TextStyle(color: Colors.black, fontSize: 14),
 
     // Used for text fields text
-    bodySmall: TextStyle(color: Color(0xFF989898), fontSize: 14), // GREY
+    bodySmall: TextStyle(color: Color(0xFF989898), fontSize: 14),
+    // GREY
 
     // Used for nutrition value labels (e.g. Energy)
     labelLarge: TextStyle(color: Colors.black, fontSize: 12),

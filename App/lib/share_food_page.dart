@@ -18,7 +18,12 @@ class ShareFoodPage extends StatefulWidget {
   final String postID;
   final String imageURL;
 
-  ShareFoodPage({Key? key, required this.image, required this.user, required this.postID, required this.imageURL})
+  ShareFoodPage(
+      {Key? key,
+      required this.image,
+      required this.user,
+      required this.postID,
+      required this.imageURL})
       : super(key: key);
 
   @override
@@ -101,8 +106,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                               .elevatedButtonTheme
                               .style
                               ?.copyWith(
-                                backgroundColor:
-                                    const MaterialStatePropertyAll(Colors.white),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    Colors.white),
                                 textStyle: MaterialStatePropertyAll(
                                   TextStyle(
                                       foreground: Paint()
@@ -149,7 +154,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      final docPost = FirebaseFirestore.instance.collection('posts').doc(widget.postID);
+      final docPost =
+          FirebaseFirestore.instance.collection('posts').doc(widget.postID);
       final PostData newPost = PostData(
         firstName: widget.user.firstName,
         lastName: widget.user.lastName,

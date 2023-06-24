@@ -13,8 +13,7 @@ class StarRating extends StatelessWidget {
         Icons.star_rate,
         color: Colors.grey,
       );
-    }
-    else if (index > rating - 1) {
+    } else if (index > rating - 1) {
       icon = const Icon(
         Icons.star_rate,
         color: Colors.blue,
@@ -32,6 +31,8 @@ class StarRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: List.generate(starCount, (index) => buildStar(context, index)));
+    return Row(
+        children:
+            List.generate(starCount, (index) => buildStar(context, index)));
   }
 }

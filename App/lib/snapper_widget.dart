@@ -18,7 +18,6 @@ import 'package:my_first_flutter/config/config.dart' as config;
 import 'classifier.dart';
 import 'package:image/image.dart' as img;
 
-
 class SnapperWidget extends StatefulWidget {
   final UserData user;
 
@@ -39,7 +38,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   // CameraController? cameraController;
 
   void startCamera() async {
-
     // TODO: Note. Camera library causes a lot of dequeue buffer error messages
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
@@ -176,7 +174,14 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CheckFoodPage(image: null, fd: selectedFoodData, user: widget.user, postID: id, imageURL: config.noImageAvailable,),
+        builder: (context) => CheckFoodPage(
+          image: null,
+          fd: selectedFoodData,
+          user: widget.user,
+          postID: id,
+          imageURL:
+              "https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092",
+        ),
       ),
     );
   }
@@ -206,27 +211,37 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     String imageURL = await ref.getDownloadURL();
 
     // Load AI classifier and obtain prediction of food from image
-    Classifier? classifier = await Classifier.loadWith(labelsFileName: 'assets/labels.txt', modelFileName: 'food-classifier.tflite');
+    Classifier? classifier = await Classifier.loadWith(
+        labelsFileName: 'assets/labels.txt',
+        modelFileName: 'food-classifier.tflite');
     img.Image imageInput = img.decodeImage(File(image.path).readAsBytesSync())!;
     String? foodItem = classifier?.predict(imageInput);
 
     // Nutritionix api to query nutritional information of predicted food.
     if (foodItem != null) {
-      Uri nutritionix = Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
+      Uri nutritionix =
+          Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
       String query = jsonEncode({"query": foodItem});
-      Response nutritionInfo = await http.post(nutritionix,
-        headers: {"Content-Type":"application/json", "x-app-id":config.nutritionixAppID, "x-app-key":config.nutritionixAppKey},
-        body: query,);
+      Response nutritionInfo = await http.post(
+        nutritionix,
+        headers: {
+          "Content-Type": "application/json",
+          "x-app-id": config.nutritionixAppID,
+          "x-app-key": config.nutritionixAppKey
+        },
+        body: query,
+      );
 
       if (nutritionInfo.statusCode == 200) {
         Map<String, dynamic> nutritionixJson = jsonDecode(nutritionInfo.body);
         predictedFood = FoodData(
-            name: foodItem,
-            energy: nutritionixJson['foods'][0]['nf_calories'].toInt(),
-            protein: nutritionixJson['foods'][0]['nf_protein'].toDouble(),
-            fats: nutritionixJson['foods'][0]['nf_total_fat'].toDouble(),
-            carbs: nutritionixJson['foods'][0]['nf_total_carbohydrate'].toDouble(),
-            sugar: nutritionixJson['foods'][0]['nf_sugars'].toDouble(),
+          name: foodItem,
+          energy: nutritionixJson['foods'][0]['nf_calories'].toInt(),
+          protein: nutritionixJson['foods'][0]['nf_protein'].toDouble(),
+          fats: nutritionixJson['foods'][0]['nf_total_fat'].toDouble(),
+          carbs:
+              nutritionixJson['foods'][0]['nf_total_carbohydrate'].toDouble(),
+          sugar: nutritionixJson['foods'][0]['nf_sugars'].toDouble(),
         );
       }
     }
@@ -234,8 +249,12 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) =>
-            CheckFoodPage(image: image, fd: predictedFood, user: widget.user, postID: postID, imageURL: imageURL),
+        builder: (BuildContext context) => CheckFoodPage(
+            image: image,
+            fd: predictedFood,
+            user: widget.user,
+            postID: postID,
+            imageURL: imageURL),
       ),
     );
   }
