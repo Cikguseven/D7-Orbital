@@ -21,22 +21,22 @@ Widget foodDataWidget(
       }
     case "Protein":
       {
-        percentIntake = (value * 100 / user.proteinIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.proteinGoal).toStringAsFixed(1);
         break;
       }
     case "Fats":
       {
-        percentIntake = (value * 100 / user.fatsIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.fatsGoal).toStringAsFixed(1);
         break;
       }
     case "Carbs":
       {
-        percentIntake = (value * 100 / user.carbsIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.carbsGoal).toStringAsFixed(1);
         break;
       }
     case "Sugar":
       {
-        percentIntake = (value * 100 / user.sugarIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.sugarGoal).toStringAsFixed(1);
         break;
       }
   }

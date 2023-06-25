@@ -1,11 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:my_first_flutter/day_log.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_first_flutter/auth_widget.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/verify_email_page.dart';
 import 'package:my_first_flutter/themes/theme_constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,53 +33,6 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      // theme: ThemeData(
-      //   primarySwatch: Colors.orange,
-      //     textTheme: const TextTheme(
-      //       displaySmall: TextStyle(),
-      //       displayMedium: TextStyle(),
-      //       displayLarge: TextStyle(),
-      //       headlineSmall: TextStyle(),
-      //       headlineMedium: TextStyle(),
-      //       headlineLarge: TextStyle(),
-      //       titleSmall: TextStyle(),
-      //       titleMedium: TextStyle(),
-      //       titleLarge: TextStyle(),
-      //       bodySmall: TextStyle(),
-      //       bodyMedium: TextStyle(),
-      //       bodyLarge: TextStyle(),
-      //       labelSmall: TextStyle(),
-      //       labelMedium: TextStyle(),
-      //       labelLarge: TextStyle(),
-      //     ).apply(
-      //       bodyColor: Colors.black,
-      //       displayColor: Colors.black,
-      //     ),
-      // ),
-      // darkTheme: ThemeData(
-      //   primarySwatch: Colors.teal,
-      //   scaffoldBackgroundColor: Colors.black38,
-      //   textTheme: const TextTheme(
-      //     displaySmall: TextStyle(),
-      //     displayMedium: TextStyle(),
-      //     displayLarge: TextStyle(),
-      //     headlineSmall: TextStyle(),
-      //     headlineMedium: TextStyle(),
-      //     headlineLarge: TextStyle(),
-      //     titleSmall: TextStyle(),
-      //     titleMedium: TextStyle(),
-      //     titleLarge: TextStyle(),
-      //     bodySmall: TextStyle(),
-      //     bodyMedium: TextStyle(),
-      //     bodyLarge: TextStyle(),
-      //     labelSmall: TextStyle(),
-      //     labelMedium: TextStyle(),
-      //     labelLarge: TextStyle(),
-      //   ).apply(
-      //     bodyColor: Colors.white70,
-      //     displayColor: Colors.white70,
-      //   ),
-      // ),
       home: const MainPage(),
     );
   }
@@ -87,6 +44,17 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // body: FloatingActionButton(
+      //   onPressed: (){
+      //     DayLog dayLog = DayLog(["123", "124", "125", "126"], 100, 2, 35, 4, 5);
+      //     final docUser = FirebaseFirestore.instance
+      //         .collection('userData')
+      //         .doc("myDayLogTest");
+      //     // docUser.snapshots().forEach((element) {print(element.data());});
+      //     // docUser.get().then((value) => print(value));
+      //     // docUser.update(dayLog.toJson());
+      //   },
+      // ),
       // appBar: AppBar(
       //   title: const Text("Donovan's App"),
       // ),
@@ -94,8 +62,10 @@ class MainPage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              // print("#");
               return const VerifyEmailPage();
             } else {
+              // print("@");
               return const AuthPage();
             }
           }),

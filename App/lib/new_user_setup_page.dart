@@ -286,7 +286,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Sedentary'),
                           subtitle: const Text('Little to no exercise'),
-                          value: ActivityLevel["SEDENTARY"],
+                          value: ActivityMultiplier.SEDENTARY,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -300,7 +300,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Lightly active'),
                           subtitle: const Text('Light exercise 1–3 days/week'),
-                          value: ActivityLevel["LIGHTLY_ACTIVE"],
+                          value: ActivityMultiplier.LIGHTLY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -315,7 +315,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           title: const Text('Moderately active'),
 
                           subtitle: const Text('Moderate exercise 3-5 days/week'),
-                          value: ActivityLevel["MODERATELY_ACTIVE"],
+                          value: ActivityMultiplier.MODERATELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -329,7 +329,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Very active'),
                           subtitle: const Text('Heavy exercise 6-7 days/week'),
-                          value: ActivityLevel["VERY_ACTIVE"],
+                          value: ActivityMultiplier.VERY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -343,7 +343,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Extremely  active'),
                           subtitle: const Text('Strenuous training 2 times/day'),
-                          value: ActivityLevel["EXTREMELY_ACTIVE"],
+                          value: ActivityMultiplier.EXTREMELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -404,7 +404,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       baseRMR -= 161;
     }
     int rmr = (baseRMR * activityMultiplier).round();
-    int sugarIntake = (rmr / 40).round();
+    int sugarGoal = (rmr / 40).round();
     double proteinMultiplier;
     // unable to use switch for comparing double using ==
     if (activityMultiplier == 1.2) {
@@ -418,9 +418,9 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
     } else {
       proteinMultiplier = 1.2;
     }
-    int proteinIntake = (proteinMultiplier * weight).round();
-    int fatsIntake = (rmr / 30).round();
-    int carbsIntake = (rmr / 20 * 3).round();
+    int proteinGoal = (proteinMultiplier * weight).round();
+    int fatsGoal = (rmr / 30).round();
+    int carbsGoal = (rmr / 20 * 3).round();
 
     showDialog(
       context: context,
@@ -428,18 +428,14 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      final user = UserData(
+      final user = UserData.setupNewUser(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
         gender: genderSelected[0] ? "Male" : "Female",
         birthday: birthday,
         height: height,
         weight: weight,
-        rmr: rmr,
-        sugarIntake: sugarIntake,
-        proteinIntake: proteinIntake,
-        fatsIntake: fatsIntake,
-        carbsIntake: carbsIntake,
+        activityMultiplier: activityMultiplier,
       );
       final docUser = FirebaseFirestore.instance
           .collection('userData')

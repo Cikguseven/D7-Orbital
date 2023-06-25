@@ -1,3 +1,4 @@
+import 'package:my_first_flutter/day_log.dart';
 import 'package:my_first_flutter/food_data.dart';
 
 import 'package:camera/camera.dart';
@@ -162,6 +163,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
+      // Share with community
       final docPost =
           FirebaseFirestore.instance.collection('posts').doc(widget.postID);
       final PostData newPost = PostData(
@@ -182,6 +184,32 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         likedBy: [],
       );
       await docPost.set(newPost.toJson());
+
+      print(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
+      // Add to diary
+      final docDiary = FirebaseFirestore.instance
+          .collection('userData')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("diary")
+          .doc(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
+
+      late DayLog existingDayLog;
+      await docDiary.get().then((doc) {
+        if (doc.exists) {
+          existingDayLog = DayLog.fromJson(doc.data()!);
+        } else {
+          existingDayLog = DayLog.createNew();
+        }
+      });
+
+      existingDayLog.postIDs.add(widget.postID);
+      existingDayLog.caloriesIn += widget.fd.energy;
+      existingDayLog.proteinIn += widget.fd.protein;
+      existingDayLog.fatIn += widget.fd.fats;
+      existingDayLog.carbIn += widget.fd.carbs;
+      existingDayLog.sugarIn += widget.fd.sugar;
+
+      docDiary.set(existingDayLog.toJson());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {

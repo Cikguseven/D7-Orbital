@@ -33,7 +33,10 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   late Future<void> _initializeControllerFuture;
   Uuid uuid = const Uuid();
 
-  void startCamera() async {
+  Future<void> startCamera() async {
+    // final cameras = await availableCameras();
+    // _controller = CameraController(cameras.first, ResolutionPreset.medium);
+    // _initializeControllerFuture = _controller.initialize();
     final cameras = availableCameras();
     cameras.then((cams) {
       _controller = CameraController(
@@ -55,14 +58,16 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   @override
   void initState() {
-
-    startCamera();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await startCamera();
+      setState(() { });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("BUilding..");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Snap and Log'),
@@ -78,8 +83,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
+      body: StreamBuilder(
+        stream: Stream.fromFuture(_initializeControllerFuture),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             print("Done loading");
@@ -88,7 +93,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
               fit: StackFit.expand,
               // Might make the picture unusually elongated
               children: [
-                CameraPreview(_controller),
+                CameraPreview(_controller!),
                 const QRScannerOverlay(overlayColour: Colors.grey),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -147,7 +152,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
       // Attempt to take a picture and get the file `image`
       // where it was saved.
-      final image = await _controller.takePicture();
+      final image = await _controller?.takePicture();
 
       if (!mounted) return;
 
@@ -193,7 +198,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     checkFood(image);
   }
 
-  void checkFood(XFile image) async {
+  void checkFood(XFile? image) async {
+    if (image == null) return;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -244,6 +250,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         );
       }
     }
+
+    Navigator.pop(context); // remove spinner
 
     Navigator.push(
       context,

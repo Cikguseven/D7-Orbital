@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/home_page.dart';
 import 'package:my_first_flutter/user_data.dart';
@@ -26,17 +27,21 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    // print("APP");
     return Scaffold(
       body: StreamBuilder(
         stream: Stream.fromFuture(Utils.getUserData()),
         builder: (BuildContext context, user) {
           if (user.data == UserData.newUser) {
+            // print("new user");
             return const NewUserSetupPage();
           } else {
+            // print(user.data);
             if (user.data == null) {
+              // print("Null userdata");
               return const Scaffold();
             }
-
+            // print("Not null userdata");
             return Scaffold(
               body: screenNameToWidgetMap[selectedScreenName](user.data),
               bottomNavigationBar: BottomNavigationBar(

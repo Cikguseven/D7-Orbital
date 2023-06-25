@@ -126,11 +126,11 @@ class _LoginWidgetState extends State<LoginWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      // await FirebaseAuth.instance.signInWithEmailAndPassword(
-      //     email: emailController.text.trim(),
-      //     password: passwordController.text.trim());
-      await Utils.firebaseSignIn(
-          emailController.text.trim(), passwordController.text.trim());
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+      // await Utils.firebaseSignIn(
+      //     emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {
