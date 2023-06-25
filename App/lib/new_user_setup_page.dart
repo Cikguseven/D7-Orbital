@@ -6,7 +6,6 @@ import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/app.dart';
-import 'package:age_calculator/age_calculator.dart';
 
 class NewUserSetupPage extends StatefulWidget {
   const NewUserSetupPage({Key? key}) : super(key: key);
@@ -391,36 +390,6 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
     double height = double.parse(heightController.text.trim());
     double weight = double.parse(weightController.text.trim());
     String birthday = birthdayController.text.trim();
-    int birthYear = Utils.stringToDateTime(birthday).year;
-    int birthMonth = Utils.stringToDateTime(birthday).month;
-    int birthDay = Utils.stringToDateTime(birthday).day;
-    DateTime dtBirthday = DateTime(birthYear, birthMonth, birthDay);
-    DateDuration age = AgeCalculator.age(dtBirthday);
-    int yearsOld = age.years;
-    double baseRMR = 10 * weight + 6.25 * height - 5 * yearsOld;
-    if (genderSelected[0]) {
-      baseRMR += 5;
-    } else {
-      baseRMR -= 161;
-    }
-    int rmr = (baseRMR * activityMultiplier).round();
-    int sugarGoal = (rmr / 40).round();
-    double proteinMultiplier;
-    // unable to use switch for comparing double using ==
-    if (activityMultiplier == 1.2) {
-      proteinMultiplier = 0.8;
-    } else if (activityMultiplier == 1.375) {
-      proteinMultiplier = 0.9;
-    } else if (activityMultiplier == 1.55) {
-      proteinMultiplier = 1.0;
-    } else if (activityMultiplier == 1.725) {
-      proteinMultiplier = 1.1;
-    } else {
-      proteinMultiplier = 1.2;
-    }
-    int proteinGoal = (proteinMultiplier * weight).round();
-    int fatsGoal = (rmr / 30).round();
-    int carbsGoal = (rmr / 20 * 3).round();
 
     showDialog(
       context: context,

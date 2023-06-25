@@ -1,6 +1,4 @@
 import 'package:age_calculator/age_calculator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_first_flutter/post_data.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/day_log.dart';

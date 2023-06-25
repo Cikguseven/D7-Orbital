@@ -166,24 +166,24 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       // Share with community
       final docPost =
           FirebaseFirestore.instance.collection('posts').doc(widget.postID);
-      final PostData newPost = PostData(
-        firstName: widget.user.firstName,
-        lastName: widget.user.lastName,
-        caption: captionController.text.trim(),
-        location: 'Singapore',
-        postID: widget.postID,
-        imageURL: widget.imageURL,
-        commentCount: 0,
-        rating: _rating,
-        calories: widget.fd.energy,
-        protein: widget.fd.protein,
-        fats: widget.fd.fats,
-        carbs: widget.fd.carbs,
-        sugar: widget.fd.sugar,
-        postTime: DateTime.now(),
-        likedBy: [],
-      );
-      await docPost.set(newPost.toJson());
+      // final PostData newPost = PostData(
+      //   firstName: widget.user.firstName,
+      //   lastName: widget.user.lastName,
+      //   caption: captionController.text.trim(),
+      //   location: 'Singapore',
+      //   postID: widget.postID,
+      //   imageURL: widget.imageURL,
+      //   commentCount: 0,
+      //   rating: _rating,
+      //   calories: widget.fd.energy,
+      //   protein: widget.fd.protein,
+      //   fats: widget.fd.fats,
+      //   carbs: widget.fd.carbs,
+      //   sugar: widget.fd.sugar,
+      //   postTime: DateTime.now(),
+      //   likedBy: [],
+      // );
+      await docPost.set(PostData.testPost.toJson());
 
 
       // Add to diary

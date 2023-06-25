@@ -93,7 +93,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
               fit: StackFit.expand,
               // Might make the picture unusually elongated
               children: [
-                CameraPreview(_controller!),
+                CameraPreview(_controller),
                 const QRScannerOverlay(overlayColour: Colors.grey),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -152,7 +152,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
       // Attempt to take a picture and get the file `image`
       // where it was saved.
-      final image = await _controller?.takePicture();
+      final image = await _controller.takePicture();
 
       if (!mounted) return;
 

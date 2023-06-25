@@ -1,10 +1,10 @@
 class PostData {
-  static final PostData nonePost = PostData(
+  static final PostData testPost = PostData(
     firstName: 'John',
     lastName: 'Doe',
     caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
     location: 'Singapore',
-    postID: 'noID',
+    postID: 'testPost',
     commentCount: 0,
     rating: 5,
     calories: 1000,
