@@ -185,7 +185,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       );
       await docPost.set(newPost.toJson());
 
-      print(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
+
       // Add to diary
       final docDiary = FirebaseFirestore.instance
           .collection('userData')
