@@ -27,7 +27,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           : null;
 
   String? passwordValidator(String? pwd) =>
-      pwd != null && pwd.length < 6 ? 'Password needs > 6 characters' : null;
+      pwd != null && pwd.length < 6 ? 'Password needs at least 6 characters' : null;
 
   String? password2Validator(String? pwd2) =>
       pwd2 != passwordController.text.trim() ? "Password does not match" : null;
