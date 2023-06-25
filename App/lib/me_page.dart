@@ -1,17 +1,15 @@
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/csv_to_firebase.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'day_log.dart';
 
 class MePage extends StatefulWidget {
-  UserData user;
+  final UserData user;
 
   MePage({Key? key, required this.user}) : super(key: key);
 
@@ -28,23 +26,18 @@ class _MePageState extends State<MePage> {
   int experienceForNextLevel = 200; // TODO: IDC just make some tier progression and put that data somewhere
   
   void loadLastFoodImage() async {
-    print("AJSIOFAOFAFOA");
     final diary = widget.user.diary;
     if (diary.isEmpty) {
-      print("EMPTY DIARY");
       return;
     }
     final mostRecentDayLogPostIds = diary.last.postIDs;
     if (mostRecentDayLogPostIds.isEmpty) {
-      print("EMPTY POSTS");
       return;
     }
     imageURL = await Utils.getPostByID(mostRecentDayLogPostIds.last).then((value) => value?.imageURL);
-    print("BBBBBBBBBBBBBBB");
 
     setState(() {
       // to refresh page
-      print("ImageURL: $imageURL");
     });
   }
   

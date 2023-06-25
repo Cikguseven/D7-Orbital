@@ -91,6 +91,8 @@ dependencies:
 
   # For sending HTTP requests
   http: ^0.13.6
+
+  # For Tensorflow lite model
   tflite_flutter_helper: ^0.2.1
   tflite_flutter: ^0.9.5
 

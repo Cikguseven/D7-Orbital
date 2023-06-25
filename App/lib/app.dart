@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/home_page.dart';
 import 'package:my_first_flutter/user_data.dart';

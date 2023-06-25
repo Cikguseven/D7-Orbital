@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/post_data.dart';
-import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/star_rating.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -44,23 +43,10 @@ class _HomeWidgetState extends State<HomeWidget> {
     return StreamBuilder(
         stream: Stream.fromFuture(futurePosts),
         builder: (context, posts) {
-          print("FUTUREDDD");
           return Scaffold(
             appBar: AppBar(
               title: const Text("Make it Count"),
               centerTitle: true,
-              // actions: [
-              //   IconButton(
-              //     onPressed: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (BuildContext context) =>
-              //                   const SettingsPage()));
-              //     },
-              //     icon: const Icon(Icons.settings),
-              //   ),
-              // ],
             ),
             body: RefreshIndicator(
               onRefresh: _pullRefresh,
@@ -73,9 +59,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   // List view of posts loaded on refresh
   Widget _listView(AsyncSnapshot posts) {
     if (posts.hasData) {
-      print("HAS DATA~!");
-      print(posts.data!.length);
-      if (posts.data!.length == 0) { // TODO: Ask kieron if this is okay... technically the bug is obvious, if server reset to 0 post data, this will permanently refresh
+      if (posts.data!.length == 0) {
         _pullRefresh();
         sleep(Duration(milliseconds: 300));
       }
@@ -90,7 +74,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         physics: const AlwaysScrollableScrollPhysics(),
       );
     } else {
-      print("IM HERE");
       return const Scaffold();
     }
   }

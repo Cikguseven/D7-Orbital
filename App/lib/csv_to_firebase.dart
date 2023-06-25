@@ -61,7 +61,6 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
 
     setState(() {
       for (List<String> line in _csvData) {}
-      // because I return early if selectedFiles/bytes is null, wont be null
       selectedFileIdx = 0;
       selectedFileName = selectedFiles!.files.first.name;
       parseCSVToTable();
