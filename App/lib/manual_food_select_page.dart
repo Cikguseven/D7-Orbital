@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/food_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'food_data.dart';
+import 'utils.dart';
 
 class ManualFoodSelectPage extends StatefulWidget {
   const ManualFoodSelectPage({Key? key}) : super(key: key);

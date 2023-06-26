@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/auth_widget.dart';
-import 'package:my_first_flutter/themes/theme_constants.dart';
-import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/verify_email_page.dart';
+import 'auth_widget.dart';
+import 'themes/theme_constants.dart';
+import 'utils.dart';
+import 'verify_email_page.dart';
 
 import 'firebase_options.dart';
 

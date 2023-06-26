@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/settings_page.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'settings_page.dart';
+import 'user_data.dart';
+import 'utils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

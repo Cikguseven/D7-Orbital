@@ -2,7 +2,7 @@
     package="com.example.my_first_flutter">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="my_first_flutter"
+        android:label="Make it Count"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

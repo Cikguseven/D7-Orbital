@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_first_flutter/app.dart';
-import 'package:my_first_flutter/main.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'app.dart';
+import 'main.dart';
+import 'user_data.dart';
+import 'utils.dart';
 
 class NewUserSetupPage extends StatefulWidget {
   const NewUserSetupPage({Key? key}) : super(key: key);

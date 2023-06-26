@@ -8,17 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
-import 'package:my_first_flutter/check_food_page.dart';
-import 'package:my_first_flutter/config/config.dart' as config;
-import 'package:my_first_flutter/food_data.dart';
-import 'package:my_first_flutter/manual_food_select_page.dart';
-import 'package:my_first_flutter/scanner_overlay.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
 import 'package:universal_io/io.dart' as i;
 import 'package:uuid/uuid.dart';
 
+import 'check_food_page.dart';
 import 'classifier.dart';
+import 'config/config.dart' as config;
+import 'food_data.dart';
+import 'manual_food_select_page.dart';
+import 'scanner_overlay.dart';
+import 'user_data.dart';
+import 'utils.dart';
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -94,27 +94,20 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 4,
+                    SizedBox(
+                      height: null,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: ElevatedButton.icon(
+                        onPressed: analyseAndLogCallBack,
+                        icon: const Icon(Icons.edit, size: 24),
+                        label: const Text(
+                          "Log it",
                         ),
-                        SizedBox(
-                          height: null,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: ElevatedButton.icon(
-                            onPressed: analyseAndLogCallBack,
-                            icon: const Icon(Icons.edit, size: 24),
-                            label: const Text(
-                              "Log it",
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     Utils.createVerticalSpace(16),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: ElevatedButton(
                         onPressed: manualEntryCallBack,
                         child: const Text(
@@ -124,7 +117,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                     ),
                     Utils.createVerticalSpace(16),
                   ],
-                )
+                ),
               ],
             );
           } else {
