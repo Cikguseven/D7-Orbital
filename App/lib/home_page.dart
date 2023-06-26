@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'check_food_page.dart';
-import 'comments_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:my_first_flutter/post_data.dart';
 import 'package:my_first_flutter/star_rating.dart';
 import 'package:my_first_flutter/user_data.dart';
@@ -13,6 +11,9 @@ import 'package:my_first_flutter/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
+
+import 'check_food_page.dart';
+import 'comments_page.dart';
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
@@ -61,7 +62,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     if (posts.hasData) {
       if (posts.data!.length == 0) {
         _pullRefresh();
-        sleep(Duration(milliseconds: 300));
+        sleep(const Duration(milliseconds: 300));
       }
       return ListView.builder(
         itemCount: posts.data!.length,
@@ -98,12 +99,20 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // Post image
-        Image.network(
-          post.imageURL,
-          width: double.infinity,
-          fit: BoxFit.fitWidth,
+        Container(
+          height: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: NetworkImage(
+                post.imageURL,
+              ),
+            ),
+          ),
         ),
 
         // Like, comment and share buttons
@@ -137,11 +146,14 @@ class PostCard extends StatelessWidget {
                   ),
                   Utils.createVerticalSpace(5),
                   // Caption container
-                  Text(
-                    post.caption,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleSmall,
+                  SizedBox(
+                    width: 280,
+                    child: Text(
+                      post.caption,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                   ),
                 ],
               ),

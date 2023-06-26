@@ -1,32 +1,29 @@
-import 'package:my_first_flutter/day_log.dart';
-import 'package:my_first_flutter/food_data.dart';
-
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:my_first_flutter/day_log.dart';
+import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/post_data.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:uuid/uuid.dart';
 
 import 'main.dart';
 
-// TODO: 2 bugs: Cannot take null rating and cannot take null picture
-
 class ShareFoodPage extends StatefulWidget {
   // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
-  XFile? image;
+  final XFile? image;
   final UserData user;
 
-  FoodData fd;
+  final FoodData fd;
 
   final String postID;
   final String imageURL;
 
-  ShareFoodPage(
+  const ShareFoodPage(
       {Key? key,
       required this.image,
       required this.user,
@@ -166,25 +163,24 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       // Share with community
       final docPost =
           FirebaseFirestore.instance.collection('posts').doc(widget.postID);
-      // final PostData newPost = PostData(
-      //   firstName: widget.user.firstName,
-      //   lastName: widget.user.lastName,
-      //   caption: captionController.text.trim(),
-      //   location: 'Singapore',
-      //   postID: widget.postID,
-      //   imageURL: widget.imageURL,
-      //   commentCount: 0,
-      //   rating: _rating,
-      //   calories: widget.fd.energy,
-      //   protein: widget.fd.protein,
-      //   fats: widget.fd.fats,
-      //   carbs: widget.fd.carbs,
-      //   sugar: widget.fd.sugar,
-      //   postTime: DateTime.now(),
-      //   likedBy: [],
-      // );
-      await docPost.set(PostData.testPost.toJson());
-
+      final PostData newPost = PostData(
+        firstName: widget.user.firstName,
+        lastName: widget.user.lastName,
+        caption: captionController.text.trim(),
+        location: 'Singapore',
+        postID: widget.postID,
+        imageURL: widget.imageURL,
+        commentCount: 0,
+        rating: _rating,
+        calories: widget.fd.energy,
+        protein: widget.fd.protein,
+        fats: widget.fd.fats,
+        carbs: widget.fd.carbs,
+        sugar: widget.fd.sugar,
+        postTime: DateTime.now(),
+        likedBy: [],
+      );
+      await docPost.set(newPost.toJson());
 
       // Add to diary
       final docDiary = FirebaseFirestore.instance

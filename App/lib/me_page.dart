@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_data.dart';
@@ -11,7 +12,7 @@ import 'day_log.dart';
 class MePage extends StatefulWidget {
   final UserData user;
 
-  MePage({Key? key, required this.user}) : super(key: key);
+  const MePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MePage> createState() => _MePageState();
@@ -23,8 +24,9 @@ class _MePageState extends State<MePage> {
   int _currentCalories = 0;
   int _goalCalories = 0;
 
-  int experienceForNextLevel = 200; // TODO: IDC just make some tier progression and put that data somewhere
-  
+  int experienceForNextLevel =
+      200; // TODO: IDC just make some tier progression and put that data somewhere
+
   void loadLastFoodImage() async {
     final diary = widget.user.diary;
     if (diary.isEmpty) {
@@ -34,23 +36,23 @@ class _MePageState extends State<MePage> {
     if (mostRecentDayLogPostIds.isEmpty) {
       return;
     }
-    imageURL = await Utils.getPostByID(mostRecentDayLogPostIds.last).then((value) => value?.imageURL);
+    imageURL = await Utils.getPostByID(mostRecentDayLogPostIds.last)
+        .then((value) => value?.imageURL);
 
     setState(() {
       // to refresh page
     });
   }
-  
+
   void loadProgress() async {
     loadCalories();
     loadActivities();
   }
-  
+
   void loadCalories() async {
     DayLog dayLog = await Utils.getDayLogToday();
     _currentCalories = dayLog.caloriesIn;
     _goalCalories = widget.user.rmr;
-    print(_currentCalories / _goalCalories);
   }
 
   void loadActivities() async {} // TODO: TO be added
@@ -138,10 +140,12 @@ class _MePageState extends State<MePage> {
               right: 0,
               child: Column(
                 children: [
-                  imageURL == null ? Container() : CircleAvatar(
-                    radius: 50,
-                    foregroundImage: NetworkImage(imageURL!),
-                  ),
+                  imageURL == null
+                      ? Container()
+                      : CircleAvatar(
+                          radius: 50,
+                          foregroundImage: NetworkImage(imageURL!),
+                        ),
                 ],
               ),
             ),
@@ -199,8 +203,8 @@ class _MePageState extends State<MePage> {
                               Icons.fastfood_rounded,
                               size: 48,
                             ),
-                            footer:
-                                Utils.createTitleSmall("$_currentCalories/$_goalCalories", context),
+                            footer: Utils.createTitleSmall(
+                                "$_currentCalories/$_goalCalories", context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -267,9 +271,12 @@ class _MePageState extends State<MePage> {
                   animationDuration: 1000,
                   lineHeight: 20.0,
                   trailing: Utils.createTitleSmall(
-                      "Level ${widget.user.level}\n ${widget.user.experience}/$experienceForNextLevel XP", context),
-                  percent: min(widget.user.experience / experienceForNextLevel, 1),
-                  center: Text("${widget.user.experience / experienceForNextLevel * 100}%"),
+                      "Level ${widget.user.level}\n ${widget.user.experience}/$experienceForNextLevel XP",
+                      context),
+                  percent:
+                      min(widget.user.experience / experienceForNextLevel, 1),
+                  center: Text(
+                      "${widget.user.experience / experienceForNextLevel * 100}%"),
                   barRadius: const Radius.circular(16),
                   progressColor: Theme.of(context).primaryColor,
                 ),

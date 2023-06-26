@@ -1,22 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first_flutter/check_food_page.dart';
+import 'package:my_first_flutter/config/config.dart' as config;
 import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:universal_io/io.dart' as i;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
-import 'package:my_first_flutter/config/config.dart' as config;
+
 import 'classifier.dart';
-import 'package:image/image.dart' as img;
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -34,9 +36,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   Uuid uuid = const Uuid();
 
   Future<void> startCamera() async {
-    // final cameras = await availableCameras();
-    // _controller = CameraController(cameras.first, ResolutionPreset.medium);
-    // _initializeControllerFuture = _controller.initialize();
     final cameras = availableCameras();
     cameras.then((cams) {
       _controller = CameraController(
@@ -45,8 +44,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         // Define the resolution to use.
         ResolutionPreset.medium,
       );
-      _initializeControllerFuture = _controller.initialize()
-        ..then((value) => print("Initilaised"));
+      _initializeControllerFuture = _controller.initialize();
     });
   }
 
@@ -60,14 +58,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await startCamera();
-      setState(() { });
+      setState(() {});
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("BUilding..");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Snap and Log'),
@@ -87,7 +84,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         stream: Stream.fromFuture(_initializeControllerFuture),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print("Done loading");
             // If the Future is complete, display the preview.
             return Stack(
               fit: StackFit.expand,
@@ -133,7 +129,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
             );
           } else {
             // Otherwise, display a loading indicator.
-            print("Loeading");
             return const Center(child: CircularProgressIndicator());
           }
         },
@@ -160,7 +155,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       checkFood(image);
     } catch (e) {
       // If an error occurs, log the error to the console.
-      print(e);
       Utils.showSnackBar(e.toString());
     }
   }
@@ -238,7 +232,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
       if (nutritionInfo.statusCode == 200) {
         Map<String, dynamic> nutritionixJson = jsonDecode(nutritionInfo.body);
-        print(nutritionixJson);
         predictedFood = FoodData(
           name: foodItem,
           energy: nutritionixJson['foods'][0]['nf_calories'].toInt(),

@@ -1,7 +1,7 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/utils.dart';
 import 'package:my_first_flutter/day_log.dart';
+import 'package:my_first_flutter/utils.dart';
 
 class UserData {
   static final UserData newUser = UserData(
