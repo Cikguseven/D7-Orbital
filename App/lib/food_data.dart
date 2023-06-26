@@ -1,6 +1,11 @@
 class FoodData {
   static final FoodData none = FoodData(
-      name: 'NONE', energy: 0, protein: 0.0, fats: 0.0, carbs: 0.0, sugar: 0.0);
+      name: 'NONE',
+      energy: 0,
+      protein: 0.0,
+      fats: 0.0,
+      carbs: 0.0,
+      sugar: 0.0);
 
   final String name;
   final int energy; // kcal
@@ -18,7 +23,8 @@ class FoodData {
     required this.sugar,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'name': name,
         'energy': energy,
         'protein': protein,
@@ -36,11 +42,5 @@ class FoodData {
         carbs: data['carb'],
         sugar: data['sugar']);
   }
-
-  double get energyKJ => energy * 4.184;
-
-// @override
-// String toString() {
-//   return "Name: $name, Energy: $energy, Protein: $protein, Fat: $fats, Carb: $carbs, Sugar: $sugar";
-// } // kcal * 4.184 = kJ
 }
+

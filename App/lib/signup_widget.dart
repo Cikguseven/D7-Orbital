@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -27,7 +27,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           : null;
 
   String? passwordValidator(String? pwd) =>
-      pwd != null && pwd.length < 6 ? 'Password needs > 6 characters' : null;
+      pwd != null && pwd.length < 6 ? 'Password needs at least 6 characters' : null;
 
   String? password2Validator(String? pwd2) =>
       pwd2 != passwordController.text.trim() ? "Password does not match" : null;
@@ -52,7 +52,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Column(
               children: [
                 Utils.createVerticalSpace(60),
-                Image.asset("assets/NewLogoNoBG.png"),
+                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
                 Utils.createVerticalSpace(50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),

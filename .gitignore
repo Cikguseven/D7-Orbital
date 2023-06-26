@@ -13,6 +13,7 @@ venv/
 test.py
 __pycache__
 config.dart
+*.ai
 
 # IntelliJ related
 *.iml

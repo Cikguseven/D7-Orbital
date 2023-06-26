@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_first_flutter/app.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/app.dart';
 
 class NewUserSetupPage extends StatefulWidget {
   const NewUserSetupPage({Key? key}) : super(key: key);
@@ -312,8 +312,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Moderately active'),
-
-                          subtitle: const Text('Moderate exercise 3-5 days/week'),
+                          subtitle:
+                              const Text('Moderate exercise 3-5 days/week'),
                           value: ActivityMultiplier.MODERATELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
@@ -341,7 +341,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Extremely  active'),
-                          subtitle: const Text('Strenuous training 2 times/day'),
+                          subtitle:
+                              const Text('Strenuous training 2 times/day'),
                           value: ActivityMultiplier.EXTREMELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {

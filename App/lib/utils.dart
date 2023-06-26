@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart' hide Badge;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
 import 'package:my_first_flutter/day_log.dart';
 import 'package:my_first_flutter/post_data.dart';
@@ -80,9 +80,9 @@ class Utils {
 
     List<Badge> badgesEarned = [];
     docUser.collection("badgesEarned").snapshots().forEach((querySnapshot) {
-      for (final badge in querySnapshot.docs) {
-        // TODO: Add badge processing
-      }
+      // for (final badge in querySnapshot.docs) {
+      //   // TODO: Add badge processing
+      // }
     });
 
     return docUser.get().then(
@@ -118,6 +118,7 @@ class Utils {
 
     docUser.update(changes);
   }
+
   static Future<DayLog> getDayLogToday() async {
     String dayLogName = DayLog.dayLogNameFromTimeStamp(Timestamp.now());
     final docDayLog = FirebaseFirestore.instance

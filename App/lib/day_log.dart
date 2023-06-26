@@ -15,8 +15,7 @@ class DayLog {
   DayLog(this.date, this.postIDs, this.caloriesIn, this.proteinIn, this.fatIn,
       this.carbIn, this.sugarIn);
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'date': date,
         'postIDs': postIDs,
         'caloriesIn': caloriesIn,
@@ -26,20 +25,19 @@ class DayLog {
         'sugarIn': sugarIn,
       };
 
-  static DayLog fromJson(Map<String, dynamic> data) =>
-      DayLog(
-          data["date"],
-          data["postIDs"].cast<String>(),
-          data["caloriesIn"],
-          data["proteinIn"],
-          data["fatIn"],
-          data["carbIn"],
-          data["sugarIn"]
-      );
+  static DayLog fromJson(Map<String, dynamic> data) => DayLog(
+      data["date"],
+      data["postIDs"].cast<String>(),
+      data["caloriesIn"],
+      data["proteinIn"],
+      data["fatIn"],
+      data["carbIn"],
+      data["sugarIn"]);
+
   static String dayLogNameFromTimeStamp(Timestamp ts) {
     DateTime dt = ts.toDate();
     return "${dt.day}_${dt.month}_dayLog";
   }
 
-  DayLog.createNew() : this(Timestamp.now(), [], 0, 0, 0 ,0, 0);
+  DayLog.createNew() : this(Timestamp.now(), [], 0, 0, 0, 0, 0);
 }
