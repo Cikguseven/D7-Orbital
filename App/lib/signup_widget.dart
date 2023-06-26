@@ -52,7 +52,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Column(
               children: [
                 Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png"),
+                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
                 Utils.createVerticalSpace(50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),

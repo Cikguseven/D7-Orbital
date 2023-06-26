@@ -83,7 +83,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             body: Column(
               children: [
                 Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png"),
+                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
                 Utils.createVerticalSpace(60),
                 Utils.createHeadlineMedium("Verify Email", context),
                 Utils.createVerticalSpace(70),

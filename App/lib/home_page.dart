@@ -201,7 +201,7 @@ class PostCard extends StatelessWidget {
             ],
           ),
         ),
-        Utils.createVerticalSpace(30),
+        Utils.createVerticalSpace(20),
       ],
     );
   }

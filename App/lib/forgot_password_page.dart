@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Utils.createVerticalSpace(60),
-              Image.asset("assets/logo-black-text.png"),
+              Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
               Utils.createVerticalSpace(50),
               Utils.createHeadlineMedium("Reset Password", context),
               Utils.createVerticalSpace(25),
