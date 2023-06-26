@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/utils.dart';
+import '../utils.dart';
 
 final NUS_ORANGE = Utils.createMaterialColor(const Color(0xFFEFC700));
 final NUS_BLUE = Utils.createMaterialColor(const Color(0xFF003D7C));

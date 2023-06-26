@@ -1,11 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/food_data.dart';
-import 'package:my_first_flutter/manual_food_select_page.dart';
-import 'package:my_first_flutter/share_food_page.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'food_data.dart';
+import 'manual_food_select_page.dart';
+import 'share_food_page.dart';
+import 'user_data.dart';
+import 'utils.dart';
 
 // Widget for creating box displaying nutritional information
 Widget foodDataWidget(

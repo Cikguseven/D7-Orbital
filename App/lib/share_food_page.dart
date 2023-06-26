@@ -4,11 +4,11 @@ import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:my_first_flutter/day_log.dart';
-import 'package:my_first_flutter/food_data.dart';
-import 'package:my_first_flutter/post_data.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'day_log.dart';
+import 'food_data.dart';
+import 'post_data.dart';
+import 'user_data.dart';
+import 'utils.dart';
 import 'package:uuid/uuid.dart';
 
 import 'main.dart';

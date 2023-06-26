@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/home_page.dart';
-import 'package:my_first_flutter/me_page.dart';
-import 'package:my_first_flutter/new_user_setup_page.dart';
-import 'package:my_first_flutter/snapper_widget.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'home_page.dart';
+import 'me_page.dart';
+import 'new_user_setup_page.dart';
+import 'snapper_widget.dart';
+import 'user_data.dart';
+import 'utils.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

@@ -19,8 +19,8 @@ class QRScannerOverlay extends StatelessWidget {
     //     : 330.0;
     double scanArea = min(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height) *
-        4 /
-        5;
+        2 /
+        3;
     return Stack(children: [
       Align(
         alignment: Alignment.center,
@@ -95,11 +95,6 @@ class BorderPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
   }
-}
-
-class BarReaderSize {
-  static double width = 200;
-  static double height = 200;
 }
 
 class OverlayWithHolePainter extends CustomPainter {

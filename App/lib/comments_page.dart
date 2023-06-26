@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/comment_data.dart';
-import 'package:my_first_flutter/post_data.dart';
-import 'package:my_first_flutter/star_rating.dart';
-import 'package:my_first_flutter/user_data.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'comment_data.dart';
+import 'post_data.dart';
+import 'star_rating.dart';
+import 'user_data.dart';
+import 'utils.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
 

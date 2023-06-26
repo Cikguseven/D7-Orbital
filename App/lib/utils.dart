@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
-import 'package:my_first_flutter/day_log.dart';
-import 'package:my_first_flutter/post_data.dart';
-import 'package:my_first_flutter/user_data.dart';
+import 'day_log.dart';
+import 'post_data.dart';
+import 'user_data.dart';
 
 import 'comment_data.dart';
 
