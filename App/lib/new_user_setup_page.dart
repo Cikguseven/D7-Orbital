@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_first_flutter/app.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/app.dart';
-import 'package:age_calculator/age_calculator.dart';
 
 class NewUserSetupPage extends StatefulWidget {
   const NewUserSetupPage({Key? key}) : super(key: key);
@@ -286,7 +285,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Sedentary'),
                           subtitle: const Text('Little to no exercise'),
-                          value: 1.2,
+                          value: ActivityMultiplier.SEDENTARY,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -300,7 +299,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Lightly active'),
                           subtitle: const Text('Light exercise 1–3 days/week'),
-                          value: 1.375,
+                          value: ActivityMultiplier.LIGHTLY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -315,7 +314,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           title: const Text('Moderately active'),
                           subtitle:
                               const Text('Moderate exercise 3-5 days/week'),
-                          value: 1.55,
+                          value: ActivityMultiplier.MODERATELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -329,7 +328,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Very active'),
                           subtitle: const Text('Heavy exercise 6-7 days/week'),
-                          value: 1.725,
+                          value: ActivityMultiplier.VERY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -344,7 +343,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           title: const Text('Extremely  active'),
                           subtitle:
                               const Text('Strenuous training 2 times/day'),
-                          value: 1.9,
+                          value: ActivityMultiplier.EXTREMELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
@@ -392,36 +391,6 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
     double height = double.parse(heightController.text.trim());
     double weight = double.parse(weightController.text.trim());
     String birthday = birthdayController.text.trim();
-    int birthYear = Utils.stringToDateTime(birthday).year;
-    int birthMonth = Utils.stringToDateTime(birthday).month;
-    int birthDay = Utils.stringToDateTime(birthday).day;
-    DateTime dtBirthday = DateTime(birthYear, birthMonth, birthDay);
-    DateDuration age = AgeCalculator.age(dtBirthday);
-    int yearsOld = age.years;
-    double baseRMR = 10 * weight + 6.25 * height - 5 * yearsOld;
-    if (genderSelected[0]) {
-      baseRMR += 5;
-    } else {
-      baseRMR -= 161;
-    }
-    int rmr = (baseRMR * activityMultiplier).round();
-    int sugarIntake = (rmr / 40).round();
-    double proteinMultiplier;
-    // unable to use switch for comparing double using ==
-    if (activityMultiplier == 1.2) {
-      proteinMultiplier = 0.8;
-    } else if (activityMultiplier == 1.375) {
-      proteinMultiplier = 0.9;
-    } else if (activityMultiplier == 1.55) {
-      proteinMultiplier = 1.0;
-    } else if (activityMultiplier == 1.725) {
-      proteinMultiplier = 1.1;
-    } else {
-      proteinMultiplier = 1.2;
-    }
-    int proteinIntake = (proteinMultiplier * weight).round();
-    int fatsIntake = (rmr / 30).round();
-    int carbsIntake = (rmr / 20 * 3).round();
 
     showDialog(
       context: context,
@@ -429,18 +398,14 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      final user = UserData(
+      final user = UserData.setupNewUser(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
         gender: genderSelected[0] ? "Male" : "Female",
         birthday: birthday,
         height: height,
         weight: weight,
-        rmr: rmr,
-        sugarIntake: sugarIntake,
-        proteinIntake: proteinIntake,
-        fatsIntake: fatsIntake,
-        carbsIntake: carbsIntake,
+        activityMultiplier: activityMultiplier,
       );
       final docUser = FirebaseFirestore.instance
           .collection('userData')

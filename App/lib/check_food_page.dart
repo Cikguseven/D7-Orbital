@@ -1,14 +1,13 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
-import 'package:cross_file_image/cross_file_image.dart';
 import 'package:camera/camera.dart';
+import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/share_food_page.dart';
 import 'package:my_first_flutter/user_data.dart';
-import 'food_data.dart';
 import 'package:my_first_flutter/utils.dart';
 
+// Widget for creating box displaying nutritional information
 Widget foodDataWidget(
     String title, dynamic value, UserData user, BuildContext context) {
   String unit = "g";
@@ -23,22 +22,22 @@ Widget foodDataWidget(
       }
     case "Protein":
       {
-        percentIntake = (value * 100 / user.proteinIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.proteinGoal).toStringAsFixed(1);
         break;
       }
     case "Fats":
       {
-        percentIntake = (value * 100 / user.fatsIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.fatsGoal).toStringAsFixed(1);
         break;
       }
     case "Carbs":
       {
-        percentIntake = (value * 100 / user.carbsIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.carbsGoal).toStringAsFixed(1);
         break;
       }
     case "Sugar":
       {
-        percentIntake = (value * 100 / user.sugarIntake).toStringAsFixed(1);
+        percentIntake = (value * 100 / user.sugarGoal).toStringAsFixed(1);
         break;
       }
   }
@@ -65,7 +64,7 @@ Widget foodDataWidget(
           color: Colors.black,
         ),
         Utils.createVerticalSpace(5),
-        Utils.createTitleSmall("${percentIntake}%", context),
+        Utils.createTitleSmall("$percentIntake%", context),
         Utils.createVerticalSpace(5),
         // TODO: Have a global access to user so we can get his information from any page in the app, useful here for calculating % target
       ],
@@ -73,6 +72,7 @@ Widget foodDataWidget(
   );
 }
 
+// Widget to create all nutrtional data boxes
 Widget allFoodDataWidget(int calories, double protein, double fats,
     double carbs, double sugar, UserData user, BuildContext context) {
   return Row(
@@ -88,7 +88,7 @@ Widget allFoodDataWidget(int calories, double protein, double fats,
 }
 
 class CheckFoodPage extends StatefulWidget {
-  XFile? image;
+  final XFile? image;
   FoodData
       fd; // Food data that was taken from firebase, used to fill up the page
   final UserData user;
@@ -187,6 +187,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                         builder: (BuildContext context) => ShareFoodPage(
                             image: widget.image,
                             user: widget.user,
+                            fd: widget.fd,
                             postID: widget.postID,
                             imageURL: widget.imageURL),
                       ),

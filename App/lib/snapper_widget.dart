@@ -1,22 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first_flutter/check_food_page.dart';
+import 'package:my_first_flutter/config/config.dart' as config;
 import 'package:my_first_flutter/food_data.dart';
 import 'package:my_first_flutter/manual_food_select_page.dart';
 import 'package:my_first_flutter/scanner_overlay.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'package:universal_io/io.dart' as i;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
-import 'package:my_first_flutter/config/config.dart' as config;
+
 import 'classifier.dart';
-import 'package:image/image.dart' as img;
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -31,26 +33,19 @@ class SnapperWidget extends StatefulWidget {
 class _SnapperWidgetState extends State<SnapperWidget> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-
   Uuid uuid = const Uuid();
 
-  // List<CameraDescription>? cameras;
-  // CameraController? cameraController;
-
-  void startCamera() async {
-    // TODO: Note. Camera library causes a lot of dequeue buffer error messages
-    WidgetsFlutterBinding.ensureInitialized();
-    final cameras = await availableCameras();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      cameras.first,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
+  Future<void> startCamera() async {
+    final cameras = availableCameras();
+    cameras.then((cams) {
+      _controller = CameraController(
+        // Get a specific camera from the list of available cameras.
+        cams.first,
+        // Define the resolution to use.
+        ResolutionPreset.medium,
+      );
+      _initializeControllerFuture = _controller.initialize();
+    });
   }
 
   @override
@@ -61,7 +56,10 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   @override
   void initState() {
-    startCamera();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await startCamera();
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -82,8 +80,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
+      body: StreamBuilder(
+        stream: Stream.fromFuture(_initializeControllerFuture),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
@@ -157,7 +155,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       checkFood(image);
     } catch (e) {
       // If an error occurs, log the error to the console.
-      print(e);
       Utils.showSnackBar(e.toString());
     }
   }
@@ -195,7 +192,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     checkFood(image);
   }
 
-  void checkFood(XFile image) async {
+  void checkFood(XFile? image) async {
+    if (image == null) return;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -245,6 +243,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         );
       }
     }
+
+    Navigator.pop(context); // remove spinner
 
     Navigator.push(
       context,

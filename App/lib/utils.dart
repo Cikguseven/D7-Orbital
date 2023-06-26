@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
+import 'package:my_first_flutter/day_log.dart';
 import 'package:my_first_flutter/post_data.dart';
 import 'package:my_first_flutter/user_data.dart';
 
@@ -22,6 +23,18 @@ class Utils {
       ..showSnackBar(snackBar);
   }
 
+  /// Signs into firebase
+  static firebaseSignIn(String email, String password) {
+    return FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  /// Creates firebase auth user
+  static firebaseCreateUser(String email, String password) {
+    return FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+  }
+
   /// Gets the current firebase authenticated user.
   /// Only use after signed in!
   static User? getAuthUser() {
@@ -30,19 +43,65 @@ class Utils {
     return authUser;
   }
 
+  /// Setups new user data, putting into firebase
+  static firebaseSetupNewUser(UserData user) async {
+    // Sets the fields
+    final docUser = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    await docUser.set(user.toJson());
+
+    // Creates the diary collection
+    docUser.collection('diary').add({"First Diary": 0});
+
+    // Sets the badgesEarned collection
+    docUser.collection('badgesEarned').add({});
+  }
+
   /// Gets the current firebase authenticated user's data.
   /// Only use after signed in! (ASYNC)
-  static Future<UserData?> getUserData({String? uid}) async {
+  static Future<UserData> getUserData({String? uid}) async {
     // uid optional, if not give, takes the current logged in user
     final docUser = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid ?? getAuthUser()!.uid);
+
+    List<DayLog> diary = [];
+    docUser
+        .collection("diary")
+        .orderBy("date")
+        .snapshots()
+        .forEach((querySnapshot) {
+      for (final dayLog in querySnapshot.docs) {
+        diary.add(DayLog.fromJson(dayLog.data()));
+        // print(dayLog.data());
+      }
+    });
+
+    List<Badge> badgesEarned = [];
+    docUser.collection("badgesEarned").snapshots().forEach((querySnapshot) {
+      // for (final badge in querySnapshot.docs) {
+      //   // TODO: Add badge processing
+      // }
+    });
+
     return docUser.get().then(
       (DocumentSnapshot doc) {
         if (doc.exists) {
           // user has been created before, proceed to read
           final data = doc.data() as Map<String, dynamic>;
-          return UserData.fromJson(data);
+          // Create user from firestore json data, then add a diary and badgesEarned retrieved from the nested collection.
+          // print("Doc exists");
+          // print("Hello");
+          // data.forEach((key, value) {
+          //   print("key: $key, value: $value");
+          // });
+          UserData user = UserData.fromJson(data);
+          // print("User: $user");
+          user
+            ..diary = diary
+            ..badgesEarned = badgesEarned;
+          return user;
         } else {
           // new user detected, create user and proceed with setup
           return UserData.newUser;
@@ -50,6 +109,32 @@ class Utils {
       },
       onError: (e) => print("Error getting document: $e"),
     );
+  }
+
+  static Future<void> updateUserData(Map<String, dynamic> changes) async {
+    final docUser = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(getAuthUser()!.uid);
+
+    docUser.update(changes);
+  }
+
+  static Future<DayLog> getDayLogToday() async {
+    String dayLogName = DayLog.dayLogNameFromTimeStamp(Timestamp.now());
+    final docDayLog = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('diary')
+        .doc(dayLogName);
+
+    return docDayLog.get().then((doc) {
+      if (doc.exists) {
+        return DayLog.fromJson(doc.data()!);
+      } else {
+        // Create one
+        return DayLog.createNew();
+      }
+    });
   }
 
   /// Gets all current post data.
@@ -66,6 +151,17 @@ class Utils {
       }
     });
     return posts;
+  }
+
+  /// Gets a specific post.
+  static Future<PostData?> getPostByID(String postID) async {
+    final post =
+        await FirebaseFirestore.instance.collection('posts').doc(postID).get();
+    if (post.exists) {
+      return PostData.fromJson(post.data() as Map<String, dynamic>);
+    } else {
+      return null;
+    }
   }
 
   /// Gets all comment data from specified post.

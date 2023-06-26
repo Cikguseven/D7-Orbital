@@ -1,16 +1,18 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
-import 'package:my_first_flutter/csv_to_firebase.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class MePage extends StatefulWidget {
-  UserData user;
+import 'day_log.dart';
 
-  MePage({Key? key, required this.user}) : super(key: key);
+class MePage extends StatefulWidget {
+  final UserData user;
+
+  const MePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MePage> createState() => _MePageState();
@@ -18,6 +20,49 @@ class MePage extends StatefulWidget {
 
 class _MePageState extends State<MePage> {
   int numNotifications = 0;
+  String? imageURL;
+  int _currentCalories = 0;
+  int _goalCalories = 0;
+
+  int experienceForNextLevel =
+      200; // TODO: IDC just make some tier progression and put that data somewhere
+
+  void loadLastFoodImage() async {
+    final diary = widget.user.diary;
+    if (diary.isEmpty) {
+      return;
+    }
+    final mostRecentDayLogPostIds = diary.last.postIDs;
+    if (mostRecentDayLogPostIds.isEmpty) {
+      return;
+    }
+    imageURL = await Utils.getPostByID(mostRecentDayLogPostIds.last)
+        .then((value) => value?.imageURL);
+
+    setState(() {
+      // to refresh page
+    });
+  }
+
+  void loadProgress() async {
+    loadCalories();
+    loadActivities();
+  }
+
+  void loadCalories() async {
+    DayLog dayLog = await Utils.getDayLogToday();
+    _currentCalories = dayLog.caloriesIn;
+    _goalCalories = widget.user.rmr;
+  }
+
+  void loadActivities() async {} // TODO: TO be added
+
+  @override
+  void initState() {
+    super.initState();
+    loadLastFoodImage();
+    loadProgress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +76,8 @@ class _MePageState extends State<MePage> {
                 : "Good Evening";
 
     Text onTrackIndicator; // TODO: How to track on track or not?
-
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            /// Placeholder testing notifications
-            setState(
-              () {
-                numNotifications++;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const CSVUploadWidget()));
-              },
-            );
-          },
-          icon: const Icon(Icons.person),
-        ),
         title: const Text("Me"),
         centerTitle: true,
         actions: [
@@ -108,14 +136,16 @@ class _MePageState extends State<MePage> {
         padding: const EdgeInsets.all(16),
         child: Stack(
           children: [
-            const Positioned(
+            Positioned(
               right: 0,
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    child: Text("Inser img of last meal here"),
-                  ),
+                  imageURL == null
+                      ? Container()
+                      : CircleAvatar(
+                          radius: 50,
+                          foregroundImage: NetworkImage(imageURL!),
+                        ),
                 ],
               ),
             ),
@@ -167,14 +197,14 @@ class _MePageState extends State<MePage> {
                             radius: MediaQuery.of(context).size.width / 6 - 4,
                             lineWidth: 13.0,
                             animation: true,
-                            percent: 0.7,
+                            percent: min(_currentCalories / _goalCalories, 1.0),
                             header: Utils.createTitleSmall("Calories", context),
                             center: const Icon(
                               Icons.fastfood_rounded,
                               size: 48,
                             ),
-                            footer:
-                                Utils.createTitleSmall("Curr/Goal", context),
+                            footer: Utils.createTitleSmall(
+                                "$_currentCalories/$_goalCalories", context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -209,14 +239,14 @@ class _MePageState extends State<MePage> {
                             radius: MediaQuery.of(context).size.width / 6 - 4,
                             lineWidth: 13.0,
                             animation: true,
-                            percent: 0.7,
+                            percent: min(0.7, 1.0),
                             header: Utils.createTitleSmall("Activity", context),
                             center: const Icon(
                               Icons.sports_kabaddi_rounded,
                               size: 48,
                             ),
                             footer:
-                                Utils.createTitleSmall("Curr/Goal", context),
+                                Utils.createTitleSmall("1463/2000", context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -241,9 +271,12 @@ class _MePageState extends State<MePage> {
                   animationDuration: 1000,
                   lineHeight: 20.0,
                   trailing: Utils.createTitleSmall(
-                      "Level 13\n 1500/1700 XP", context),
-                  percent: 0.2,
-                  center: const Text("20.0%"),
+                      "Level ${widget.user.level}\n ${widget.user.experience}/$experienceForNextLevel XP",
+                      context),
+                  percent:
+                      min(widget.user.experience / experienceForNextLevel, 1),
+                  center: Text(
+                      "${widget.user.experience / experienceForNextLevel * 100}%"),
                   barRadius: const Radius.circular(16),
                   progressColor: Theme.of(context).primaryColor,
                 ),
@@ -259,7 +292,14 @@ class _MePageState extends State<MePage> {
                               backgroundColor:
                                   const MaterialStatePropertyAll(Colors.green),
                             ),
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.user.experience += 50;
+                          setState(() {
+                            Utils.updateUserData({
+                              'experience': widget.user.experience + 50,
+                            });
+                          });
+                        },
                         child: const Text("Check in for +50 xp"),
                       ),
                     )

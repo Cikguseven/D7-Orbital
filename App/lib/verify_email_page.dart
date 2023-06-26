@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_first_flutter/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/app.dart';
+import 'package:my_first_flutter/utils.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
@@ -82,33 +83,13 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             body: Column(
               children: [
                 Utils.createVerticalSpace(60),
-                Image.asset("assets/NewLogoNoBG.png"),
+                Image.asset("assets/logo-black-text.png"),
                 Utils.createVerticalSpace(60),
                 Utils.createHeadlineMedium("Verify Email", context),
                 Utils.createVerticalSpace(70),
                 Utils.createTitleMedium(
                     "A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}",
                     context),
-                // Column(
-                //   children: [
-                //     Text(
-                //       "A verification email has been sent to:",
-                //       style: Theme
-                //           .of(context)
-                //           .textTheme
-                //           .headlineSmall
-                //           ?.copyWith(fontSize: 16),
-                //     ),
-                //     Text(
-                //       "${FirebaseAuth.instance.currentUser!.email}",
-                //       style: Theme
-                //           .of(context)
-                //           .textTheme2
-                //           .headlineSmall
-                //           ?.copyWith(fontSize: 16),
-                //     ),
-                //   ],
-                // ),
                 Utils.createVerticalSpace(80),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),

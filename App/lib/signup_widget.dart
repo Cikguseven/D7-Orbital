@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -52,7 +52,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Column(
               children: [
                 Utils.createVerticalSpace(60),
-                Image.asset("assets/NewLogoNoBG.png"),
+                Image.asset("assets/logo-black-text.png"),
                 Utils.createVerticalSpace(50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -151,9 +151,11 @@ class _SignupWidgetState extends State<SignupWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+      // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //     email: emailController.text.trim(),
+      //     password: passwordController.text.trim());
+      await Utils.firebaseCreateUser(
+          emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {

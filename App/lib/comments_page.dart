@@ -75,7 +75,7 @@ class _CommentsState extends State<CommentsWidget> {
                       radius: 20,
                       // Change to user's profile photo eventually
                       backgroundImage: AssetImage(
-                        "images/Cow.jpeg",
+                        "images/Dog.jpeg",
                       )),
                 ),
                 Utils.createHorizontalSpace(15),

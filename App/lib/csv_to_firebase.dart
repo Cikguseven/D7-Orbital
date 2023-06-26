@@ -6,12 +6,11 @@
 
 import 'dart:convert';
 import 'dart:math';
-import 'package:csv/csv.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-
+import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/utils.dart';
 
 class CSVUploadWidget extends StatefulWidget {
@@ -61,7 +60,6 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
 
     setState(() {
       for (List<String> line in _csvData) {}
-      // because I return early if selectedFiles/bytes is null, wont be null
       selectedFileIdx = 0;
       selectedFileName = selectedFiles!.files.first.name;
       parseCSVToTable();

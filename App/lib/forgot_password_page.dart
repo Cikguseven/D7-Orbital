@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
 
@@ -31,9 +31,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Reset Password"),
-      // ),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -41,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Utils.createVerticalSpace(60),
-              Image.asset("assets/NewLogoNoBG.png"),
+              Image.asset("assets/logo-black-text.png"),
               Utils.createVerticalSpace(50),
               Utils.createHeadlineMedium("Reset Password", context),
               Utils.createVerticalSpace(25),

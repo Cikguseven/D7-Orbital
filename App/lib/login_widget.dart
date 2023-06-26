@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:my_first_flutter/forgot_password_page.dart';
 import 'package:my_first_flutter/main.dart';
 import 'package:my_first_flutter/utils.dart';
@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(
             children: [
               Utils.createVerticalSpace(60),
-              Image.asset("assets/NewLogoNoBG.png"),
+              Image.asset("assets/logo-black-text.png"),
               Utils.createVerticalSpace(50),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -128,6 +128,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
+      // await Utils.firebaseSignIn(
+      //     emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } finally {

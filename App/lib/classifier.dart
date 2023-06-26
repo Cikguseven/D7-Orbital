@@ -1,8 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+
 import 'classifier_category.dart';
 import 'classifier_model.dart';
 
@@ -27,7 +29,6 @@ class Classifier {
       final model = await _loadModel(modelFileName);
       return Classifier._(labels: labels, model: model);
     } catch (e) {
-      debugPrint('Can\'t initialize Classifier: ${e.toString()}');
       if (e is Error) {
         debugPrintStack(stackTrace: e.stackTrace);
       }
@@ -78,7 +79,9 @@ class Classifier {
     _model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
     final resultCategories = _postProcessOutput(outputBuffer);
     final topResult = resultCategories.first;
-    return topResult.label;
+    return topResult.score < 50
+        ? ""
+        : topResult.label; // TODO: FInd out a good metric for the score.
   }
 
   List<ClassifierCategory> _postProcessOutput(TensorBuffer outputBuffer) {
@@ -92,6 +95,7 @@ class Classifier {
     labelledResult.getMapWithFloatValue().forEach((key, value) {
       final category = ClassifierCategory(key, value);
       categoryList.add(category);
+      // debugPrint('label: ${category.label}, score: ${category.score}');
     });
     categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
 
