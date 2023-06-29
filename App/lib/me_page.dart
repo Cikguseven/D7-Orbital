@@ -67,7 +67,7 @@ class _MePageState extends State<MePage> {
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    String greetings = now.hour < 3
+    String greetings = now.hour < 4
         ? "Good Night"
         : now.hour < 12
             ? "Good Morning"
@@ -75,7 +75,8 @@ class _MePageState extends State<MePage> {
                 ? "Good Afternoon"
                 : "Good Evening";
 
-    Text onTrackIndicator; // TODO: How to track on track or not?
+    // Text onTrackIndicator;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Me"),

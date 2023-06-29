@@ -48,7 +48,9 @@ Widget foodDataWidget(
     padding: const EdgeInsets.symmetric(vertical: 4),
     decoration: BoxDecoration(
       border: Border.all(
-        color: Colors.black,
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white
+            : Colors.black,
       ),
       borderRadius: BorderRadius.circular(8),
     ),
@@ -59,9 +61,11 @@ Widget foodDataWidget(
         Utils.createLabelLarge("${value.round().toString()} $unit", context),
         Utils.createVerticalSpace(10),
         Container(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
           height: 1.0,
           width: 62,
-          color: Colors.black,
         ),
         Utils.createVerticalSpace(5),
         Utils.createTitleSmall("$percentIntake%", context),

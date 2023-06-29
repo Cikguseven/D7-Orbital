@@ -148,7 +148,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       checkFood(image);
     } catch (e) {
       // If an error occurs, log the error to the console.
-      Utils.showSnackBar(e.toString());
+      Utils.showSnackBar("Unable to read image");
     }
   }
 

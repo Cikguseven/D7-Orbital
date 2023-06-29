@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'main.dart';
 import 'utils.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -27,6 +28,18 @@ class SettingsPage extends StatelessWidget {
               MaterialPageRoute(
                   builder: (BuildContext context) => onTapPage()));
         },
+      );
+    }
+
+    ListTile darkModeTile() {
+      return ListTile(
+        leading: Container(
+          width: 300, // necessary hack for text to be aligned properly
+          height: 300,
+          alignment: Alignment.centerLeft,
+          child: Utils.createTitleSmall('Dark Mode', context),
+        ),
+        trailing: const DarkModeSwitch(),
       );
     }
 
@@ -66,7 +79,7 @@ class SettingsPage extends StatelessWidget {
                       child: Utils.createTitleMedium("Preferences", context),
                     ),
                     settingsTile("Notification", placeholderPage),
-                    settingsTile("Dark Mode", placeholderPage),
+                    darkModeTile(),
                   ],
                 ),
                 Utils.createVerticalSpace(10),
@@ -116,6 +129,41 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DarkModeSwitch extends StatefulWidget {
+  const DarkModeSwitch({super.key});
+
+  @override
+  State<DarkModeSwitch> createState() => _SwitchState();
+}
+
+class _SwitchState extends State<DarkModeSwitch> {
+  bool isDarkMode = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      // This bool value toggles the switch.
+      value: isDarkMode,
+      activeColor: Colors.black12,
+      onChanged: (bool value) {
+        // This is called when the user toggles the switch.
+        setState(() {
+          if (value) {
+            print('Switched to dark mode');
+          } else {
+            print('Switched to light mode');
+          }
+          MyApp.themeNotifier.value =
+          MyApp.themeNotifier.value == ThemeMode.light
+              ? ThemeMode.dark
+              : ThemeMode.light;
+          isDarkMode = value;
+        });
+      },
     );
   }
 }

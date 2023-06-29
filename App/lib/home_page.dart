@@ -188,7 +188,6 @@ class PostCard extends StatelessWidget {
                   title: const Text(
                     "View nutritional information",
                     style: TextStyle(
-                        color: Color(0xFF003D7C),
                         fontSize: 14,
                         fontWeight: FontWeight.normal),
                   ),

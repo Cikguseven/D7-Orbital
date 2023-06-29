@@ -86,15 +86,22 @@ dependencies:
   # For progress indicator:
   percent_indicator: ^4.2.3
 
-  # For calculating user's age
+  # For calculating user's age:
   age_calculator: ^1.0.0
 
-  # For sending HTTP requests
+  # For sending HTTP requests:
   http: ^0.13.6
 
-  # For Tensorflow lite model
+  # For Tensorflow lite model:
   tflite_flutter_helper: ^0.2.1
   tflite_flutter: ^0.9.5
+
+  # For app icon:
+  flutter_launcher_icons: ^0.11.0
+
+  # For handling images:
+  image: ^3.3.0
+
 
 dev_dependencies:
   flutter_test:
@@ -149,3 +156,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  image_path: "assets/logo-only.png"
+  android: true

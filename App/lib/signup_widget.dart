@@ -156,8 +156,8 @@ class _SignupWidgetState extends State<SignupWidget> {
       //     password: passwordController.text.trim());
       await Utils.firebaseCreateUser(
           emailController.text.trim(), passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar("Unable to create account");
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

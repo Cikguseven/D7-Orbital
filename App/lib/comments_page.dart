@@ -151,8 +151,8 @@ class _CommentsState extends State<CommentsWidget> {
             postTime: DateTime.now());
         await docComment.set(currentComment.toJson());
         await docPost.update({'commentCount': ++widget.post.commentCount});
-      } on FirebaseAuthException catch (e) {
-        Utils.showSnackBar(e.message);
+      } on FirebaseAuthException {
+        Utils.showSnackBar("Unable to post comment");
       } finally {
         commentController.clear();
         _pullRefresh();

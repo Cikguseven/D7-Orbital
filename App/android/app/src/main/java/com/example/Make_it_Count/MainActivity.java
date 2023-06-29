@@ -1,4 +1,4 @@
-package com.example.my_first_flutter;
+package com.example.Make_it_Count;
 
 import io.flutter.embedding.android.FlutterActivity;
 

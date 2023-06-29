@@ -9,10 +9,10 @@ class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
 
   @override
-  _VerifyEmailPageState createState() => _VerifyEmailPageState();
+  VerifyEmailPageState createState() => VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
+class VerifyEmailPageState extends State<VerifyEmailPage> {
   bool isEmailVerified = false;
   Timer? timer;
 
@@ -69,8 +69,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           }
         },
       );
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar("Unable to send verification email");
       canSendEmail = true;
     }
   }
@@ -103,7 +103,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     onPressed: sendEmailVerification,
                     icon: const Icon(Icons.email_outlined, size: 24),
                     label:
-                        Text("Resend email\t${cooldown > 0 ? cooldown : ""}"),
+                        Text("Resend email in \t${cooldown > 0 ? cooldown : ""} seconds"),
                   ),
                 ),
                 Utils.createVerticalSpace(26),

@@ -130,8 +130,8 @@ class _LoginWidgetState extends State<LoginWidget> {
           password: passwordController.text.trim());
       // await Utils.firebaseSignIn(
       //     emailController.text.trim(), passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar("Enter a valid account");
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

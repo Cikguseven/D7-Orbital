@@ -206,8 +206,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       existingDayLog.sugarIn += widget.fd.sugar;
 
       docDiary.set(existingDayLog.toJson());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar("Unable to share post");
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

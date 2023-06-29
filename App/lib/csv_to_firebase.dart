@@ -238,8 +238,8 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
       Utils.showSnackBar(
           "Successfully added database with name ${"${foodDBCollectionPrefix}_$suffix"}",
           isBad: false);
-    } on ArgumentError catch (e) {
-      Utils.showSnackBar(e.message);
+    } on ArgumentError {
+      Utils.showSnackBar("Unable to add to database");
     } on Exception catch (e) {
       //  TODO: Dont catch all
       Utils.showSnackBar("$e\n Cancelled upload");

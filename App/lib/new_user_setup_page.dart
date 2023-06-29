@@ -416,8 +416,8 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
           done = true;
         },
       );
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar("Unable to set up profile");
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
