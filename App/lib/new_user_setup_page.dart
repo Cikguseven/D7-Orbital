@@ -17,6 +17,7 @@ class NewUserSetupPage extends StatefulWidget {
 class _NewUserSetupPage extends State<NewUserSetupPage> {
   bool done = false;
   double activityMultiplier = 1.2;
+  double weightGoal = 0.0;
   final formKey = GlobalKey<FormState>();
 
   final firstNameController = TextEditingController();
@@ -57,7 +58,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   String? heightValidator(String? value) {
     if (value == null) return null;
     int? height = int.tryParse(value);
-    return height == null || height < 0 || height > 250 // assume no one > 250cm
+    return height == null || height < 50 || height > 260
         ? "Please enter a valid height"
         : null;
   }
@@ -66,7 +67,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   String? weightValidator(String? value) {
     if (value == null) return null;
     double? weight = double.tryParse(value);
-    return weight == null || weight < 0 || weight > 250 // assume no one > 250kg
+    return weight == null || weight < 0 || weight > 635
         ? "Please enter a valid weight"
         : null;
   }
@@ -86,7 +87,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   Widget build(BuildContext context) {
     return done
         ? const App()
-        : // TODO: fix this, abit of circular App call this, this call App but i think is a quick fix for now
+        : // TODO: fix this, a bit of circular App call this, this call App but i think is a quick fix for now
         CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -151,7 +152,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 26, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 24, 0, 0),
                         child: Center(
                           child: Utils.createTitleMedium(
                               "Select the gender we should use to \n"
@@ -160,7 +161,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                               align: TextAlign.center),
                         ),
                       ),
-                      Utils.createVerticalSpace(16),
+                      Utils.createVerticalSpace(24),
                       ToggleButtons(
                         isSelected: genderSelected,
                         onPressed: (int index) {
@@ -185,7 +186,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         selectedColor: Colors.white,
                         // Background color of selected button
                         fillColor: Theme.of(context).primaryColor,
-                        // Splash color when seledted
+                        // Splash color when selected
                         splashColor: Theme.of(context).primaryColor,
                         borderColor: Colors.black,
                         constraints: const BoxConstraints(
@@ -254,7 +255,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           ],
                           controller: heightController,
                           decoration: const InputDecoration(
-                            labelText: "Height in CM",
+                            labelText: "Height in cm",
                           ),
                         ),
                       ),
@@ -269,7 +270,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           ],
                           controller: weightController,
                           decoration: const InputDecoration(
-                            labelText: "Weight in KG",
+                            labelText: "Weight in kg",
                           ),
                         ),
                       ),
@@ -298,7 +299,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Lightly active'),
-                          subtitle: const Text('Light exercise 1–3 days/week'),
+                          subtitle: const Text('1–2 days of exercise in a week'),
                           value: ActivityMultiplier.LIGHTLY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
@@ -313,7 +314,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         child: RadioListTile(
                           title: const Text('Moderately active'),
                           subtitle:
-                              const Text('Moderate exercise 3-5 days/week'),
+                              const Text('3–5 days of exercise in a week'),
                           value: ActivityMultiplier.MODERATELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
@@ -327,7 +328,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
                           title: const Text('Very active'),
-                          subtitle: const Text('Heavy exercise 6-7 days/week'),
+                          subtitle: const Text('6-7 days of exercise in a week'),
                           value: ActivityMultiplier.VERY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
@@ -340,14 +341,86 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
-                          title: const Text('Extremely  active'),
+                          title: const Text('Extremely active'),
                           subtitle:
-                              const Text('Strenuous training 2 times/day'),
+                              const Text('Exercise twice a day'),
                           value: ActivityMultiplier.EXTREMELY_ACTIVE,
                           groupValue: activityMultiplier,
                           onChanged: (value) {
                             setState(() {
                               activityMultiplier = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 26),
+                        child: Center(
+                          child: Utils.createTitleMedium(
+                              "Set your weight goal", context),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Lose 0.5kg a week'),
+                          value: -0.5,
+                          groupValue: weightGoal,
+                          onChanged: (value) {
+                            setState(() {
+                              weightGoal = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Lose 0.2kg a week'),
+                          value: -0.2,
+                          groupValue: weightGoal,
+                          onChanged: (value) {
+                            setState(() {
+                              weightGoal = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Maintain your current weight'),
+                          value: 0.0,
+                          groupValue: weightGoal,
+                          onChanged: (value) {
+                            setState(() {
+                              weightGoal = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Gain 0.2kg a week'),
+                          value: 0.2,
+                          groupValue: weightGoal,
+                          onChanged: (value) {
+                            setState(() {
+                              weightGoal = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RadioListTile(
+                          title: const Text('Gain 0.5kg a week'),
+                          value: 0.5,
+                          groupValue: weightGoal,
+                          onChanged: (value) {
+                            setState(() {
+                              weightGoal = value!;
                             });
                           },
                         ),
@@ -360,7 +433,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                           "This is Me",
                         ),
                       ),
-                      Utils.createVerticalSpace(6),
+                      Utils.createVerticalSpace(12),
                       GestureDetector(
                         child: const Text(
                           "Cancel",
@@ -371,6 +444,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                         onTap: () => FirebaseAuth.instance.signOut(),
                       ),
+                      Utils.createVerticalSpace(10),
                     ],
                   ),
                 ),
@@ -406,6 +480,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
         height: height,
         weight: weight,
         activityMultiplier: activityMultiplier,
+        weightGoal: weightGoal,
       );
       final docUser = FirebaseFirestore.instance
           .collection('userData')

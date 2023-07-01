@@ -6,7 +6,7 @@ final NUS_BLUE = Utils.createMaterialColor(const Color(0xFF003D7C));
 final OFF_WHITE =
     Utils.createMaterialColor(const Color(0xFFF5F5F5));
 final DARK_FRAME_BACKGROUND =
-  Utils.createMaterialColor(const Color(0xFF343434));
+  Utils.createMaterialColor(const Color(0xFF212121));
 final INPUT_BORDER_GREY = Utils.createMaterialColor(const Color(0xFFC9C9C9));
 
 ThemeData lightTheme = ThemeData(
@@ -48,7 +48,6 @@ ThemeData lightTheme = ThemeData(
 
     // Used for text fields text
     bodySmall: TextStyle(color: Color(0xFF989898), fontSize: 14),
-    // GREY
 
     // Used for nutrition value labels (e.g. Energy)
     labelLarge: TextStyle(color: Colors.black, fontSize: 12),
@@ -77,6 +76,12 @@ ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: OFF_WHITE,
   scaffoldBackgroundColor: DARK_FRAME_BACKGROUND,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xFF2A2A2A),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.white,
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -111,8 +116,7 @@ ThemeData darkTheme = ThemeData(
     titleSmall: TextStyle(color: Colors.white, fontSize: 14),
 
     // Used for text fields text
-    bodySmall: TextStyle(color: Color(0xFFE1E1E1), fontSize: 14),
-    // GREY
+    bodySmall: TextStyle(color: Color(0xFFECECEC), fontSize: 14),
 
     // Used for nutrition value labels (e.g. Energy)
     labelLarge: TextStyle(color: Colors.white, fontSize: 12),
@@ -129,7 +133,7 @@ ThemeData darkTheme = ThemeData(
       borderRadius: BorderRadius.circular(8),
     ),
     filled: true,
-    fillColor: Colors.white,
+    fillColor: Color(0xFF2A2A2A),
     outlineBorder: BorderSide(
       color: INPUT_BORDER_GREY,
     ),

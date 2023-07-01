@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'main.dart';
 import 'settings_page.dart';
 import 'user_data.dart';
 import 'utils.dart';
@@ -52,7 +53,7 @@ class _MePageState extends State<MePage> {
   void loadCalories() async {
     DayLog dayLog = await Utils.getDayLogToday();
     _currentCalories = dayLog.caloriesIn;
-    _goalCalories = widget.user.rmr;
+    _goalCalories = UserData.nutritionCalculator(widget.user)[0];
   }
 
   void loadActivities() async {} // TODO: TO be added
@@ -256,15 +257,17 @@ class _MePageState extends State<MePage> {
                     ),
                   ],
                 ),
-                Utils.createVerticalSpace(26),
+                Utils.createVerticalSpace(30),
                 Container(
                   height: 1,
                   width: double.infinity,
-                  color: Colors.black,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
                 ),
-                Utils.createVerticalSpace(16),
+                Utils.createVerticalSpace(20),
                 Utils.createHeadlineSmall("Experience", context),
-                Utils.createVerticalSpace(16),
+                Utils.createVerticalSpace(20),
                 LinearPercentIndicator(
                   padding: EdgeInsets.zero,
                   // width: 170.0,
@@ -279,20 +282,13 @@ class _MePageState extends State<MePage> {
                   center: Text(
                       "${widget.user.experience / experienceForNextLevel * 100}%"),
                   barRadius: const Radius.circular(16),
-                  progressColor: Theme.of(context).primaryColor,
+                  progressColor: Colors.green,
                 ),
                 Utils.createVerticalSpace(26),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        style: Theme.of(context)
-                            .elevatedButtonTheme
-                            .style
-                            ?.copyWith(
-                              backgroundColor:
-                                  const MaterialStatePropertyAll(Colors.green),
-                            ),
                         onPressed: () {
                           widget.user.experience += 50;
                           setState(() {
@@ -306,15 +302,17 @@ class _MePageState extends State<MePage> {
                     )
                   ],
                 ),
-                Utils.createVerticalSpace(26),
+                Utils.createVerticalSpace(30),
                 Container(
                   height: 1,
                   width: double.infinity,
-                  color: Colors.black,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
                 ),
-                Utils.createVerticalSpace(16),
+                Utils.createVerticalSpace(20),
                 Utils.createHeadlineSmall("Badges", context),
-                Utils.createVerticalSpace(16),
+                Utils.createVerticalSpace(20),
                 Row(
                   children: [
                     // TODO: Make our own Badge class that includes original art and assign badges to userData

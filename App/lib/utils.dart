@@ -171,7 +171,7 @@ class Utils {
         .collection('posts')
         .doc(postID)
         .collection('comments')
-        .orderBy('postTime', descending: true)
+        .orderBy('postTime', descending: false)
         .snapshots()
         .forEach((querySnapshot) {
       for (var comment in querySnapshot.docs) {

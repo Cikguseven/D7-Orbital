@@ -64,7 +64,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(18, 6, 0, 0),
+                padding: const EdgeInsets.fromLTRB(18, 10, 0, 0),
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   child: const Text(

@@ -17,8 +17,7 @@ class SignupWidget extends StatefulWidget {
 class _SignupWidgetState extends State<SignupWidget> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  final passwordController =
-      TextEditingController(); // TODO: Make 2 password fields and validate that they are equals
+  final passwordController = TextEditingController();
   final password2Controller = TextEditingController();
 
   String? emailValidator(String? email) =>

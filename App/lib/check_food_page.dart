@@ -9,41 +9,40 @@ import 'utils.dart';
 
 // Widget for creating box displaying nutritional information
 Widget foodDataWidget(
-    String title, dynamic value, UserData user, BuildContext context) {
+    String title, dynamic value, dynamic goal, BuildContext context) {
   String unit = "g";
   String percentIntake = '';
 
   switch (title) {
     case "Energy":
       {
-        percentIntake = (value * 100 / user.rmr).toStringAsFixed(1);
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
         unit = "kcal";
         break;
       }
     case "Protein":
       {
-        percentIntake = (value * 100 / user.proteinGoal).toStringAsFixed(1);
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
     case "Fats":
       {
-        percentIntake = (value * 100 / user.fatsGoal).toStringAsFixed(1);
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
     case "Carbs":
       {
-        percentIntake = (value * 100 / user.carbsGoal).toStringAsFixed(1);
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
     case "Sugar":
       {
-        percentIntake = (value * 100 / user.sugarGoal).toStringAsFixed(1);
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
   }
 
   return Container(
-    // color: , // TODO: different colours for different levels
     margin: const EdgeInsets.symmetric(horizontal: 2),
     padding: const EdgeInsets.symmetric(vertical: 4),
     decoration: BoxDecoration(
@@ -70,7 +69,6 @@ Widget foodDataWidget(
         Utils.createVerticalSpace(5),
         Utils.createTitleSmall("$percentIntake%", context),
         Utils.createVerticalSpace(5),
-        // TODO: Have a global access to user so we can get his information from any page in the app, useful here for calculating % target
       ],
     ),
   );
@@ -79,14 +77,15 @@ Widget foodDataWidget(
 // Widget to create all nutrtional data boxes
 Widget allFoodDataWidget(int calories, double protein, double fats,
     double carbs, double sugar, UserData user, BuildContext context) {
+  List<int> userNutritionGoals = UserData.nutritionCalculator(user);
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      foodDataWidget("Energy", calories, user, context),
-      foodDataWidget("Protein", protein, user, context),
-      foodDataWidget("Fats", fats, user, context),
-      foodDataWidget("Carbs", carbs, user, context),
-      foodDataWidget("Sugar", sugar, user, context),
+      foodDataWidget("Energy", calories, userNutritionGoals[0], context),
+      foodDataWidget("Protein", protein, userNutritionGoals[1], context),
+      foodDataWidget("Fats", fats, userNutritionGoals[2], context),
+      foodDataWidget("Carbs", carbs, userNutritionGoals[3], context),
+      foodDataWidget("Sugar", sugar, userNutritionGoals[4], context),
     ],
   );
 }

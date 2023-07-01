@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/update_weight_page.dart';
 import 'main.dart';
 import 'utils.dart';
 
@@ -8,6 +9,10 @@ class SettingsPage extends StatelessWidget {
 
   Widget placeholderPage() {
     return const Placeholder();
+  }
+
+  Widget UpdateWeightWidget() {
+    return UpdateWeightPage();
   }
 
   @override
@@ -21,7 +26,9 @@ class SettingsPage extends StatelessWidget {
           child: Utils.createTitleSmall(text, context),
         ),
         trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-        tileColor: Colors.white,
+        tileColor: Theme.of(context).brightness == Brightness.dark
+            ? Color(0xFF111111)
+            : Colors.white,
         onTap: () {
           Navigator.push(
               context,
@@ -65,9 +72,10 @@ class SettingsPage extends StatelessWidget {
                       child:
                           Utils.createTitleMedium("Account Settings", context),
                     ),
-                    settingsTile("Configure Profile", placeholderPage),
+                    settingsTile("Update weight", UpdateWeightWidget),
+                    // settingsTile("Update weight goals", UpdateWeightGoalsWidget),
                     settingsTile("Change Email/Password", placeholderPage),
-                    settingsTile("Privacy Settings", placeholderPage),
+                    // settingsTile("Privacy Settings", placeholderPage),
                   ],
                 ),
                 Utils.createVerticalSpace(10),
@@ -78,7 +86,7 @@ class SettingsPage extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Utils.createTitleMedium("Preferences", context),
                     ),
-                    settingsTile("Notification", placeholderPage),
+                    // settingsTile("Notifications", placeholderPage),
                     darkModeTile(),
                   ],
                 ),
@@ -94,18 +102,18 @@ class SettingsPage extends StatelessWidget {
                     settingsTile("Contact Us", placeholderPage),
                   ],
                 ),
-                Utils.createVerticalSpace(10),
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("About", context),
-                    ),
-                    settingsTile("Private Policy", placeholderPage),
-                    settingsTile("Terms of Use", placeholderPage),
-                  ],
-                ),
+                // Utils.createVerticalSpace(10),
+                // Column(
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.centerLeft,
+                //       padding: const EdgeInsets.all(16),
+                //       child: Utils.createTitleMedium("About", context),
+                //     ),
+                //     settingsTile("Private Policy", placeholderPage),
+                //     settingsTile("Terms of Use", placeholderPage),
+                //   ],
+                // ),
                 Utils.createVerticalSpace(52),
                 ElevatedButton.icon(
                   style: ButtonStyle(

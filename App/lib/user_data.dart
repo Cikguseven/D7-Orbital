@@ -1,5 +1,6 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/material.dart';
+
 import 'day_log.dart';
 import 'utils.dart';
 
@@ -12,13 +13,9 @@ class UserData {
     height: 0.0,
     weight: 0.0,
     activityMultiplier: 0,
+    weightGoal: 0.0,
     level: 0,
     experience: 0,
-    carbsGoal: 0,
-    fatsGoal: 0,
-    proteinGoal: 0,
-    rmr: 0,
-    sugarGoal: 0,
   );
 
   // Basic Information
@@ -28,17 +25,11 @@ class UserData {
   final String birthday;
   final double height;
   final double weight;
+  final double activityMultiplier;
+  final double weightGoal;
 
   // Diary, separate collection
   List<DayLog> diary;
-
-  // Goals
-  double activityMultiplier;
-  int rmr;
-  int sugarGoal;
-  int proteinGoal;
-  int fatsGoal;
-  int carbsGoal;
 
   // Miscellaneous
   List<Badge> badgesEarned;
@@ -53,44 +44,8 @@ class UserData {
     required double height,
     required double weight,
     required double activityMultiplier,
+    required double weightGoal,
   }) {
-    DateTime dtBirthday = Utils.stringToDateTime(birthday);
-    DateDuration age = AgeCalculator.age(dtBirthday);
-    int yearsOld = age.years;
-
-    double baseRMR = 10 * weight + 6.25 * height - 5 * yearsOld;
-
-    if (gender == "Male") {
-      baseRMR += 5;
-    } else {
-      baseRMR -= 161;
-    }
-
-    double proteinMultiplier;
-
-    // unable to use switch for comparing double using ==
-    if (activityMultiplier == ActivityMultiplier.SEDENTARY) {
-      proteinMultiplier = 0.8;
-    } else if (activityMultiplier == ActivityMultiplier.LIGHTLY_ACTIVE) {
-      proteinMultiplier = 0.9;
-    } else if (activityMultiplier == ActivityMultiplier.MODERATELY_ACTIVE) {
-      proteinMultiplier = 1.0;
-    } else if (activityMultiplier == ActivityMultiplier.VERY_ACTIVE) {
-      proteinMultiplier = 1.1;
-    } else {
-      // EXTREMELY_ACTIVE
-      proteinMultiplier = 1.2;
-    }
-
-    int rmr = (baseRMR * activityMultiplier).round();
-
-    int sugarGoal = (rmr / 40).round();
-
-    int proteinGoal = (proteinMultiplier * weight).round();
-
-    int fatsGoal = (rmr / 30).round();
-
-    int carbsGoal = (rmr / 20 * 3).round();
     return UserData(
       firstName: firstName,
       lastName: lastName,
@@ -98,12 +53,8 @@ class UserData {
       birthday: birthday,
       height: height,
       weight: weight,
-      rmr: rmr,
-      sugarGoal: sugarGoal,
-      proteinGoal: proteinGoal,
-      fatsGoal: fatsGoal,
-      carbsGoal: carbsGoal,
       activityMultiplier: activityMultiplier,
+      weightGoal: weightGoal,
       experience: 0,
       level: 1,
     );
@@ -116,12 +67,8 @@ class UserData {
       required this.birthday,
       required this.height,
       required this.weight,
-      required this.rmr,
-      required this.sugarGoal,
-      required this.proteinGoal,
-      required this.fatsGoal,
-      required this.carbsGoal,
       required this.activityMultiplier,
+      required this.weightGoal,
       required this.experience,
       required this.level,
       List<DayLog>? existingDiary,
@@ -137,11 +84,7 @@ class UserData {
         'height': height,
         'weight': weight,
         'activityMultiplier': activityMultiplier,
-        'rmr': rmr,
-        'sugarGoal': sugarGoal,
-        'proteinGoal': proteinGoal,
-        'fatsGoal': fatsGoal,
-        'carbsGoal': carbsGoal,
+        'weightGoal': weightGoal,
         'experience': experience,
         'level': level,
       };
@@ -155,14 +98,52 @@ class UserData {
       height: data['height'],
       weight: data['weight'],
       activityMultiplier: data['activityMultiplier'],
-      rmr: data['rmr'],
-      sugarGoal: data['sugarGoal'],
-      proteinGoal: data['proteinGoal'],
-      fatsGoal: data['fatsGoal'],
-      carbsGoal: data['carbsGoal'],
+      weightGoal: data['weightGoal'],
       experience: data['experience'],
       level: data['level'],
     );
+  }
+
+  static List<int> nutritionCalculator(UserData user) {
+    DateTime dtBirthday = Utils.stringToDateTime(user.birthday);
+    DateDuration age = AgeCalculator.age(dtBirthday);
+    int yearsOld = age.years;
+
+    double baseRMR = 10 * user.weight + 6.25 * user.height - 5 * yearsOld;
+
+    if (user.gender == "Male") {
+      baseRMR += 5;
+    } else {
+      baseRMR -= 161;
+    }
+
+    double proteinMultiplier;
+
+    if (user.activityMultiplier == ActivityMultiplier.SEDENTARY) {
+      proteinMultiplier = 0.8;
+    } else if (user.activityMultiplier == ActivityMultiplier.LIGHTLY_ACTIVE) {
+      proteinMultiplier = 0.9;
+    } else if (user.activityMultiplier ==
+        ActivityMultiplier.MODERATELY_ACTIVE) {
+      proteinMultiplier = 1.0;
+    } else if (user.activityMultiplier == ActivityMultiplier.VERY_ACTIVE) {
+      proteinMultiplier = 1.1;
+    } else {
+      // EXTREMELY_ACTIVE
+      proteinMultiplier = 1.2;
+    }
+
+    int rmr = (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
+
+    int proteinGoal = (proteinMultiplier * user.weight).round();
+
+    int fatsGoal = (rmr / 30).round();
+
+    int carbsGoal = (rmr / 20 * 3).round();
+
+    int sugarGoal = (rmr / 40).round();
+
+    return [rmr, proteinGoal, fatsGoal, carbsGoal, sugarGoal];
   }
 }
 
@@ -218,7 +199,7 @@ class Badge {
 // }
 //
 // final ActivityToCaloriesPerHourMap = <Activity, int>{
-//   // TOOD: Proper calculator
+//   // TODO: Proper calculator
 //   Activity.RUNNING: 100,
 //   Activity.JOGGING: 200,
 //   Activity.WALKING: 300,

@@ -52,7 +52,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
-      Utils.showSnackBar("Can't resend for another $cooldown seconds");
+      Utils.showSnackBar("Can't resend for another ${cooldown > 1 ? "${cooldown} seconds" : "1 second"}");
       return;
     }
     try {
@@ -102,8 +102,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                     ),
                     onPressed: sendEmailVerification,
                     icon: const Icon(Icons.email_outlined, size: 24),
-                    label:
-                        Text("Resend email in \t${cooldown > 0 ? cooldown : ""} seconds"),
+                    label: cooldown > 0 ? Text("Resend email in ${cooldown > 1 ? "${cooldown} seconds" : "1 second"}") : Text("Resend email"),
                   ),
                 ),
                 Utils.createVerticalSpace(26),
