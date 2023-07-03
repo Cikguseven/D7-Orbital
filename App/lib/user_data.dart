@@ -14,7 +14,6 @@ class UserData {
     weight: 0.0,
     activityMultiplier: 0,
     weightGoal: 0.0,
-    level: 0,
     experience: 0,
   );
 
@@ -33,8 +32,7 @@ class UserData {
 
   // Miscellaneous
   List<Badge> badgesEarned;
-  int experience = 0;
-  int level = 1;
+  int experience;
 
   static setupNewUser({
     required String firstName,
@@ -56,7 +54,6 @@ class UserData {
       activityMultiplier: activityMultiplier,
       weightGoal: weightGoal,
       experience: 0,
-      level: 1,
     );
   }
 
@@ -70,7 +67,6 @@ class UserData {
       required this.activityMultiplier,
       required this.weightGoal,
       required this.experience,
-      required this.level,
       List<DayLog>? existingDiary,
       List<Badge>? existingBadgesEarned})
       : diary = existingDiary ?? List.empty(),
@@ -86,7 +82,6 @@ class UserData {
         'activityMultiplier': activityMultiplier,
         'weightGoal': weightGoal,
         'experience': experience,
-        'level': level,
       };
 
   static UserData fromJson(Map<String, dynamic> data) {
@@ -100,7 +95,6 @@ class UserData {
       activityMultiplier: data['activityMultiplier'],
       weightGoal: data['weightGoal'],
       experience: data['experience'],
-      level: data['level'],
     );
   }
 

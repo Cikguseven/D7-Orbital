@@ -25,9 +25,6 @@ class _MePageState extends State<MePage> {
   int _currentCalories = 0;
   int _goalCalories = 0;
 
-  int experienceForNextLevel =
-      200; // TODO: IDC just make some tier progression and put that data somewhere
-
   void loadLastFoodImage() async {
     final diary = widget.user.diary;
     if (diary.isEmpty) {
@@ -69,14 +66,21 @@ class _MePageState extends State<MePage> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String greetings = now.hour < 4
-        ? "Good Night"
+        ? "Good night"
         : now.hour < 12
-            ? "Good Morning"
+            ? "Good morning"
             : now.hour < 18
-                ? "Good Afternoon"
-                : "Good Evening";
+                ? "Good afternoon"
+                : "Good evening";
 
     // Text onTrackIndicator;
+
+    int experience = widget.user.experience;
+    int level = (sqrt(experience) * 0.25).floor() + 1;
+    num experienceForPrevLevel = pow(4 * (level - 1), 2);
+    num experienceForNextLevel = pow(4 * level, 2);
+    num experienceForCurrLevel = experienceForNextLevel - experienceForPrevLevel;
+    double levelPercent = (experience - experienceForPrevLevel)/ experienceForCurrLevel;
 
     return Scaffold(
       appBar: AppBar(
@@ -154,9 +158,9 @@ class _MePageState extends State<MePage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Utils.createHeadlineSmall(
+                Utils.createHeadlineMedium(
                     // Limit the length of name displayed to 10
-                    "$greetings\n${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!",
+                    "$greetings, ${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!",
                     context,
                     align: TextAlign.start),
                 Utils.createVerticalSpace(26),
@@ -272,17 +276,16 @@ class _MePageState extends State<MePage> {
                   padding: EdgeInsets.zero,
                   // width: 170.0,
                   animation: true,
-                  animationDuration: 1000,
+                  animationDuration: 100,
                   lineHeight: 20.0,
                   trailing: Utils.createTitleSmall(
-                      "Level ${widget.user.level}\n ${widget.user.experience}/$experienceForNextLevel XP",
+                      "Level ${level}\n ${experience}/${experienceForNextLevel} XP",
                       context),
-                  percent:
-                      min(widget.user.experience / experienceForNextLevel, 1),
-                  center: Text(
-                      "${widget.user.experience / experienceForNextLevel * 100}%"),
+                  percent: levelPercent,
+                  center: Text("${(levelPercent * 100).toStringAsFixed(1)}%"),
                   barRadius: const Radius.circular(16),
                   progressColor: Colors.green,
+                  backgroundColor: const Color(0xFF888888),
                 ),
                 Utils.createVerticalSpace(26),
                 Row(
@@ -290,14 +293,14 @@ class _MePageState extends State<MePage> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          widget.user.experience += 50;
+                          widget.user.experience += 10;
                           setState(() {
                             Utils.updateUserData({
-                              'experience': widget.user.experience + 50,
+                              'experience': widget.user.experience + 10,
                             });
                           });
                         },
-                        child: const Text("Check in for +50 xp"),
+                        child: const Text("Check in for 10 XP"),
                       ),
                     )
                   ],

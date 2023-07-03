@@ -133,7 +133,7 @@ ThemeData darkTheme = ThemeData(
       borderRadius: BorderRadius.circular(8),
     ),
     filled: true,
-    fillColor: Color(0xFF2A2A2A),
+    fillColor: const Color(0xFF2A2A2A),
     outlineBorder: BorderSide(
       color: INPUT_BORDER_GREY,
     ),

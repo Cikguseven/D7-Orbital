@@ -16,7 +16,7 @@ class NewUserSetupPage extends StatefulWidget {
 
 class _NewUserSetupPage extends State<NewUserSetupPage> {
   bool done = false;
-  double activityMultiplier = 1.2;
+  double activityMultiplier = ActivityMultiplier.LIGHTLY_ACTIVE;
   double weightGoal = 0.0;
   final formKey = GlobalKey<FormState>();
 
@@ -87,7 +87,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
   Widget build(BuildContext context) {
     return done
         ? const App()
-        : // TODO: fix this, a bit of circular App call this, this call App but i think is a quick fix for now
+        :
         CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -360,6 +360,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                               "Set your weight goal", context),
                         ),
                       ),
+                      Utils.createVerticalSpace(10),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
@@ -389,7 +390,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: RadioListTile(
-                          title: const Text('Maintain your current weight'),
+                          title: const Text('Maintain my current weight'),
                           value: 0.0,
                           groupValue: weightGoal,
                           onChanged: (value) {
@@ -444,7 +445,7 @@ class _NewUserSetupPage extends State<NewUserSetupPage> {
                         ),
                         onTap: () => FirebaseAuth.instance.signOut(),
                       ),
-                      Utils.createVerticalSpace(10),
+                      Utils.createVerticalSpace(12),
                     ],
                   ),
                 ),

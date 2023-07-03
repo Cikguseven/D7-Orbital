@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/update_weight_goal_page.dart';
 import 'package:my_first_flutter/update_weight_page.dart';
 import 'main.dart';
 import 'utils.dart';
@@ -11,9 +12,14 @@ class SettingsPage extends StatelessWidget {
     return const Placeholder();
   }
 
-  Widget UpdateWeightWidget() {
-    return UpdateWeightPage();
+  Widget updateWeightWidget() {
+    return const UpdateWeightPage();
   }
+
+  Widget updateWeightGoalWidget() {
+    return const UpdateWeightGoalPage();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,7 @@ class SettingsPage extends StatelessWidget {
         ),
         trailing: const Icon(Icons.keyboard_arrow_right_rounded),
         tileColor: Theme.of(context).brightness == Brightness.dark
-            ? Color(0xFF111111)
+            ? const Color(0xFF111111)
             : Colors.white,
         onTap: () {
           Navigator.push(
@@ -72,8 +78,8 @@ class SettingsPage extends StatelessWidget {
                       child:
                           Utils.createTitleMedium("Account Settings", context),
                     ),
-                    settingsTile("Update weight", UpdateWeightWidget),
-                    // settingsTile("Update weight goals", UpdateWeightGoalsWidget),
+                    settingsTile("Update weight", updateWeightWidget),
+                    settingsTile("Update weight goal", updateWeightGoalWidget),
                     settingsTile("Change Email/Password", placeholderPage),
                     // settingsTile("Privacy Settings", placeholderPage),
                   ],
@@ -160,11 +166,6 @@ class _SwitchState extends State<DarkModeSwitch> {
       onChanged: (bool value) {
         // This is called when the user toggles the switch.
         setState(() {
-          if (value) {
-            print('Switched to dark mode');
-          } else {
-            print('Switched to light mode');
-          }
           MyApp.themeNotifier.value =
           MyApp.themeNotifier.value == ThemeMode.light
               ? ThemeMode.dark

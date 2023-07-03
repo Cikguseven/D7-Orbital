@@ -97,11 +97,10 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                     SizedBox(
                       height: null,
                       width: MediaQuery.of(context).size.width * 0.7,
-                      child: ElevatedButton.icon(
+                      child: ElevatedButton(
                         onPressed: analyseAndLogCallBack,
-                        icon: const Icon(Icons.edit, size: 24),
-                        label: const Text(
-                          "Log it",
+                        child: const Text(
+                          "Log it!",
                         ),
                       ),
                     ),
@@ -111,7 +110,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                       child: ElevatedButton(
                         onPressed: manualEntryCallBack,
                         child: const Text(
-                          "Manual Entry",
+                          "Manual entry",
                         ),
                       ),
                     ),
@@ -131,7 +130,6 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   Future analyseAndLogCallBack() async {
     try {
-      // TODO: Integrate a food recognition model
       // if (_image == null) throw ArgumentError("No image selected");
       // throw UnimplementedError("Has not been implemented");
 

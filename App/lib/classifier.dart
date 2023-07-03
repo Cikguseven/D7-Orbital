@@ -81,7 +81,7 @@ class Classifier {
     final topResult = resultCategories.first;
     return topResult.score < 50
         ? ""
-        : topResult.label; // TODO: FInd out a good metric for the score.
+        : topResult.label;
   }
 
   List<ClassifierCategory> _postProcessOutput(TensorBuffer outputBuffer) {

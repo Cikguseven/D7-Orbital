@@ -33,9 +33,13 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Update weight"),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
-          Utils.createVerticalSpace(80),
+          Utils.createVerticalSpace(60),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
@@ -44,7 +48,7 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
               inputFormatters: [LengthLimitingTextInputFormatter(4)],
               controller: weightController,
               decoration: const InputDecoration(
-                labelText: "Enter your new weight in KG",
+                labelText: "Enter your new weight in kg",
               ),
             ),
           ),
