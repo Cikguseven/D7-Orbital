@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'food_data.dart';
-import 'utils.dart';
 
 class ManualFoodSelectPage extends StatefulWidget {
   const ManualFoodSelectPage({Key? key}) : super(key: key);
@@ -11,117 +10,117 @@ class ManualFoodSelectPage extends StatefulWidget {
 }
 
 class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
-  final canteens = ["Frontier", "Techno Edge", "Terrace", "The Deck"];
+  final canteens = ['Frontier', 'Techno Edge', 'Terrace', 'The Deck'];
   final canteenToStallMap = {
-    "Frontier": ["Stall 1", "Stall 2", "Stall 3"],
-    "Techno Edge": ["Stall A", "Stall B", "Stall C"],
-    "Terrace": ["Stall X", "Stall Y", "Stall Z"],
-    "The Deck": ["Stall T", "Stall U", "Stall V"],
+    'Frontier': ['Stall 1', 'Stall 2', 'Stall 3'],
+    'Techno Edge': ['Stall A', 'Stall B', 'Stall C'],
+    'Terrace': ['Stall X', 'Stall Y', 'Stall Z'],
+    'The Deck': ['Stall T', 'Stall U', 'Stall V'],
   };
   final stallToFoodMap = {
     // TODO: Should have CSV files locally to get these
-    "Stall 1": [
+    'Stall 1': [
       FoodData(
-          name: "FoodData Item 1",
+          name: 'FoodData Item 1',
           energy: 100,
           protein: 10,
           fats: 10,
           carbs: 10,
           sugar: 10)
     ],
-    "Stall 2": [
+    'Stall 2': [
       FoodData(
-          name: "FoodData Item 2",
+          name: 'FoodData Item 2',
           energy: 200,
           protein: 20,
           fats: 20,
           carbs: 20,
           sugar: 20)
     ],
-    "Stall 3": [
+    'Stall 3': [
       FoodData(
-          name: "FoodData Item 3",
+          name: 'FoodData Item 3',
           energy: 300,
           protein: 30,
           fats: 30,
           carbs: 30,
           sugar: 30)
     ],
-    "Stall A": [
+    'Stall A': [
       FoodData(
-          name: "FoodData Item 4",
+          name: 'FoodData Item 4',
           energy: 400,
           protein: 40,
           fats: 40,
           carbs: 40,
           sugar: 40)
     ],
-    "Stall B": [
+    'Stall B': [
       FoodData(
-          name: "FoodData Item 5",
+          name: 'FoodData Item 5',
           energy: 500,
           protein: 50,
           fats: 50,
           carbs: 50,
           sugar: 50)
     ],
-    "Stall C": [
+    'Stall C': [
       FoodData(
-          name: "FoodData Item 6",
+          name: 'FoodData Item 6',
           energy: 600,
           protein: 60,
           fats: 60,
           carbs: 60,
           sugar: 60)
     ],
-    "Stall X": [
+    'Stall X': [
       FoodData(
-          name: "FoodData Item 7",
+          name: 'FoodData Item 7',
           energy: 700,
           protein: 70,
           fats: 70,
           carbs: 70,
           sugar: 70)
     ],
-    "Stall Y": [
+    'Stall Y': [
       FoodData(
-          name: "FoodData Item 8",
+          name: 'FoodData Item 8',
           energy: 800,
           protein: 80,
           fats: 80,
           carbs: 80,
           sugar: 80)
     ],
-    "Stall Z": [
+    'Stall Z': [
       FoodData(
-          name: "FoodData Item 9",
+          name: 'FoodData Item 9',
           energy: 900,
           protein: 90,
           fats: 90,
           carbs: 90,
           sugar: 90)
     ],
-    "Stall T": [
+    'Stall T': [
       FoodData(
-          name: "FoodData Item 10",
+          name: 'FoodData Item 10',
           energy: 1000,
           protein: 100,
           fats: 100,
           carbs: 100,
           sugar: 100)
     ],
-    "Stall U": [
+    'Stall U': [
       FoodData(
-          name: "FoodData Item 11",
+          name: 'FoodData Item 11',
           energy: 1100,
           protein: 110,
           fats: 110,
           carbs: 110,
           sugar: 110)
     ],
-    "Stall V": [
+    'Stall V': [
       FoodData(
-          name: "FoodData Item 12",
+          name: 'FoodData Item 12',
           energy: 1200,
           protein: 120,
           fats: 120,
@@ -138,7 +137,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Snap and Log"),
+        title: const Text('Snap and Log'),
         centerTitle: true,
       ),
       body: Column(
@@ -178,7 +177,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: const Text("Select canteen"),
+              hint: const Text('Select canteen'),
             ),
           ),
           Container(
@@ -218,7 +217,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: const Text("Select stall"),
+              hint: const Text('Select stall'),
             ),
           ),
           Container(
@@ -257,10 +256,10 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: const Text("Select food"),
+              hint: const Text('Select food'),
             ),
           ),
-          // Utils.createVerticalSpace(MediaQuery.of(context).size.height * 2/5), // TODO: Magic number
+          // const SizedBox(height: MediaQuery.of(context).size.height * 2/5), // TODO: Magic number
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -278,9 +277,9 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                         ? const MaterialStatePropertyAll(Colors.grey)
                         : null,
                   ),
-                  child: const Text("Confirm"),
+                  child: const Text('Confirm'),
                 ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
               ],
             ),
           )

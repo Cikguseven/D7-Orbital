@@ -33,19 +33,19 @@ class _LoginWidgetState extends State<LoginWidget> {
           hasScrollBody: false,
           child: Column(
             children: [
-              Utils.createVerticalSpace(60),
-              Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-              Utils.createVerticalSpace(50),
+              const SizedBox(height: 60),
+              Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+              const SizedBox(height: 50),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                    labelText: "Email",
+                    labelText: 'Email',
                   ),
                 ),
               ),
-              Utils.createVerticalSpace(16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
@@ -58,7 +58,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                       onTap: () => setState(() => obscureFlag = !obscureFlag),
                     ),
-                    labelText: "Password",
+                    labelText: 'Password',
                   ),
                   obscureText: obscureFlag, // Obscure password field
                 ),
@@ -68,7 +68,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   child: const Text(
-                    "Forgot Password",
+                    'Forgot Password',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Colors.blueAccent,
@@ -85,7 +85,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   },
                 ),
               ),
-              Utils.createVerticalSpace(20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -93,12 +93,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 onPressed: signInCallBack,
                 child: const Text(
-                  "Log in",
+                  'Log in',
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.all(12),
-                child: Text("---------- or ----------",
+                child: Text('---------- or ----------',
                     style: TextStyle(color: Colors.grey)),
               ),
               ElevatedButton(
@@ -108,7 +108,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 onPressed: widget.onClickSignUp,
                 child: const Text(
-                  "Sign up",
+                  'Sign up',
                 ),
               ),
             ],
@@ -131,7 +131,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       // await Utils.firebaseSignIn(
       //     emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException {
-      Utils.showSnackBar("Enter a valid account");
+      Utils.showSnackBar('Enter a valid account');
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

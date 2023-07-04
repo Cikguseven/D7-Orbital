@@ -46,7 +46,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         builder: (context, posts) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Make it Count"),
+              title: const Text('Make it Count'),
               centerTitle: true,
             ),
             body: RefreshIndicator(
@@ -117,7 +117,7 @@ class PostCard extends StatelessWidget {
 
         // Like, comment and share buttons
         SocialContainerWidget(post: post, user: user),
-        Utils.createVerticalSpace(5),
+        const SizedBox(height: 5),
 
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
@@ -130,10 +130,10 @@ class PostCard extends StatelessWidget {
                     radius: 20,
                     // Change to user's profile photo eventually
                     backgroundImage: AssetImage(
-                      "images/Dog.jpeg",
+                      'images/Dog.jpeg',
                     )),
               ),
-              Utils.createHorizontalSpace(15),
+              const SizedBox(width: 15),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -144,7 +144,7 @@ class PostCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Utils.createVerticalSpace(5),
+                  const SizedBox(height: 5),
                   // Caption container
                   SizedBox(
                     width: 280,
@@ -160,7 +160,7 @@ class PostCard extends StatelessWidget {
             ],
           ),
         ),
-        Utils.createVerticalSpace(10),
+        const SizedBox(height: 10),
 
         // Rating container
         Padding(
@@ -171,7 +171,7 @@ class PostCard extends StatelessWidget {
               StarRating(
                 rating: post.rating.toDouble(),
               ),
-              Utils.createVerticalSpace(10),
+              const SizedBox(height: 10),
               // Post age container
               Padding(
                 padding: const EdgeInsets.only(left: 5),
@@ -182,11 +182,11 @@ class PostCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
-              Utils.createVerticalSpace(5),
+              const SizedBox(height: 5),
               // Nutritional information container
               ExpansionTile(
                   title: const Text(
-                    "View nutritional information",
+                    'View nutritional information',
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.normal),
@@ -195,12 +195,12 @@ class PostCard extends StatelessWidget {
                     // Nutrition bar
                     allFoodDataWidget(post.calories, post.protein, post.fats,
                         post.carbs, post.sugar, user, context),
-                    Utils.createVerticalSpace(15),
+                    const SizedBox(height: 15),
                   ]),
             ],
           ),
         ),
-        Utils.createVerticalSpace(20),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -291,6 +291,6 @@ class _SocialContainerState extends State<SocialContainerWidget> {
     var file = await DefaultCacheManager().getSingleFile(widget.post.imageURL);
     await Share.shareXFiles([XFile(file.path)],
         text:
-            "Check out this post by ${widget.post.firstName} ${widget.post.lastName}!");
+            'Check out this post by ${widget.post.firstName} ${widget.post.lastName}!');
   }
 }

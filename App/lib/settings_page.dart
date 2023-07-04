@@ -50,15 +50,18 @@ class SettingsPage extends StatelessWidget {
           width: 300, // necessary hack for text to be aligned properly
           height: 300,
           alignment: Alignment.centerLeft,
-          child: Utils.createTitleSmall('Dark Mode', context),
+          child: Utils.createTitleSmall('Toggle Dark Mode', context),
         ),
         trailing: const DarkModeSwitch(),
+        tileColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF111111)
+            : Colors.white,
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: const Text('Settings'),
         centerTitle: true,
       ),
       body: CustomScrollView(
@@ -76,68 +79,68 @@ class SettingsPage extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
                       child:
-                          Utils.createTitleMedium("Account Settings", context),
+                          Utils.createTitleMedium('Account Settings', context),
                     ),
-                    settingsTile("Update weight", updateWeightWidget),
-                    settingsTile("Update weight goal", updateWeightGoalWidget),
-                    settingsTile("Change Email/Password", placeholderPage),
-                    // settingsTile("Privacy Settings", placeholderPage),
+                    settingsTile('Update weight', updateWeightWidget),
+                    settingsTile('Update weight goal', updateWeightGoalWidget),
+                    settingsTile('Change Email/Password', placeholderPage),
+                    // settingsTile('Privacy Settings', placeholderPage),
                   ],
                 ),
-                Utils.createVerticalSpace(10),
+                const SizedBox(height: 10),
                 Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("Preferences", context),
+                      child: Utils.createTitleMedium('Preferences', context),
                     ),
-                    // settingsTile("Notifications", placeholderPage),
+                    // settingsTile('Notifications', placeholderPage),
                     darkModeTile(),
                   ],
                 ),
-                Utils.createVerticalSpace(10),
+                const SizedBox(height: 10),
                 Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("Help", context),
+                      child: Utils.createTitleMedium('Help', context),
                     ),
-                    settingsTile("FAQ", placeholderPage),
-                    settingsTile("Contact Us", placeholderPage),
+                    settingsTile('FAQ', placeholderPage),
+                    settingsTile('Contact Us', placeholderPage),
                   ],
                 ),
-                // Utils.createVerticalSpace(10),
+                // const SizedBox(height: 10),
                 // Column(
                 //   children: [
                 //     Container(
                 //       alignment: Alignment.centerLeft,
                 //       padding: const EdgeInsets.all(16),
-                //       child: Utils.createTitleMedium("About", context),
+                //       child: Utils.createTitleMedium('About', context),
                 //     ),
-                //     settingsTile("Private Policy", placeholderPage),
-                //     settingsTile("Terms of Use", placeholderPage),
+                //     settingsTile('Private Policy', placeholderPage),
+                //     settingsTile('Terms of Use', placeholderPage),
                 //   ],
                 // ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(
                         Theme.of(context).textTheme.titleMedium),
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 16 * 2)),
+                        MediaQuery.of(context).size.width - 20 * 2)),
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.arrow_back, size: 24),
-                  label: const Text("Log Out"),
+                  label: const Text('Log Out'),
                 ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
               ],
             ),
           ),

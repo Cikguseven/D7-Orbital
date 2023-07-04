@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
-import 'package:universal_io/io.dart' as i;
 import 'package:uuid/uuid.dart';
 
 import 'check_food_page.dart';
@@ -71,9 +70,9 @@ class _SnapperWidgetState extends State<SnapperWidget> {
         centerTitle: true,
         actions: [
           IconButton(
-            color: Colors.grey,
+            color: Colors.white,
             onPressed: getImageGalleryCallBack,
-            icon: const Icon(Icons.insert_drive_file),
+            icon: const Icon(Icons.collections),
           ),
         ],
       ),
@@ -97,24 +96,25 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                     SizedBox(
                       height: null,
                       width: MediaQuery.of(context).size.width * 0.7,
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                         onPressed: analyseAndLogCallBack,
-                        child: const Text(
-                          "Log it!",
+                        icon: const Icon(Icons.camera_alt, size: 24),
+                        label: const Text(
+                          'Log it!',
                         ),
                       ),
                     ),
-                    Utils.createVerticalSpace(16),
+                    const SizedBox(height: 16),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ElevatedButton(
                         onPressed: manualEntryCallBack,
                         child: const Text(
-                          "Manual entry",
+                          'Manual entry',
                         ),
                       ),
                     ),
-                    Utils.createVerticalSpace(16),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ],
@@ -130,8 +130,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   Future analyseAndLogCallBack() async {
     try {
-      // if (_image == null) throw ArgumentError("No image selected");
-      // throw UnimplementedError("Has not been implemented");
+      // if (_image == null) throw ArgumentError('No image selected');
+      // throw UnimplementedError('Has not been implemented');
 
       // Ensure that the camera is initialized.
       await _initializeControllerFuture;
@@ -146,7 +146,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       checkFood(image);
     } catch (e) {
       // If an error occurs, log the error to the console.
-      Utils.showSnackBar("Unable to read image");
+      Utils.showSnackBar('Unable to read image');
     }
   }
 
@@ -168,19 +168,17 @@ class _SnapperWidgetState extends State<SnapperWidget> {
           user: widget.user,
           postID: id,
           imageURL:
-              "https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092",
+              'https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092',
         ),
       ),
     );
   }
 
-  getImageGalleryCallBack() async {
+  void getImageGalleryCallBack() async {
     final ImagePicker picker = ImagePicker();
     XFile? image;
     image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image == null) return;
-    checkFood(image);
+    if (image != null) checkFood(image);
   }
 
   void checkFood(XFile? image) async {
@@ -196,7 +194,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     // Store image on Firebase
     String imagePath = 'posts/$postID.jpg';
     Reference ref = FirebaseStorage.instance.ref().child(imagePath);
-    await ref.putFile(i.File(image.path));
+    await ref.putFile(File(image.path));
     String imageURL = await ref.getDownloadURL();
 
     // Load AI classifier and obtain prediction of food from image
@@ -210,13 +208,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     if (foodItem != null) {
       Uri nutritionix =
           Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
-      String query = jsonEncode({"query": foodItem});
+      String query = jsonEncode({'query': foodItem});
       Response nutritionInfo = await http.post(
         nutritionix,
         headers: {
-          "Content-Type": "application/json",
-          "x-app-id": config.nutritionixAppID,
-          "x-app-key": config.nutritionixAppKey
+          'Content-Type': 'application/json',
+          'x-app-id': config.nutritionixAppID,
+          'x-app-key': config.nutritionixAppKey
         },
         body: query,
       );

@@ -18,12 +18,12 @@ class _UpdateWeightGoalPageState extends State<UpdateWeightGoalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Update weight goal"),
+        title: const Text('Update weight goal'),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          Utils.createVerticalSpace(40),
+          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RadioListTile(
@@ -89,11 +89,11 @@ class _UpdateWeightGoalPageState extends State<UpdateWeightGoalPage> {
               },
             ),
           ),
-          Utils.createVerticalSpace(30),
+          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: updateWeightCallback,
             child: const Text(
-              "Update",
+              'Update',
             ),
           ),
         ],
@@ -108,9 +108,9 @@ class _UpdateWeightGoalPageState extends State<UpdateWeightGoalPage> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'weightGoal': weightGoal});
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to update weight goal");
+      Utils.showSnackBar('Unable to update weight goal');
     } finally {
-      Utils.showSnackBar("Weight goal successfully updated", isBad: false);
+      Utils.showSnackBar('Weight goal successfully updated', isBad: false);
       navigatorKey.currentState!.pop();
     }
   }

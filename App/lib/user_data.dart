@@ -10,6 +10,8 @@ class UserData {
     lastName: 'user',
     gender: '',
     birthday: '',
+    checkIn: '',
+    pfpURL: '',
     height: 0.0,
     weight: 0.0,
     activityMultiplier: 0,
@@ -22,6 +24,8 @@ class UserData {
   final String lastName;
   final String gender;
   final String birthday;
+  final String checkIn;
+  String pfpURL;
   final double height;
   final double weight;
   final double activityMultiplier;
@@ -49,6 +53,8 @@ class UserData {
       lastName: lastName,
       gender: gender,
       birthday: birthday,
+      checkIn: '',
+      pfpURL: '',
       height: height,
       weight: weight,
       activityMultiplier: activityMultiplier,
@@ -62,6 +68,8 @@ class UserData {
       required this.lastName,
       required this.gender,
       required this.birthday,
+      required this.checkIn,
+      required this.pfpURL,
       required this.height,
       required this.weight,
       required this.activityMultiplier,
@@ -77,6 +85,8 @@ class UserData {
         'lastName': lastName,
         'gender': gender,
         'birthday': birthday,
+        'checkIn': checkIn,
+        'pfpURL' : pfpURL,
         'height': height,
         'weight': weight,
         'activityMultiplier': activityMultiplier,
@@ -90,6 +100,8 @@ class UserData {
       lastName: data['lastName'],
       gender: data['gender'],
       birthday: data['birthday'],
+      checkIn: data['checkIn'],
+      pfpURL: data['pfpURL'],
       height: data['height'],
       weight: data['weight'],
       activityMultiplier: data['activityMultiplier'],
@@ -105,7 +117,7 @@ class UserData {
 
     double baseRMR = 10 * user.weight + 6.25 * user.height - 5 * yearsOld;
 
-    if (user.gender == "Male") {
+    if (user.gender == 'Male') {
       baseRMR += 5;
     } else {
       baseRMR -= 161;

@@ -79,8 +79,9 @@ class Classifier {
     _model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
     final resultCategories = _postProcessOutput(outputBuffer);
     final topResult = resultCategories.first;
-    return topResult.score < 50
-        ? ""
+    // Threshold of 50
+    return topResult.score < 60
+        ? ''
         : topResult.label;
   }
 

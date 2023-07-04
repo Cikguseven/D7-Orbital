@@ -52,7 +52,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
-      Utils.showSnackBar("Can't resend for another ${cooldown > 1 ? "$cooldown seconds" : "1 second"}");
+      Utils.showSnackBar('Cannot resend for another ${cooldown > 1 ? '$cooldown seconds' : '1 second'}');
       return;
     }
     try {
@@ -70,7 +70,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
         },
       );
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to send verification email");
+      Utils.showSnackBar('Unable to send verification email');
       canSendEmail = true;
     }
   }
@@ -82,15 +82,15 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
         : Scaffold(
             body: Column(
               children: [
-                Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-                Utils.createVerticalSpace(60),
-                Utils.createHeadlineMedium("Verify Email", context),
-                Utils.createVerticalSpace(70),
+                const SizedBox(height: 60),
+                Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+                const SizedBox(height: 60),
+                Utils.createHeadlineMedium('Verify Email', context),
+                const SizedBox(height: 70),
                 Utils.createTitleMedium(
-                    "A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}",
+                    'A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}',
                     context),
-                Utils.createVerticalSpace(80),
+                const SizedBox(height: 80),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton.icon(
@@ -102,14 +102,14 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                     ),
                     onPressed: sendEmailVerification,
                     icon: const Icon(Icons.email_outlined, size: 24),
-                    label: cooldown > 0 ? Text("Resend email in ${cooldown > 1 ? "$cooldown seconds" : "1 second"}") : const Text("Resend email"),
+                    label: cooldown > 0 ? Text('Resend email in ${cooldown > 1 ? '$cooldown seconds' : '1 second'}') : const Text('Resend email'),
                   ),
                 ),
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 26),
                 TextButton(
                   onPressed: () => FirebaseAuth.instance.signOut(),
                   child: Text(
-                    "Return to log in",
+                    'Return to log in',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium

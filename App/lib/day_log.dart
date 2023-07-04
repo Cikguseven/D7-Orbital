@@ -26,17 +26,17 @@ class DayLog {
       };
 
   static DayLog fromJson(Map<String, dynamic> data) => DayLog(
-      data["date"],
-      data["postIDs"].cast<String>(),
-      data["caloriesIn"],
-      data["proteinIn"],
-      data["fatIn"],
-      data["carbIn"],
-      data["sugarIn"]);
+      data['date'],
+      data['postIDs'].cast<String>(),
+      data['caloriesIn'],
+      data['proteinIn'],
+      data['fatIn'],
+      data['carbIn'],
+      data['sugarIn']);
 
   static String dayLogNameFromTimeStamp(Timestamp ts) {
     DateTime dt = ts.toDate();
-    return "${dt.day}_${dt.month}_dayLog";
+    return '${dt.day}_${dt.month}_dayLog';
   }
 
   DayLog.createNew() : this(Timestamp.now(), [], 0, 0, 0, 0, 0);

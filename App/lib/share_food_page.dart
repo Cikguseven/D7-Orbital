@@ -46,7 +46,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Snap and Log"),
+        title: const Text('Snap and Log'),
         centerTitle: true,
       ),
       body: Column(
@@ -70,13 +70,13 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
             minLines: 4,
             controller: captionController,
             decoration: const InputDecoration(
-              labelText: "Write a caption...",
+              labelText: 'Write a caption...',
               alignLabelWithHint: true,
             ),
           ),
-          Utils.createVerticalSpace(52),
-          Utils.createTitleMedium("Rate your meal", context),
-          // Utils.createVerticalSpace(16),
+          const SizedBox(height: 52),
+          Utils.createTitleMedium('Rate your meal', context),
+          // const SizedBox(height: 16),
           // Rate your meal
           Center(
             child: RatingBar.builder(
@@ -127,9 +127,9 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                             Navigator.of(context)
                                 .popUntil((route) => route.isFirst);
                             Utils.showSnackBar(
-                                "Not implemented yet!"); // TODO: Implement adding to diary
+                                'Not implemented yet!'); // TODO: Implement adding to diary
                           },
-                          child: const Text("Add to diary"),
+                          child: const Text('Add to diary'),
                         ),
                       ),
                       const SizedBox(
@@ -138,13 +138,13 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: newPostSetupCallback,
-                          child: const Text("Share!"),
+                          child: const Text('Share!'),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
               ],
             ),
           ),
@@ -186,7 +186,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       final docDiary = FirebaseFirestore.instance
           .collection('userData')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("diary")
+          .collection('diary')
           .doc(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
 
       late DayLog existingDayLog;
@@ -205,9 +205,13 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       existingDayLog.carbIn += widget.fd.carbs;
       existingDayLog.sugarIn += widget.fd.sugar;
 
-      docDiary.set(existingDayLog.toJson());
+      await docDiary.set(existingDayLog.toJson());
+
+      await Utils.updateUserData({
+        'experience': widget.user.experience + 50,
+      });
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to share post");
+      Utils.showSnackBar('Unable to share post');
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

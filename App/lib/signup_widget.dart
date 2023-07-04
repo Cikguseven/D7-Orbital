@@ -29,7 +29,7 @@ class _SignupWidgetState extends State<SignupWidget> {
       pwd != null && pwd.length < 6 ? 'Password needs at least 6 characters' : null;
 
   String? password2Validator(String? pwd2) =>
-      pwd2 != passwordController.text.trim() ? "Password does not match" : null;
+      pwd2 != passwordController.text.trim() ? 'Password does not match' : null;
 
   bool obscureFlag = true;
 
@@ -50,21 +50,21 @@ class _SignupWidgetState extends State<SignupWidget> {
             key: formKey,
             child: Column(
               children: [
-                Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-                Utils.createVerticalSpace(50),
+                const SizedBox(height: 60),
+                Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+                const SizedBox(height: 50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                      labelText: "Email",
+                      labelText: 'Email',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: emailValidator,
                   ),
                 ),
-                Utils.createVerticalSpace(16),
+                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -77,14 +77,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
-                      labelText: "Password",
+                      labelText: 'Password',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: passwordValidator,
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                Utils.createVerticalSpace(16),
+                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -97,14 +97,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
-                      labelText: "Confirm Password",
+                      labelText: 'Confirm Password',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: password2Validator,
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 26),
                 ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -112,19 +112,19 @@ class _SignupWidgetState extends State<SignupWidget> {
                   ),
                   onPressed: signUpCallBack,
                   child: const Text(
-                    "Sign up",
+                    'Sign up',
                   ),
                 ),
-                Utils.createVerticalSpace(36),
+                const SizedBox(height: 36),
                 RichText(
                   text: TextSpan(
                     style: Theme.of(context).textTheme.titleMedium,
-                    text: "Have an Account? ",
+                    text: 'Have an Account? ',
                     children: [
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = widget.onClickLogIn,
-                        text: "Log in",
+                        text: 'Log in',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                         ),
@@ -156,7 +156,7 @@ class _SignupWidgetState extends State<SignupWidget> {
       await Utils.firebaseCreateUser(
           emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to create account");
+      Utils.showSnackBar('Unable to create account');
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

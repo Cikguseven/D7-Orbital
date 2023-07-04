@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'main.dart';
 import 'settings_page.dart';
 import 'user_data.dart';
@@ -24,6 +25,7 @@ class _MePageState extends State<MePage> {
   String? imageURL;
   int _currentCalories = 0;
   int _goalCalories = 0;
+  bool canCheckIn = false;
 
   void loadLastFoodImage() async {
     final diary = widget.user.diary;
@@ -55,23 +57,36 @@ class _MePageState extends State<MePage> {
 
   void loadActivities() async {} // TODO: TO be added
 
+  void checkIn() {
+    if (widget.user.checkIn != '') {
+      DateTime today = DateTime.now();
+      DateTime lastCheckIn = Utils.stringToDateTime(widget.user.checkIn);
+      if (today.year == lastCheckIn.year && today.month == lastCheckIn.month &&
+          today.day == lastCheckIn.day) {
+        return;
+      }
+    }
+    canCheckIn = true;
+  }
+
   @override
   void initState() {
     super.initState();
     loadLastFoodImage();
     loadProgress();
+    checkIn();
   }
 
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String greetings = now.hour < 4
-        ? "Good night"
+        ? 'Good night'
         : now.hour < 12
-            ? "Good morning"
+            ? 'Good morning'
             : now.hour < 18
-                ? "Good afternoon"
-                : "Good evening";
+                ? 'Good afternoon'
+                : 'Good evening';
 
     // Text onTrackIndicator;
 
@@ -84,7 +99,7 @@ class _MePageState extends State<MePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Me"),
+        title: const Text('Me'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -160,19 +175,19 @@ class _MePageState extends State<MePage> {
               children: [
                 Utils.createHeadlineMedium(
                     // Limit the length of name displayed to 10
-                    "$greetings, ${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!",
+                    '$greetings, \n${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!',
                     context,
                     align: TextAlign.start),
-                Utils.createVerticalSpace(26),
-                Utils.createHeadlineSmall("Your daily overview", context),
-                Utils.createVerticalSpace(8),
+                const SizedBox(height: 26),
+                Utils.createHeadlineSmall('Your daily overview', context),
+                const SizedBox(height: 8),
                 Text(
-                  "You are on track!",
+                  'You are on track!',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Colors.lightGreen,
                       ),
                 ),
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 26),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -197,27 +212,27 @@ class _MePageState extends State<MePage> {
                                 const MaterialStatePropertyAll(Colors.orange),
                           ),
                           onPressed: () {
-                            Utils.showSnackBar("Calories");
+                            Utils.showSnackBar('Calories');
                           },
                           child: CircularPercentIndicator(
                             radius: MediaQuery.of(context).size.width / 6 - 4,
                             lineWidth: 13.0,
                             animation: true,
                             percent: min(_currentCalories / _goalCalories, 1.0),
-                            header: Utils.createTitleSmall("Calories", context),
+                            header: Utils.createTitleSmall('Calories', context),
                             center: const Icon(
                               Icons.fastfood_rounded,
                               size: 48,
                             ),
                             footer: Utils.createTitleSmall(
-                                "$_currentCalories/$_goalCalories", context),
+                                '$_currentCalories/$_goalCalories', context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
                         ),
                       ),
                     ),
-                    Utils.createHorizontalSpace(16),
+                    const SizedBox(width: 16),
                     //   Activity
                     Expanded(
                       child: AspectRatio(
@@ -239,20 +254,20 @@ class _MePageState extends State<MePage> {
                                 const MaterialStatePropertyAll(Colors.purple),
                           ),
                           onPressed: () {
-                            Utils.showSnackBar("Activity");
+                            Utils.showSnackBar('Activity');
                           },
                           child: CircularPercentIndicator(
                             radius: MediaQuery.of(context).size.width / 6 - 4,
                             lineWidth: 13.0,
                             animation: true,
                             percent: min(0.7, 1.0),
-                            header: Utils.createTitleSmall("Activity", context),
+                            header: Utils.createTitleSmall('Activity', context),
                             center: const Icon(
                               Icons.sports_kabaddi_rounded,
                               size: 48,
                             ),
                             footer:
-                                Utils.createTitleSmall("1463/2000", context),
+                                Utils.createTitleSmall('1463/2000', context),
                             circularStrokeCap: CircularStrokeCap.round,
                             progressColor: Colors.green,
                           ),
@@ -261,7 +276,7 @@ class _MePageState extends State<MePage> {
                     ),
                   ],
                 ),
-                Utils.createVerticalSpace(30),
+                const SizedBox(height: 30),
                 Container(
                   height: 1,
                   width: double.infinity,
@@ -269,9 +284,9 @@ class _MePageState extends State<MePage> {
                       ? Colors.black
                       : Colors.white,
                 ),
-                Utils.createVerticalSpace(20),
-                Utils.createHeadlineSmall("Experience", context),
-                Utils.createVerticalSpace(20),
+                const SizedBox(height: 20),
+                Utils.createHeadlineSmall('Experience', context),
+                const SizedBox(height: 20),
                 LinearPercentIndicator(
                   padding: EdgeInsets.zero,
                   // width: 170.0,
@@ -279,33 +294,42 @@ class _MePageState extends State<MePage> {
                   animationDuration: 100,
                   lineHeight: 20.0,
                   trailing: Utils.createTitleSmall(
-                      "Level ${level}\n ${experience}/${experienceForNextLevel} XP",
+                      'Level ${level}\n ${experience}/${experienceForNextLevel} XP',
                       context),
                   percent: levelPercent,
-                  center: Text("${(levelPercent * 100).toStringAsFixed(1)}%"),
+                  center: Text('${(levelPercent * 100).toStringAsFixed(1)}%'),
                   barRadius: const Radius.circular(16),
                   progressColor: Colors.green,
                   backgroundColor: const Color(0xFF888888),
                 ),
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 26),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          widget.user.experience += 10;
-                          setState(() {
-                            Utils.updateUserData({
-                              'experience': widget.user.experience + 10,
+                          if (canCheckIn) {
+                            canCheckIn = false;
+                            widget.user.experience += 10;
+                            Utils.showSnackBar('Check in successful', isBad: false);
+                            final DateFormat formatter = DateFormat('dd/MM/yyyy');
+                            final String formatted = formatter.format(DateTime.now());
+                            setState(() {
+                              Utils.updateUserData({
+                                'experience': widget.user.experience + 10,
+                                'checkIn': formatted,
+                              });
                             });
-                          });
+                          } else {
+                            Utils.showSnackBar('Unable to check in');
+                          };
                         },
-                        child: const Text("Check in for 10 XP"),
+                        child: canCheckIn ? const Text('Check in for 10 XP') : const Text('Come back tomorrow!'),
                       ),
                     )
                   ],
                 ),
-                Utils.createVerticalSpace(30),
+                const SizedBox(height: 30),
                 Container(
                   height: 1,
                   width: double.infinity,
@@ -313,9 +337,9 @@ class _MePageState extends State<MePage> {
                       ? Colors.black
                       : Colors.white,
                 ),
-                Utils.createVerticalSpace(20),
-                Utils.createHeadlineSmall("Badges", context),
-                Utils.createVerticalSpace(20),
+                const SizedBox(height: 20),
+                Utils.createHeadlineSmall('Badges', context),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     // TODO: Make our own Badge class that includes original art and assign badges to userData
@@ -324,15 +348,15 @@ class _MePageState extends State<MePage> {
                       size: 48,
                       color: Colors.blueAccent,
                     ),
-                    Utils.createHorizontalSpace(20),
+                    const SizedBox(width: 20),
                     const Icon(Icons.camera_alt,
                         size: 48, color: Colors.deepOrange),
-                    Utils.createHorizontalSpace(20),
+                    const SizedBox(width: 20),
                     const Icon(
                       Icons.sports_soccer_rounded,
                       size: 48,
                     ),
-                    Utils.createHorizontalSpace(20),
+                    const SizedBox(width: 20),
                     const Icon(Icons.sports_gymnastics_rounded,
                         size: 48, color: Colors.brown),
                   ],

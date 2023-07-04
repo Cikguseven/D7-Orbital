@@ -54,7 +54,7 @@ Spongata
 Funge
 /g/1212ghsj
 Köttbullar
-Ka'ak
+Ka"ak
 Papet vaudois
 /g/12148tdg
 Prosciutto di Norcia
@@ -88,7 +88,7 @@ Pozharsky cutlet
 Roccocò
 Feijão de óleo de palma
 Calulu
-Bey's Soup
+Bey"s Soup
 /g/1226mnbh
 Thịt kho tàu
 Bon bon chicken
@@ -149,7 +149,7 @@ Fouée
 Octopus
 Koba
 Bò lúc lắc
-Squid lū'au
+Squid lū"au
 Shrimp Louie
 Black pudding
 Cherry kebab
@@ -294,7 +294,7 @@ Monte Cristo sandwich
 Kielbasa
 Polenta
 Reuben sandwich
-S'more
+S"more
 Andouille
 Beignet
 Crêpe
@@ -344,7 +344,7 @@ Kaipen
 Draw soup
 Shahan ful
 Shiro
-Ga'at
+Ga"at
 Skordalia
 Budae jjigae
 Anju
@@ -428,7 +428,7 @@ Black sesame soup
 Gougère
 Namul
 Kosambari
-Ma'amoul
+Ma"amoul
 Caldo de pollo
 Loukaniko
 Doberge cake
@@ -477,7 +477,7 @@ Yakisoba
 Dagwood sandwich
 Cheesecake
 Samosa
-Devil's food cake
+Devil"s food cake
 Shashlik
 Horseshoe sandwich
 City chicken
@@ -503,7 +503,7 @@ Bryndzové halušky
 Imagawayaki
 Vasilopita
 Strapačky
-Po' boy
+Po" boy
 Capirotada
 Beef Manhattan
 Sandwich loaf
@@ -813,7 +813,7 @@ Hot wiener
 Wodzionka
 Greek salad
 Raita
-Dong'an chicken
+Dong"an chicken
 Boortsog
 Coca
 Champon
@@ -875,7 +875,7 @@ Spiedie
 Gimbap
 Czernina
 Kroppkaka
-Buddha's delight
+Buddha"s delight
 Pain au chocolat
 Goetta
 German chocolate cake
@@ -940,7 +940,7 @@ Mekitsa
 Sanna
 Qazı
 Sorbetes
-Potatoes O'Brien
+Potatoes O"Brien
 Tom yum
 Balushahi
 Arroz a la cubana
@@ -988,7 +988,7 @@ Eba
 Parfait
 Ndolé
 Cheese sandwich
-Carne de vinha d'alhos
+Carne de vinha d"alhos
 Bob Andy pie
 Cincinnati chili
 Frico
@@ -1307,7 +1307,7 @@ Galaktoboureko
 Börek
 Suya
 Rye bread
-Escudella i carn d'olla
+Escudella i carn d"olla
 Gari
 Tilkut
 Botok
@@ -1385,7 +1385,7 @@ Dirty rice
 Urnebes
 Andouillette
 Landjäger
-Fisherman's soup
+Fisherman"s soup
 Romeritos
 Lane cake
 Pork jelly
@@ -1400,7 +1400,7 @@ Cocada amarela
 Japanese curry
 Qeema
 Unagi
-Hoppin' John
+Hoppin" John
 Gyūhi
 Clafoutis
 Green curry
@@ -1524,7 +1524,7 @@ Obi non
 Garganelli
 Kig ha farz
 Mississippi mud pie
-Eve's pudding
+Eve"s pudding
 Amala
 Okinawa soba
 Lamian
@@ -1539,7 +1539,7 @@ Qutab
 Dum Aloo
 Queijo do Pico
 Cocada
-Calf's liver and bacon
+Calf"s liver and bacon
 Moules-frites
 Anarsa
 Tlayuda
@@ -1726,7 +1726,7 @@ Vispipuuro
 Bakso
 Canjica
 Fougasse
-Fool's Gold Loaf
+Fool"s Gold Loaf
 Blueberry pie
 Pickled cucumber
 Ogbono soup
@@ -1852,7 +1852,7 @@ Kilishi
 Baji
 Peanut butter cookie
 Rabbit pie
-Paling in 't groen
+Paling in "t groen
 Chataamari
 Lawar
 Arisa Pitha
@@ -1905,7 +1905,7 @@ Cocido lebaniego
 Koi
 Stir-fried tomato and scrambled eggs
 Flæskesteg
-Beggar's Chicken
+Beggar"s Chicken
 /m/0hzpvf0
 Konkonte
 Stuffed squash

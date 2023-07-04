@@ -10,32 +10,32 @@ import 'utils.dart';
 // Widget for creating box displaying nutritional information
 Widget foodDataWidget(
     String title, dynamic value, dynamic goal, BuildContext context) {
-  String unit = "g";
+  String unit = 'g';
   String percentIntake = '';
 
   switch (title) {
-    case "Energy":
+    case 'Energy':
       {
         percentIntake = (value * 100 / goal).toStringAsFixed(1);
-        unit = "kcal";
+        unit = 'kcal';
         break;
       }
-    case "Protein":
-      {
-        percentIntake = (value * 100 / goal).toStringAsFixed(1);
-        break;
-      }
-    case "Fats":
+    case 'Protein':
       {
         percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
-    case "Carbs":
+    case 'Fats':
       {
         percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
       }
-    case "Sugar":
+    case 'Carbs':
+      {
+        percentIntake = (value * 100 / goal).toStringAsFixed(1);
+        break;
+      }
+    case 'Sugar':
       {
         percentIntake = (value * 100 / goal).toStringAsFixed(1);
         break;
@@ -56,9 +56,9 @@ Widget foodDataWidget(
     child: Column(
       children: [
         Utils.createTitleSmall(title, context),
-        Utils.createVerticalSpace(12),
-        Utils.createLabelLarge("${value.round().toString()} $unit", context),
-        Utils.createVerticalSpace(10),
+        const SizedBox(height: 12),
+        Utils.createLabelLarge('${value.round().toString()} $unit', context),
+        const SizedBox(height: 10),
         Container(
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
@@ -66,9 +66,9 @@ Widget foodDataWidget(
           height: 1.0,
           width: 62,
         ),
-        Utils.createVerticalSpace(5),
-        Utils.createTitleSmall("$percentIntake%", context),
-        Utils.createVerticalSpace(5),
+        const SizedBox(height: 5),
+        Utils.createTitleSmall('$percentIntake%', context),
+        const SizedBox(height: 5),
       ],
     ),
   );
@@ -81,19 +81,18 @@ Widget allFoodDataWidget(int calories, double protein, double fats,
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      foodDataWidget("Energy", calories, userNutritionGoals[0], context),
-      foodDataWidget("Protein", protein, userNutritionGoals[1], context),
-      foodDataWidget("Fats", fats, userNutritionGoals[2], context),
-      foodDataWidget("Carbs", carbs, userNutritionGoals[3], context),
-      foodDataWidget("Sugar", sugar, userNutritionGoals[4], context),
+      foodDataWidget('Energy', calories, userNutritionGoals[0], context),
+      foodDataWidget('Protein', protein, userNutritionGoals[1], context),
+      foodDataWidget('Fats', fats, userNutritionGoals[2], context),
+      foodDataWidget('Carbs', carbs, userNutritionGoals[3], context),
+      foodDataWidget('Sugar', sugar, userNutritionGoals[4], context),
     ],
   );
 }
 
 class CheckFoodPage extends StatefulWidget {
   final XFile? image;
-  FoodData
-      fd; // Food data that was taken from firebase, used to fill up the page
+  FoodData fd;
   final UserData user;
   final String postID;
   final String imageURL;
@@ -116,7 +115,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Snap"),
+        title: const Text('Snap'),
         centerTitle: true,
       ),
       body: Column(
@@ -134,15 +133,15 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     ),
                   ),
           ),
-          Utils.createVerticalSpace(26),
+          const SizedBox(height: 26),
 
           // Name of Food headline text
           Utils.createHeadlineMedium(widget.fd.name, context),
-          Utils.createVerticalSpace(26),
+          const SizedBox(height: 26),
 
           // Nutritional information regular
-          Utils.createHeadlineSmall("Nutritional Information", context),
-          Utils.createVerticalSpace(16),
+          Utils.createHeadlineSmall('Nutritional Information', context),
+          const SizedBox(height: 16),
 
           // Nutrition bar
           allFoodDataWidget(widget.fd.energy, widget.fd.protein, widget.fd.fats,
@@ -171,11 +170,11 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     });
                   },
                   child: const Text(
-                    "Edit food entry",
+                    'Edit food entry',
                   ),
                 ),
 
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 26),
 
                 // Elevated button (Confirm)
                 ElevatedButton(
@@ -197,10 +196,10 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     );
                   },
                   child: const Text(
-                    "Confirm",
+                    'Confirm',
                   ),
                 ),
-                Utils.createVerticalSpace(42),
+                const SizedBox(height: 42),
               ],
             ),
           ),

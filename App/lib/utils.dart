@@ -39,7 +39,7 @@ class Utils {
   /// Only use after signed in!
   static User? getAuthUser() {
     final authUser = FirebaseAuth.instance.currentUser;
-    assert(authUser != null, "No currently logged in user");
+    assert(authUser != null, 'No currently logged in user');
     return authUser;
   }
 
@@ -52,7 +52,7 @@ class Utils {
     await docUser.set(user.toJson());
 
     // Creates the diary collection
-    docUser.collection('diary').add({"First Diary": 0});
+    docUser.collection('diary').add({'First Diary': 0});
 
     // Sets the badgesEarned collection
     docUser.collection('badgesEarned').add({});
@@ -68,8 +68,8 @@ class Utils {
 
     List<DayLog> diary = [];
     docUser
-        .collection("diary")
-        .orderBy("date")
+        .collection('diary')
+        .orderBy('date')
         .snapshots()
         .forEach((querySnapshot) {
       for (final dayLog in querySnapshot.docs) {
@@ -79,7 +79,7 @@ class Utils {
     });
 
     List<Badge> badgesEarned = [];
-    docUser.collection("badgesEarned").snapshots().forEach((querySnapshot) {
+    docUser.collection('badgesEarned').snapshots().forEach((querySnapshot) {
       // for (final badge in querySnapshot.docs) {
       //   // TODO: Add badge processing
       // }
@@ -91,23 +91,22 @@ class Utils {
           // user has been created before, proceed to read
           final data = doc.data() as Map<String, dynamic>;
           // Create user from firestore json data, then add a diary and badgesEarned retrieved from the nested collection.
-          // print("Doc exists");
-          // print("Hello");
+          // print('Doc exists');
+          // print('Hello');
           // data.forEach((key, value) {
-          //   print("key: $key, value: $value");
+          //   print('key: $key, value: $value');
           // });
           UserData user = UserData.fromJson(data);
-          // print("User: $user");
+          // print('User: $user');
           user
             ..diary = diary
             ..badgesEarned = badgesEarned;
           return user;
-        } else {
-          // new user detected, create user and proceed with setup
-          return UserData.newUser;
         }
+        // new user detected, create user and proceed with setup
+        return UserData.newUser;
       },
-      onError: (e) => print("Error getting document: $e"),
+      onError: (e) => print('Error getting document: $e'),
     );
   }
 
@@ -182,24 +181,12 @@ class Utils {
     return comments;
   }
 
-  //
-  // /// Gets the number of comments of specified post.
-  // static Future<int> getCommentCount(String postID) async {
-  //   AggregateQuerySnapshot query = await FirebaseFirestore.instance
-  //       .collection('posts')
-  //       .doc(postID)
-  //       .collection('comments')
-  //       .count()
-  //       .get();
-  //   return query.count;
-  // }
-
   /// Converts Date time to string to save to database. DD/MM/YYYY
   static String dateTimeToString(DateTime dt) {
-    String day = dt.day.toString().padLeft(2, "0");
-    String month = dt.month.toString().padLeft(2, "0");
+    String day = dt.day.toString().padLeft(2, '0');
+    String month = dt.month.toString().padLeft(2, '0');
 
-    return "$day/$month/${dt.year}";
+    return '$day/$month/${dt.year}';
   }
 
   /// Converts the stored string taken from the database back to DT.
@@ -217,10 +204,11 @@ class Utils {
     int? day = int.tryParse(dt.substring(0, 2));
     int? month = int.tryParse(dt.substring(3, 5));
     int? year = int.tryParse(dt.substring(6, 10));
-    DateFormat format = DateFormat("dd/MM/yyyy");
+    DateFormat format = DateFormat('dd/MM/yyyy');
+    if (year! > DateTime.now().year || year < 1907) return false;
     try {
       // TODO: Fix this, dont use try catch as control flow
-      format.parseStrict("$day/$month/$year");
+      format.parseStrict('$day/$month/$year');
     } on FormatException {
       return false;
     }
@@ -301,20 +289,6 @@ class Utils {
       text,
       style: Theme.of(context).textTheme.labelLarge,
       textAlign: align,
-    );
-  }
-
-  /// Simple create vertical whitespace.
-  static Widget createVerticalSpace(double pixels) {
-    return SizedBox(
-      height: pixels,
-    );
-  }
-
-  /// Simple create horizontal whitespace.
-  static Widget createHorizontalSpace(double pixels) {
-    return SizedBox(
-      width: pixels,
     );
   }
 }

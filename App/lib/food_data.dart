@@ -1,6 +1,6 @@
 class FoodData {
   static final FoodData none = FoodData(
-      name: 'NONE',
+      name: 'No food detected',
       energy: 0,
       protein: 0.0,
       fats: 0.0,

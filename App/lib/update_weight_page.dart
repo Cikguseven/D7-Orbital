@@ -20,7 +20,7 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
     if (value == null) return null;
     double? weight = double.tryParse(value);
     return weight == null || weight < 0 || weight > 635
-        ? "Please enter a valid weight"
+        ? 'Please enter a valid weight'
         : null;
   }
 
@@ -34,12 +34,12 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Update weight"),
+        title: const Text('Update weight'),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          Utils.createVerticalSpace(60),
+          const SizedBox(height: 60),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
@@ -48,15 +48,15 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
               inputFormatters: [LengthLimitingTextInputFormatter(4)],
               controller: weightController,
               decoration: const InputDecoration(
-                labelText: "Enter your new weight in kg",
+                labelText: 'Enter your new weight in kg',
               ),
             ),
           ),
-          Utils.createVerticalSpace(30),
+          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: updateWeightCallback,
             child: const Text(
-              "Update",
+              'Update',
             ),
           ),
         ],
@@ -72,10 +72,10 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'weight': weight});
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to update weight");
+      Utils.showSnackBar('Unable to update weight');
     } finally {
       weightController.clear();
-      Utils.showSnackBar("Weight successfully updated", isBad: false);
+      Utils.showSnackBar('Weight successfully updated', isBad: false);
       navigatorKey.currentState!.pop();
     }
   }

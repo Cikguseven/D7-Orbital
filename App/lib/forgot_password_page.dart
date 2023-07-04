@@ -37,22 +37,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Utils.createVerticalSpace(60),
-              Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-              Utils.createVerticalSpace(50),
-              Utils.createHeadlineMedium("Reset Password", context),
-              Utils.createVerticalSpace(25),
+              const SizedBox(height: 60),
+              Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+              const SizedBox(height: 50),
+              Utils.createHeadlineMedium('Reset Password', context),
+              const SizedBox(height: 25),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                    labelText: "Email",
+                    labelText: 'Email',
                   ),
                   validator: emailValidator,
                 ),
               ),
-              Utils.createVerticalSpace(35),
+              const SizedBox(height: 35),
               ElevatedButton.icon(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -61,7 +61,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   onPressed: sendResetEmailCallback,
                   icon: const Icon(Icons.email_outlined, size: 24),
                   label: const Text(
-                    "Send email",
+                    'Send email',
                   )),
             ],
           ),
@@ -82,10 +82,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      Utils.showSnackBar("Password reset email sent!");
+      Utils.showSnackBar('Password reset email sent!');
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException {
-      Utils.showSnackBar("Unable to reset password");
+      Utils.showSnackBar('Unable to reset password');
       navigatorKey.currentState!.pop();
     }
   }
