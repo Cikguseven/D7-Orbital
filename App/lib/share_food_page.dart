@@ -1,35 +1,31 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:uuid/uuid.dart';
+
 import 'day_log.dart';
 import 'food_data.dart';
+import 'main.dart';
 import 'post_data.dart';
 import 'user_data.dart';
 import 'utils.dart';
-import 'package:uuid/uuid.dart';
-
-import 'main.dart';
 
 class ShareFoodPage extends StatefulWidget {
-  // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
-  final XFile? image;
+  dynamic image;
   final UserData user;
+  final FoodData foodData;
 
-  final FoodData fd;
-
-  final String postID;
-  final String imageURL;
-
-  const ShareFoodPage(
+  ShareFoodPage(
       {Key? key,
       required this.image,
       required this.user,
-      required this.fd,
-      required this.postID,
-      required this.imageURL})
+      required this.foodData})
       : super(key: key);
 
   @override
@@ -59,7 +55,9 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                 : BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fitWidth,
-                      image: XFileImage(widget.image!),
+                      image: widget.image is XFile
+                          ? XFileImage(widget.image)
+                          : AssetImage(widget.image) as ImageProvider,
                     ),
                   ),
           ),
@@ -154,29 +152,46 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
   }
 
   Future newPostSetupCallback() async {
+    String caption = captionController.text.trim();
+    if (caption == '') {
+      Utils.showSnackBar('Add a caption');
+      return;
+    }
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
+    String postID = uuid.v4();
+    String imageLoc;
     try {
+      // Store image on Firebase if it is from the user
+      if (widget.image is XFile) {
+        String imagePath = 'posts/${postID}.jpg';
+        Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+        await ref.putFile(File(widget.image.path));
+        imageLoc = await ref.getDownloadURL();
+      } else {
+        imageLoc = widget.image;
+      }
       // Share with community
       final docPost =
-          FirebaseFirestore.instance.collection('posts').doc(widget.postID);
+          FirebaseFirestore.instance.collection('posts').doc(postID);
       final PostData newPost = PostData(
         firstName: widget.user.firstName,
         lastName: widget.user.lastName,
-        caption: captionController.text.trim(),
+        caption: caption,
         location: 'Singapore',
-        postID: widget.postID,
-        imageURL: widget.imageURL,
+        postID: postID,
+        imageLoc: imageLoc,
+        pfpURL: widget.user.pfpURL,
         commentCount: 0,
         rating: _rating,
-        calories: widget.fd.energy,
-        protein: widget.fd.protein,
-        fats: widget.fd.fats,
-        carbs: widget.fd.carbs,
-        sugar: widget.fd.sugar,
+        calories: widget.foodData.energy,
+        protein: widget.foodData.protein,
+        fats: widget.foodData.fats,
+        carbs: widget.foodData.carbs,
+        sugar: widget.foodData.sugar,
         postTime: DateTime.now(),
         likedBy: [],
       );
@@ -198,12 +213,12 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         }
       });
 
-      existingDayLog.postIDs.add(widget.postID);
-      existingDayLog.caloriesIn += widget.fd.energy;
-      existingDayLog.proteinIn += widget.fd.protein;
-      existingDayLog.fatIn += widget.fd.fats;
-      existingDayLog.carbIn += widget.fd.carbs;
-      existingDayLog.sugarIn += widget.fd.sugar;
+      existingDayLog.postIDs.add(postID);
+      existingDayLog.caloriesIn += widget.foodData.energy;
+      existingDayLog.proteinIn += widget.foodData.protein;
+      existingDayLog.fatIn += widget.foodData.fats;
+      existingDayLog.carbIn += widget.foodData.carbs;
+      existingDayLog.sugarIn += widget.foodData.sugar;
 
       await docDiary.set(existingDayLog.toJson());
 
@@ -213,6 +228,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     } on FirebaseAuthException {
       Utils.showSnackBar('Unable to share post');
     } finally {
+      Utils.showSnackBar('Shared successfully', isBad: false);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
   }

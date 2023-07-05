@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/update_profile_pic_page.dart';
 import 'package:my_first_flutter/update_weight_goal_page.dart';
 import 'package:my_first_flutter/update_weight_page.dart';
 import 'main.dart';
@@ -20,6 +21,9 @@ class SettingsPage extends StatelessWidget {
     return const UpdateWeightGoalPage();
   }
 
+  Widget updateProfilePicWidget() {
+    return const UpdateProfilePicPage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,7 @@ class SettingsPage extends StatelessWidget {
           width: 300, // necessary hack for text to be aligned properly
           height: 300,
           alignment: Alignment.centerLeft,
-          child: Utils.createTitleSmall('Toggle Dark Mode', context),
+          child: Utils.createTitleSmall('Toggle dark mode', context),
         ),
         trailing: const DarkModeSwitch(),
         tileColor: Theme.of(context).brightness == Brightness.dark
@@ -83,7 +87,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                     settingsTile('Update weight', updateWeightWidget),
                     settingsTile('Update weight goal', updateWeightGoalWidget),
-                    settingsTile('Change Email/Password', placeholderPage),
+                    settingsTile('Update profile picture', updateProfilePicWidget),
                     // settingsTile('Privacy Settings', placeholderPage),
                   ],
                 ),
@@ -108,7 +112,6 @@ class SettingsPage extends StatelessWidget {
                       child: Utils.createTitleMedium('Help', context),
                     ),
                     settingsTile('FAQ', placeholderPage),
-                    settingsTile('Contact Us', placeholderPage),
                   ],
                 ),
                 // const SizedBox(height: 10),
@@ -137,7 +140,7 @@ class SettingsPage extends StatelessWidget {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back, size: 24),
+                  icon: const Icon(Icons.arrow_back),
                   label: const Text('Log Out'),
                 ),
                 const SizedBox(height: 52),
@@ -158,7 +161,7 @@ class DarkModeSwitch extends StatefulWidget {
 }
 
 class _SwitchState extends State<DarkModeSwitch> {
-  bool isDarkMode = false;
+  bool isDarkMode = MyApp.themeNotifier.value == ThemeMode.dark;
 
   @override
   Widget build(BuildContext context) {

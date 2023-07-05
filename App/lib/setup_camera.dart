@@ -5,8 +5,9 @@ import 'package:my_first_flutter/user_data.dart';
 import 'setup_page_4.dart';
 
 class SetupCameraPage extends StatefulWidget {
-  final UserData user;
-  const SetupCameraPage({Key? key, required this.cameras, required this.user}) : super(key: key);
+  UserData? user;
+  final bool fromUpdate;
+  SetupCameraPage({Key? key, required this.cameras, this.user, required this.fromUpdate}) : super(key: key);
 
   final List<CameraDescription>? cameras;
 
@@ -16,7 +17,7 @@ class SetupCameraPage extends StatefulWidget {
 
 class _SetupCameraPageState extends State<SetupCameraPage> {
   late CameraController _cameraController;
-  bool _isRearCameraSelected = true;
+  bool _isRearCameraSelected = false;
 
   @override
   void dispose() {
@@ -46,6 +47,8 @@ class _SetupCameraPageState extends State<SetupCameraPage> {
               builder: (context) => SetupPage4(
                 user: widget.user,
                 image: image,
+                fromCamera: true,
+                fromUpdate: widget.fromUpdate,
               )));
     } on CameraException catch (e) {
       debugPrint('Error occured while taking picture: $e');
@@ -79,7 +82,7 @@ class _SetupCameraPageState extends State<SetupCameraPage> {
             Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.20,
+                  height: MediaQuery.of(context).size.height * 0.18,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                       color: Colors.black),
@@ -88,7 +91,7 @@ class _SetupCameraPageState extends State<SetupCameraPage> {
                     Expanded(
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          iconSize: 30,
+                          iconSize: 40,
                           icon: Icon(
                               _isRearCameraSelected
                                   ? CupertinoIcons.switch_camera
@@ -103,7 +106,7 @@ class _SetupCameraPageState extends State<SetupCameraPage> {
                     Expanded(
                         child: IconButton(
                           onPressed: takePicture,
-                          iconSize: 50,
+                          iconSize: 55,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           icon: const Icon(Icons.circle, color: Colors.white),

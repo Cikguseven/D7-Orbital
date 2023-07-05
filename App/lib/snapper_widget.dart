@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:camera/camera.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
-
 import 'check_food_page.dart';
 import 'classifier.dart';
 import 'config/config.dart' as config;
@@ -32,7 +29,6 @@ class SnapperWidget extends StatefulWidget {
 class _SnapperWidgetState extends State<SnapperWidget> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  Uuid uuid = const Uuid();
 
   Future<void> startCamera() async {
     final cameras = availableCameras();
@@ -98,7 +94,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ElevatedButton.icon(
                         onPressed: analyseAndLogCallBack,
-                        icon: const Icon(Icons.camera_alt, size: 24),
+                        icon: const Icon(Icons.camera_alt, color: Colors.white,),
                         label: const Text(
                           'Log it!',
                         ),
@@ -158,18 +154,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       ),
     );
     if (!mounted) return;
-    String id = uuid.v4();
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CheckFoodPage(
-          image: null,
-          fd: selectedFoodData,
-          user: widget.user,
-          postID: id,
-          imageURL:
-              'https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092',
-        ),
+          image: "assets/NoFood.jpg",
+          foodData: selectedFoodData,
+          user: widget.user),
       ),
     );
   }
@@ -188,14 +179,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
-    String postID = uuid.v4();
     FoodData predictedFood = FoodData.none;
-
-    // Store image on Firebase
-    String imagePath = 'posts/$postID.jpg';
-    Reference ref = FirebaseStorage.instance.ref().child(imagePath);
-    await ref.putFile(File(image.path));
-    String imageURL = await ref.getDownloadURL();
 
     // Load AI classifier and obtain prediction of food from image
     Classifier? classifier = await Classifier.loadWith(
@@ -240,10 +224,8 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       MaterialPageRoute(
         builder: (BuildContext context) => CheckFoodPage(
             image: image,
-            fd: predictedFood,
-            user: widget.user,
-            postID: postID,
-            imageURL: imageURL),
+            foodData: predictedFood,
+            user: widget.user),
       ),
     );
   }

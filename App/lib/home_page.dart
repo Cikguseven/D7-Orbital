@@ -4,16 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'post_data.dart';
-import 'star_rating.dart';
-import 'user_data.dart';
-import 'utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
 
 import 'check_food_page.dart';
 import 'comments_page.dart';
+import 'post_data.dart';
+import 'star_rating.dart';
+import 'user_data.dart';
+import 'utils.dart';
 
 class HomeWidget extends StatefulWidget {
   final UserData user;
@@ -108,9 +108,9 @@ class PostCard extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fitWidth,
-              image: NetworkImage(
-                post.imageURL,
-              ),
+              image: post.imageLoc.substring(0, 4) == 'http'
+                  ? NetworkImage(post.imageLoc)
+                  : AssetImage(post.imageLoc) as ImageProvider,
             ),
           ),
         ),
@@ -124,14 +124,10 @@ class PostCard extends StatelessWidget {
           child: Row(
             children: [
               // User profile image
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 5),
                 child: CircleAvatar(
-                    radius: 20,
-                    // Change to user's profile photo eventually
-                    backgroundImage: AssetImage(
-                      'images/Dog.jpeg',
-                    )),
+                    radius: 20, backgroundImage: NetworkImage(post.pfpURL)),
               ),
               const SizedBox(width: 15),
               Column(
@@ -187,9 +183,8 @@ class PostCard extends StatelessWidget {
               ExpansionTile(
                   title: const Text(
                     'View nutritional information',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                   ),
                   children: [
                     // Nutrition bar
@@ -288,7 +283,7 @@ class _SocialContainerState extends State<SocialContainerWidget> {
   }
 
   void _onShare(BuildContext context) async {
-    var file = await DefaultCacheManager().getSingleFile(widget.post.imageURL);
+    var file = await DefaultCacheManager().getSingleFile(widget.post.imageLoc);
     await Share.shareXFiles([XFile(file.path)],
         text:
             'Check out this post by ${widget.post.firstName} ${widget.post.lastName}!');

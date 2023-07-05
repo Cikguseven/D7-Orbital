@@ -51,7 +51,7 @@ class _SignupWidgetState extends State<SignupWidget> {
             child: Column(
               children: [
                 const SizedBox(height: 60),
-                Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+                Utils.appLogo(context),
                 const SizedBox(height: 50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -73,7 +73,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                       suffixIcon: GestureDetector(
                         child: const Icon(
                           Icons.remove_red_eye,
-                          size: 24,
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
@@ -93,7 +92,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                       suffixIcon: GestureDetector(
                         child: const Icon(
                           Icons.remove_red_eye,
-                          size: 24,
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
@@ -104,7 +102,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                const SizedBox(height: 26),
+                const SizedBox(height: 25),
                 ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -115,22 +113,18 @@ class _SignupWidgetState extends State<SignupWidget> {
                     'Sign up',
                   ),
                 ),
-                const SizedBox(height: 36),
-                RichText(
-                  text: TextSpan(
-                    style: Theme.of(context).textTheme.titleMedium,
-                    text: 'Have an Account? ',
-                    children: [
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = widget.onClickLogIn,
-                        text: 'Log in',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ],
+                const Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Text('---------- or ----------',
+                      style: TextStyle(color: Colors.grey)),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
+                  onPressed: widget.onClickLogIn,
+                  child: const Text('Log in instead'),
                 ),
               ],
             ),

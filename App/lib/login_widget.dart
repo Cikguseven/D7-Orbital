@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'forgot_password_page.dart';
+import 'reset_password_page.dart';
 import 'main.dart';
 import 'utils.dart';
 
@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(
             children: [
               const SizedBox(height: 60),
-              Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+              Utils.appLogo(context),
               const SizedBox(height: 50),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -54,7 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     suffixIcon: GestureDetector(
                       child: const Icon(
                         Icons.remove_red_eye,
-                        size: 24,
+                        color: Colors.white,
                       ),
                       onTap: () => setState(() => obscureFlag = !obscureFlag),
                     ),
@@ -78,14 +78,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                     navigatorKey.currentState!.push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const ForgotPasswordPage();
+                          return const ResetPasswordPage();
                         },
                       ),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 22),
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size.fromWidth(

@@ -1,20 +1,14 @@
 class CommentData {
-  static final CommentData newComment = CommentData(
-    firstName: 'John',
-    lastName: 'Doe',
-    comment:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
-    postTime: DateTime.now(),
-  );
-
   final String firstName;
   final String lastName;
+  final String pfpURL;
   final String comment;
   final DateTime postTime;
 
   CommentData({
     required this.firstName,
     required this.lastName,
+    required this.pfpURL,
     required this.comment,
     required this.postTime,
   });
@@ -22,6 +16,7 @@ class CommentData {
   Map<String, dynamic> toJson() => {
         'firstName': firstName,
         'lastName': lastName,
+        'pfpURL': pfpURL,
         'comment': comment,
         'postTime': postTime,
       };
@@ -30,6 +25,7 @@ class CommentData {
     return CommentData(
       firstName: data['firstName'],
       lastName: data['lastName'],
+      pfpURL: data['pfpURL'],
       comment: data['comment'],
       postTime: data['postTime'].toDate(),
     );

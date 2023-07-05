@@ -1,30 +1,11 @@
 class PostData {
-  static final PostData testPost = PostData(
-    firstName: 'John',
-    lastName: 'Doe',
-    caption:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
-    location: 'Singapore',
-    postID: 'testPost',
-    commentCount: 0,
-    rating: 5,
-    calories: 1000,
-    protein: 20.2,
-    fats: 1.1,
-    carbs: 99.3,
-    sugar: 13.3,
-    postTime: DateTime.now(),
-    likedBy: [],
-    imageURL:
-        'https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092',
-  );
-
   final String firstName;
   final String lastName;
   final String caption;
   final String location;
   final String postID;
-  final String imageURL;
+  final String imageLoc;
+  final String pfpURL;
   int commentCount;
   final int rating;
   final int calories;
@@ -41,7 +22,8 @@ class PostData {
     required this.caption,
     required this.location,
     required this.postID,
-    required this.imageURL,
+    required this.imageLoc,
+    required this.pfpURL,
     required this.commentCount,
     required this.rating,
     required this.calories,
@@ -59,7 +41,8 @@ class PostData {
         'caption': caption,
         'location': location,
         'postID': postID,
-        'imageURL': imageURL,
+        'imageLoc': imageLoc,
+        'pfpURL': pfpURL,
         'commentCount': commentCount,
         'rating': rating,
         'calories': calories,
@@ -78,7 +61,8 @@ class PostData {
       caption: data['caption'],
       location: data['location'],
       postID: data['postID'],
-      imageURL: data['imageURL'],
+      imageLoc: data['imageLoc'],
+      pfpURL: data['pfpURL'],
       commentCount: data['commentCount'],
       rating: data['rating'],
       calories: data['calories'],

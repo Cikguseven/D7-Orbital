@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_first_flutter/setup_page_2.dart';
 
-import 'main.dart';
 import 'user_data.dart';
 import 'utils.dart';
 
@@ -93,8 +91,10 @@ class _SetupPage1 extends State<SetupPage1> {
             key: formKey,
             child: Column(
               children: [
+                const SizedBox(height: 60),
+                Utils.appLogo(context),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Utils.createHeadlineMedium('Hello!', context),
@@ -154,7 +154,7 @@ class _SetupPage1 extends State<SetupPage1> {
                         align: TextAlign.center),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 18),
                 ToggleButtons(
                   isSelected: genderSelected,
                   onPressed: (int index) {
@@ -174,13 +174,13 @@ class _SetupPage1 extends State<SetupPage1> {
                   },
                   textStyle: Theme.of(context).textTheme.titleMedium,
                   // Text color of non-selected button
-                  color:  Theme.of(context).brightness == Brightness.dark
+                  color: Theme.of(context).brightness == Brightness.dark
                       ? Colors.white
                       : Colors.black,
                   // Text color of selected button
                   selectedColor: Colors.white,
                   // Background color of selected button
-                  fillColor: Color(0xFF003D7C),
+                  fillColor: const Color(0xFF003D7C),
                   // Splash color when selected
                   splashColor: Theme.of(context).primaryColor,
                   borderColor: Colors.black,
@@ -194,7 +194,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     Text('Female'),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -276,7 +276,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Sedentary'),
+                    title: const Text(
+                      'Sedentary',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     subtitle: const Text('Little to no exercise'),
                     value: ActivityMultiplier.SEDENTARY,
                     groupValue: activityMultiplier,
@@ -290,7 +293,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Lightly active'),
+                    title: const Text(
+                      'Lightly active',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     subtitle: const Text('1–2 days of exercise in a week'),
                     value: ActivityMultiplier.LIGHTLY_ACTIVE,
                     groupValue: activityMultiplier,
@@ -304,7 +310,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Moderately active'),
+                    title: const Text(
+                      'Moderately active',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     subtitle: const Text('3–5 days of exercise in a week'),
                     value: ActivityMultiplier.MODERATELY_ACTIVE,
                     groupValue: activityMultiplier,
@@ -318,7 +327,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Very active'),
+                    title: const Text(
+                      'Very active',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     subtitle: const Text('6-7 days of exercise in a week'),
                     value: ActivityMultiplier.VERY_ACTIVE,
                     groupValue: activityMultiplier,
@@ -332,7 +344,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Extremely active'),
+                    title: const Text(
+                      'Extremely active',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     subtitle: const Text('Exercise twice a day'),
                     value: ActivityMultiplier.EXTREMELY_ACTIVE,
                     groupValue: activityMultiplier,
@@ -354,7 +369,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Lose 0.5kg a week'),
+                    title: const Text(
+                      'Lose 0.5kg a week',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     value: -0.5,
                     groupValue: weightGoal,
                     onChanged: (value) {
@@ -367,7 +385,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Lose 0.2kg a week'),
+                    title: const Text(
+                      'Lose 0.2kg a week',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     value: -0.2,
                     groupValue: weightGoal,
                     onChanged: (value) {
@@ -380,7 +401,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Maintain my current weight'),
+                    title: const Text(
+                      'Maintain my current weight',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     value: 0.0,
                     groupValue: weightGoal,
                     onChanged: (value) {
@@ -393,7 +417,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Gain 0.2kg a week'),
+                    title: const Text(
+                      'Gain 0.2kg a week',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     value: 0.2,
                     groupValue: weightGoal,
                     onChanged: (value) {
@@ -406,7 +433,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RadioListTile(
-                    title: const Text('Gain 0.5kg a week'),
+                    title: const Text(
+                      'Gain 0.5kg a week',
+                      style: TextStyle(fontWeight: FontWeight.normal),
+                    ),
                     value: 0.5,
                     groupValue: weightGoal,
                     onChanged: (value) {
@@ -419,7 +449,10 @@ class _SetupPage1 extends State<SetupPage1> {
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: validateForm,
-                  icon: const Icon(Icons.arrow_forward_rounded, size: 24, color: Colors.white),
+                  icon: const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: Colors.white
+                  ),
                   label: const Text('Next'),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -432,7 +465,10 @@ class _SetupPage1 extends State<SetupPage1> {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back, size: 24, color: Colors.white),
+                  icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white
+                  ),
                   label: const Text('Log Out'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -440,7 +476,6 @@ class _SetupPage1 extends State<SetupPage1> {
                         MediaQuery.of(context).size.width * 0.5)),
                   ),
                 ),
-                const SizedBox(height: 18),
               ],
             ),
           ),
@@ -474,12 +509,12 @@ class _SetupPage1 extends State<SetupPage1> {
     );
 
     setState(
-        () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => SetupPage2(user: user)));
-        },
+      () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => SetupPage2(user: user)));
+      },
     );
   }
 }

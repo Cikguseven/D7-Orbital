@@ -63,6 +63,10 @@ class UserData {
     );
   }
 
+  String getProfilePic() {
+    return this.pfpURL;
+  }
+
   UserData(
       {required this.firstName,
       required this.lastName,

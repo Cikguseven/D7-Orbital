@@ -69,14 +69,12 @@ class _CommentsState extends State<CommentsWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                   child: CircleAvatar(
                       radius: 20,
-                      // Change to user's profile photo eventually
-                      backgroundImage: AssetImage(
-                        'images/Dog.jpeg',
-                      )),
+                      backgroundImage: NetworkImage(widget.user.pfpURL),
+                  ),
                 ),
                 const SizedBox(width: 15),
                 Expanded(
@@ -147,6 +145,7 @@ class _CommentsState extends State<CommentsWidget> {
         CommentData currentComment = CommentData(
             firstName: widget.user.firstName,
             lastName: widget.user.lastName,
+            pfpURL: widget.user.pfpURL,
             comment: finalComment,
             postTime: DateTime.now());
         await docComment.set(currentComment.toJson());
@@ -182,12 +181,10 @@ class TopCommentCard extends StatelessWidget {
             Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                     radius: 20,
-                    // Change to user's profile photo eventually
-                    backgroundImage: AssetImage(
-                      'images/Dog.jpeg',
-                    )),
+                    backgroundImage: NetworkImage(post.pfpURL),
+                ),
                 const SizedBox(width: 15),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,14 +256,12 @@ class CommentCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(0, 5, 15, 0),
           child: CircleAvatar(
               radius: 20,
-              // Change to user's profile photo eventually
-              backgroundImage: AssetImage(
-                'images/Dog.jpeg',
-              )),
+              backgroundImage: NetworkImage(comment.pfpURL),
+          ),
         ),
         Expanded(
           child: Column(

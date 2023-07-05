@@ -108,7 +108,7 @@ class _UpdateWeightGoalPageState extends State<UpdateWeightGoalPage> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'weightGoal': weightGoal});
     } on FirebaseAuthException {
-      Utils.showSnackBar('Unable to update weight goal');
+      Utils.showSnackBar('Unable to save weight goal');
     } finally {
       Utils.showSnackBar('Weight goal successfully updated', isBad: false);
       navigatorKey.currentState!.pop();

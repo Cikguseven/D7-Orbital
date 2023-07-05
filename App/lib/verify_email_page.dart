@@ -83,8 +83,8 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
             body: Column(
               children: [
                 const SizedBox(height: 60),
-                Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
-                const SizedBox(height: 60),
+                Utils.appLogo(context),
+                const SizedBox(height: 50),
                 Utils.createHeadlineMedium('Verify Email', context),
                 const SizedBox(height: 70),
                 Utils.createTitleMedium(
@@ -101,7 +101,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                       ),
                     ),
                     onPressed: sendEmailVerification,
-                    icon: const Icon(Icons.email_outlined, size: 24),
+                    icon: const Icon(Icons.email_outlined, color: Colors.white),
                     label: cooldown > 0 ? Text('Resend email in ${cooldown > 1 ? '$cooldown seconds' : '1 second'}') : const Text('Resend email'),
                   ),
                 ),

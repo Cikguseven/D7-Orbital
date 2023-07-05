@@ -3,28 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_first_flutter/setup_camera.dart';
 import 'package:my_first_flutter/setup_page_4.dart';
-import 'package:my_first_flutter/utils.dart';
 
-import 'user_data.dart';
-
-class SetupPage3 extends StatefulWidget {
-  final UserData user;
-
-  const SetupPage3({Key? key, required this.user}) : super(key: key);
+class UpdateProfilePicPage extends StatefulWidget {
+  const UpdateProfilePicPage({Key? key}) : super(key: key);
 
   @override
-  State<SetupPage3> createState() => _SetupPage3();
+  State<UpdateProfilePicPage> createState() => _UpdateProfilePicPageState();
 }
 
-class _SetupPage3 extends State<SetupPage3> {
+class _UpdateProfilePicPageState extends State<UpdateProfilePicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Update profile picture'),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 70),
-            Utils.createTitleMedium("Add your profile picture", context),
             const SizedBox(height: 70),
             ElevatedButton.icon(
               onPressed: cameraCallBack,
@@ -45,18 +42,6 @@ class _SetupPage3 extends State<SetupPage3> {
                     Size.fromWidth(MediaQuery.of(context).size.width * 0.7)),
               ),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-              label: const Text('Back'),
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(
-                    Size.fromWidth(MediaQuery.of(context).size.width * 0.7)),
-              ),
-            ),
           ],
         ),
       ),
@@ -67,11 +52,8 @@ class _SetupPage3 extends State<SetupPage3> {
     await availableCameras().then((value) => Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => SetupCameraPage(
-                  user: widget.user,
-                  cameras: value,
-                  fromUpdate: false,
-                ))));
+            builder: (BuildContext context) =>
+                SetupCameraPage(cameras: value, fromUpdate: true))));
   }
 
   void getImageGalleryCallBack() async {
@@ -82,10 +64,9 @@ class _SetupPage3 extends State<SetupPage3> {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => SetupPage4(
-            user: widget.user,
             image: image,
             fromCamera: false,
-            fromUpdate: false,
+            fromUpdate: true
           ),
         ),
       );

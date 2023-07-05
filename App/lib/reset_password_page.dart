@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'utils.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 60),
-              Image.asset('assets/logo-black-text.png', width: 0.9 * MediaQuery.of(context).size.width,),
+              Utils.appLogo(context),
               const SizedBox(height: 50),
               Utils.createHeadlineMedium('Reset Password', context),
               const SizedBox(height: 25),
@@ -59,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         MediaQuery.of(context).size.width - 15 * 2)),
                   ),
                   onPressed: sendResetEmailCallback,
-                  icon: const Icon(Icons.email_outlined, size: 24),
+                  icon: const Icon(Icons.email_outlined, color: Colors.white,),
                   label: const Text(
                     'Send email',
                   )),

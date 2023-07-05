@@ -1,21 +1,21 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:my_first_flutter/setup_page_3.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
 import 'app.dart';
 import 'main.dart';
 
 class SetupPage4 extends StatefulWidget {
-  final UserData user;
+  UserData? user;
   final XFile image;
+  final bool fromCamera;
+  final bool fromUpdate;
 
-  const SetupPage4({Key? key, required this.user, required this.image})
+  SetupPage4({Key? key, this.user, required this.image, required this.fromCamera, required this.fromUpdate})
       : super(key: key);
 
   @override
@@ -38,23 +38,24 @@ class _SetupPage4 extends State<SetupPage4> {
             const SizedBox(height: 40),
             CircleAvatar(
               radius: 120,
-              // Change to user's profile photo eventually
               backgroundImage: FileImage(File(widget.image.path)),
             ),
             const SizedBox(height: 40),
-            ElevatedButton.icon(
-              onPressed: newUserSetupCallback,
-              icon: Icon(Icons.person, color: Colors.white),
-              label: const Text('This is me'),
+            ElevatedButton(
+              onPressed: confirmCallback,
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size.fromWidth(
                     MediaQuery.of(context).size.width * 0.7)),
               ),
+              child: widget.fromUpdate ? const Text('Update profile picture') : const Text('Complete sign up'),
             ),
             const SizedBox(height: 30),
             ElevatedButton.icon(
-              onPressed: openSetupPage3,
-              icon: Icon(Icons.arrow_back_rounded, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+                if (widget.fromCamera) Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
               label: const Text('Back'),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -67,43 +68,56 @@ class _SetupPage4 extends State<SetupPage4> {
     );
   }
 
-  Future newUserSetupCallback() async {
+  Future confirmCallback() async {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     // Store image on Firebase
-    String imagePath = 'posts/${FirebaseAuth.instance.currentUser!.uid}.jpg';
+    String imagePath = 'pfp/${FirebaseAuth.instance.currentUser!.uid}.jpg';
     Reference ref = FirebaseStorage.instance.ref().child(imagePath);
     await ref.putFile(File(widget.image.path));
     String imageURL = await ref.getDownloadURL();
-    widget.user.pfpURL = imageURL;
 
-    try {
-      final docUser = FirebaseFirestore.instance
-          .collection('userData')
-          .doc(FirebaseAuth.instance.currentUser!.uid);
-      await docUser.set(widget.user.toJson());
-      setState(
-        () {
-          done = true;
-        },
-      );
-    } on FirebaseAuthException {
-      Utils.showSnackBar('Unable to set up profile');
+    if (widget.fromUpdate) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('userData')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'pfpURL': imageURL});
+      } on FirebaseAuthException {
+        Utils.showSnackBar('Unable to update profile picture');
+      } finally {
+        Utils.showSnackBar('Profile picture successfully updated', isBad: false);
+        if (widget.fromCamera) Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        setState(() {
+          imageCache.clear();
+          imageCache.clearLiveImages();
+        });
+      }
+    } else {
+      try {
+        widget.user?.pfpURL = imageURL;
+        final docUser = FirebaseFirestore.instance
+            .collection('userData')
+            .doc(FirebaseAuth.instance.currentUser!.uid);
+        await docUser.set(widget.user!.toJson());
+      } on FirebaseAuthException {
+        Utils.showSnackBar('Unable to set up profile');
+      } finally {
+        Utils.showSnackBar('Set up complete!', isBad: false);
+        setState(
+              () {
+            done = true;
+          },
+        );
+        Navigator.pop(context);
+      }
     }
-  }
-
-  void openSetupPage3() {
-    setState(
-          () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    SetupPage3(user: widget.user)));
-      },
-    );
   }
 }

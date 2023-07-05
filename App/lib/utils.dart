@@ -181,6 +181,13 @@ class Utils {
     return comments;
   }
 
+  static Image appLogo(context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return Image.asset('assets/logo-white-text.png', width: 0.8 * MediaQuery.of(context).size.width);
+    }
+    return Image.asset('assets/logo-black-text.png', width: 0.8 * MediaQuery.of(context).size.width);
+  }
+
   /// Converts Date time to string to save to database. DD/MM/YYYY
   static String dateTimeToString(DateTime dt) {
     String day = dt.day.toString().padLeft(2, '0');

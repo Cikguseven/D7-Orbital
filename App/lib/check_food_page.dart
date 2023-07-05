@@ -91,19 +91,15 @@ Widget allFoodDataWidget(int calories, double protein, double fats,
 }
 
 class CheckFoodPage extends StatefulWidget {
-  final XFile? image;
-  FoodData fd;
+  dynamic image;
+  FoodData foodData;
   final UserData user;
-  final String postID;
-  final String imageURL;
 
   CheckFoodPage(
       {Key? key,
       required this.image,
-      required this.fd,
-      required this.user,
-      required this.postID,
-      required this.imageURL})
+      required this.foodData,
+      required this.user})
       : super(key: key);
 
   @override
@@ -124,19 +120,19 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           Container(
             height: 200,
             width: 200,
-            decoration: widget.image == null
-                ? null
-                : BoxDecoration(
+            decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fitWidth,
-                      image: XFileImage(widget.image!),
+                      image: widget.image is XFile
+                          ? XFileImage(widget.image)
+                          : AssetImage(widget.image) as ImageProvider,
                     ),
                   ),
           ),
           const SizedBox(height: 26),
 
           // Name of Food headline text
-          Utils.createHeadlineMedium(widget.fd.name, context),
+          Utils.createHeadlineMedium(widget.foodData.name, context),
           const SizedBox(height: 26),
 
           // Nutritional information regular
@@ -144,8 +140,8 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           const SizedBox(height: 16),
 
           // Nutrition bar
-          allFoodDataWidget(widget.fd.energy, widget.fd.protein, widget.fd.fats,
-              widget.fd.carbs, widget.fd.sugar, widget.user, context),
+          allFoodDataWidget(widget.foodData.energy, widget.foodData.protein, widget.foodData.fats,
+              widget.foodData.carbs, widget.foodData.sugar, widget.user, context),
 
           // Elevated button (Edit food item)
           Expanded(
@@ -165,7 +161,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     );
                     setState(() {
                       if (newFD != null) {
-                        widget.fd = newFD;
+                        widget.foodData = newFD;
                       }
                     });
                   },
@@ -189,9 +185,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                         builder: (BuildContext context) => ShareFoodPage(
                             image: widget.image,
                             user: widget.user,
-                            fd: widget.fd,
-                            postID: widget.postID,
-                            imageURL: widget.imageURL),
+                            foodData: widget.foodData),
                       ),
                     );
                   },

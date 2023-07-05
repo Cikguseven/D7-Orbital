@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/setup_page_3.dart';
-
 import 'user_data.dart';
-import 'utils.dart';
 
 class SetupPage2 extends StatefulWidget {
   final UserData user;
@@ -21,8 +19,8 @@ class _SetupPage2 extends State<SetupPage2> {
       body: Column(
         children: [
           const SizedBox(height: 60),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               'Based on your profile, here are your recommended daily nutritional requirements:',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -41,7 +39,7 @@ class _SetupPage2 extends State<SetupPage2> {
           const SizedBox(height: 50),
           ElevatedButton.icon(
             onPressed: openSetupPage3,
-            icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+            icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
             label: const Text('Next'),
             style: ButtonStyle(
               fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -50,8 +48,10 @@ class _SetupPage2 extends State<SetupPage2> {
           ),
           const SizedBox(height: 30),
           ElevatedButton.icon(
-            onPressed: () {Navigator.pop(context);},
-            icon: Icon(Icons.arrow_back_rounded, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
             label: const Text('Back'),
             style: ButtonStyle(
               fixedSize: MaterialStateProperty.all(Size.fromWidth(
