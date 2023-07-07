@@ -23,8 +23,7 @@ class FoodData {
     required this.sugar,
   });
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'name': name,
         'energy': energy,
         'protein': protein,
@@ -43,4 +42,3 @@ class FoodData {
         sugar: data['sugar']);
   }
 }
-

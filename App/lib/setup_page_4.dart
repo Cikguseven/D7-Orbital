@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/user_data.dart';
 import 'package:my_first_flutter/utils.dart';
+
 import 'app.dart';
 import 'main.dart';
 
@@ -15,7 +17,12 @@ class SetupPage4 extends StatefulWidget {
   final bool fromCamera;
   final bool fromUpdate;
 
-  SetupPage4({Key? key, this.user, required this.image, required this.fromCamera, required this.fromUpdate})
+  SetupPage4(
+      {Key? key,
+      this.user,
+      required this.image,
+      required this.fromCamera,
+      required this.fromUpdate})
       : super(key: key);
 
   @override
@@ -30,42 +37,45 @@ class _SetupPage4 extends State<SetupPage4> {
     return done
         ? const App()
         : Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            Utils.createTitleMedium("Your profile picture", context),
-            const SizedBox(height: 40),
-            CircleAvatar(
-              radius: 120,
-              backgroundImage: FileImage(File(widget.image.path)),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: confirmCallback,
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                    MediaQuery.of(context).size.width * 0.7)),
+            body: Center(
+              child: Column(
+                children: [
+                  const SizedBox(height: 100),
+                  Utils.createTitleMedium("Your profile picture", context),
+                  const SizedBox(height: 40),
+                  CircleAvatar(
+                    radius: 120,
+                    backgroundImage: FileImage(File(widget.image.path)),
+                  ),
+                  const SizedBox(height: 40),
+                  ElevatedButton(
+                    onPressed: confirmCallback,
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                          MediaQuery.of(context).size.width * 0.7)),
+                    ),
+                    child: widget.fromUpdate
+                        ? const Text('Update profile picture')
+                        : const Text('Complete sign up'),
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      if (widget.fromCamera) Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded,
+                        color: Colors.white),
+                    label: const Text('Back'),
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                          MediaQuery.of(context).size.width * 0.7)),
+                    ),
+                  ),
+                ],
               ),
-              child: widget.fromUpdate ? const Text('Update profile picture') : const Text('Complete sign up'),
             ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pop(context);
-                if (widget.fromCamera) Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-              label: const Text('Back'),
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                    MediaQuery.of(context).size.width * 0.7)),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Future confirmCallback() async {
@@ -89,12 +99,9 @@ class _SetupPage4 extends State<SetupPage4> {
       } on FirebaseAuthException {
         Utils.showSnackBar('Unable to update profile picture');
       } finally {
-        Utils.showSnackBar('Profile picture successfully updated', isBad: false);
-        if (widget.fromCamera) Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Utils.showSnackBar('Profile picture successfully updated',
+            isBad: false);
+        navigatorKey.currentState!.popUntil((route) => route.isFirst);
         setState(() {
           imageCache.clear();
           imageCache.clearLiveImages();
@@ -112,7 +119,7 @@ class _SetupPage4 extends State<SetupPage4> {
       } finally {
         Utils.showSnackBar('Set up complete!', isBad: false);
         setState(
-              () {
+          () {
             done = true;
           },
         );

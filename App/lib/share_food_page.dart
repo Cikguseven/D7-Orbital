@@ -17,11 +17,11 @@ import 'user_data.dart';
 import 'utils.dart';
 
 class ShareFoodPage extends StatefulWidget {
-  dynamic image;
+  final dynamic image;
   final UserData user;
   final FoodData foodData;
 
-  ShareFoodPage(
+  const ShareFoodPage(
       {Key? key,
       required this.image,
       required this.user,
@@ -167,7 +167,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     try {
       // Store image on Firebase if it is from the user
       if (widget.image is XFile) {
-        String imagePath = 'posts/${postID}.jpg';
+        String imagePath = 'posts/$postID.jpg';
         Reference ref = FirebaseStorage.instance.ref().child(imagePath);
         await ref.putFile(File(widget.image.path));
         imageLoc = await ref.getDownloadURL();
@@ -216,8 +216,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       existingDayLog.postIDs.add(postID);
       existingDayLog.caloriesIn += widget.foodData.energy;
       existingDayLog.proteinIn += widget.foodData.protein;
-      existingDayLog.fatIn += widget.foodData.fats;
-      existingDayLog.carbIn += widget.foodData.carbs;
+      existingDayLog.fatsIn += widget.foodData.fats;
+      existingDayLog.carbsIn += widget.foodData.carbs;
       existingDayLog.sugarIn += widget.foodData.sugar;
 
       await docDiary.set(existingDayLog.toJson());

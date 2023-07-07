@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_first_flutter/update_profile_pic_page.dart';
 import 'package:my_first_flutter/update_weight_goal_page.dart';
 import 'package:my_first_flutter/update_weight_page.dart';
+
 import 'main.dart';
 import 'utils.dart';
 
@@ -87,7 +88,8 @@ class SettingsPage extends StatelessWidget {
                     ),
                     settingsTile('Update weight', updateWeightWidget),
                     settingsTile('Update weight goal', updateWeightGoalWidget),
-                    settingsTile('Update profile picture', updateProfilePicWidget),
+                    settingsTile(
+                        'Update profile picture', updateProfilePicWidget),
                     // settingsTile('Privacy Settings', placeholderPage),
                   ],
                 ),
@@ -173,9 +175,9 @@ class _SwitchState extends State<DarkModeSwitch> {
         // This is called when the user toggles the switch.
         setState(() {
           MyApp.themeNotifier.value =
-          MyApp.themeNotifier.value == ThemeMode.light
-              ? ThemeMode.dark
-              : ThemeMode.light;
+              MyApp.themeNotifier.value == ThemeMode.light
+                  ? ThemeMode.dark
+                  : ThemeMode.light;
           isDarkMode = value;
         });
       },

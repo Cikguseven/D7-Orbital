@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'app.dart';
 import 'utils.dart';
 
@@ -52,7 +53,8 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
-      Utils.showSnackBar('Cannot resend for another ${cooldown > 1 ? '$cooldown seconds' : '1 second'}');
+      Utils.showSnackBar(
+          'Cannot resend for another ${cooldown > 1 ? '$cooldown seconds' : '1 second'}');
       return;
     }
     try {
@@ -94,27 +96,28 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton.icon(
+                    onPressed: sendEmailVerification,
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all(
                         Size.fromWidth(
                             MediaQuery.of(context).size.width - 16 * 2),
                       ),
                     ),
-                    onPressed: sendEmailVerification,
                     icon: const Icon(Icons.email_outlined, color: Colors.white),
-                    label: cooldown > 0 ? Text('Resend email in ${cooldown > 1 ? '$cooldown seconds' : '1 second'}') : const Text('Resend email'),
+                    label: cooldown > 0
+                        ? Text(
+                            'Resend email in ${cooldown > 1 ? '$cooldown seconds' : '1 second'}')
+                        : const Text('Resend email'),
                   ),
                 ),
                 const SizedBox(height: 26),
-                TextButton(
+                ElevatedButton(
                   onPressed: () => FirebaseAuth.instance.signOut(),
-                  child: Text(
-                    'Return to log in',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
+                  child: const Text('Return to log in'),
                 ),
               ],
             ),

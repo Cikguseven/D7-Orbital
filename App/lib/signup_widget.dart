@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 import 'utils.dart';
 
@@ -25,8 +25,9 @@ class _SignupWidgetState extends State<SignupWidget> {
           ? 'Enter a valid email'
           : null;
 
-  String? passwordValidator(String? pwd) =>
-      pwd != null && pwd.length < 6 ? 'Password needs at least 6 characters' : null;
+  String? passwordValidator(String? pwd) => pwd != null && pwd.length < 6
+      ? 'Password needs at least 6 characters'
+      : null;
 
   String? password2Validator(String? pwd2) =>
       pwd2 != passwordController.text.trim() ? 'Password does not match' : null;
@@ -104,11 +105,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
                 const SizedBox(height: 25),
                 ElevatedButton(
+                  onPressed: signUpCallBack,
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 16 * 2)),
                   ),
-                  onPressed: signUpCallBack,
                   child: const Text(
                     'Sign up',
                   ),
@@ -119,11 +120,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                       style: TextStyle(color: Colors.grey)),
                 ),
                 ElevatedButton(
+                  onPressed: widget.onClickLogIn,
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 16 * 2)),
                   ),
-                  onPressed: widget.onClickLogIn,
                   child: const Text('Log in instead'),
                 ),
               ],

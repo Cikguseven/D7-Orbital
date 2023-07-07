@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 import 'utils.dart';
 
@@ -59,7 +60,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         MediaQuery.of(context).size.width - 15 * 2)),
                   ),
                   onPressed: sendResetEmailCallback,
-                  icon: const Icon(Icons.email_outlined, color: Colors.white,),
+                  icon: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.white,
+                  ),
                   label: const Text(
                     'Send email',
                   )),
@@ -82,11 +86,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      Utils.showSnackBar('Password reset email sent!');
+      Utils.showSnackBar('Password reset email sent!', isBad: false);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException {
       Utils.showSnackBar('Unable to reset password');
-      navigatorKey.currentState!.pop();
+      Navigator.pop(context);
     }
   }
 }

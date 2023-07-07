@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
+
 import 'food_data.dart';
 import 'manual_food_select_page.dart';
 import 'share_food_page.dart';
@@ -74,7 +75,7 @@ Widget foodDataWidget(
   );
 }
 
-// Widget to create all nutrtional data boxes
+// Widget to create all nutritional data boxes
 Widget allFoodDataWidget(int calories, double protein, double fats,
     double carbs, double sugar, UserData user, BuildContext context) {
   List<int> userNutritionGoals = UserData.nutritionCalculator(user);
@@ -91,7 +92,7 @@ Widget allFoodDataWidget(int calories, double protein, double fats,
 }
 
 class CheckFoodPage extends StatefulWidget {
-  dynamic image;
+  final dynamic image;
   FoodData foodData;
   final UserData user;
 
@@ -121,13 +122,13 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
             height: 200,
             width: 200,
             decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: widget.image is XFile
-                          ? XFileImage(widget.image)
-                          : AssetImage(widget.image) as ImageProvider,
-                    ),
-                  ),
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: widget.image is XFile
+                    ? XFileImage(widget.image)
+                    : AssetImage(widget.image) as ImageProvider,
+              ),
+            ),
           ),
           const SizedBox(height: 26),
 
@@ -140,8 +141,14 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
           const SizedBox(height: 16),
 
           // Nutrition bar
-          allFoodDataWidget(widget.foodData.energy, widget.foodData.protein, widget.foodData.fats,
-              widget.foodData.carbs, widget.foodData.sugar, widget.user, context),
+          allFoodDataWidget(
+              widget.foodData.energy,
+              widget.foodData.protein,
+              widget.foodData.fats,
+              widget.foodData.carbs,
+              widget.foodData.sugar,
+              widget.user,
+              context),
 
           // Elevated button (Edit food item)
           Expanded(

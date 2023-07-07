@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+
 import 'food_data.dart';
 
 class ManualFoodSelectPage extends StatefulWidget {
@@ -148,11 +149,13 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Color(0xFF212121)
+                  ? const Color(0xFF313131)
                   : Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black.withOpacity(0.7)
+                      : Colors.grey.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 4,
                   offset: const Offset(0, 3), // changes position of shadow
@@ -161,9 +164,10 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             ),
             child: DropdownButton2(
               iconStyleData: IconStyleData(
-                iconEnabledColor: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black,
+                iconEnabledColor:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
               ),
               underline: Container(),
               // removes the ugly underline by making it nothing
@@ -190,12 +194,14 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Color(0xFF212121)
+                  ? const Color(0xFF313131)
                   : Colors.white,
               boxShadow: selectedCanteen != null
                   ? [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black.withOpacity(0.7)
+                            : Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
                         offset:
@@ -206,9 +212,10 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             ),
             child: DropdownButton2(
               iconStyleData: IconStyleData(
-                iconEnabledColor: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black,
+                iconEnabledColor:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
               ),
               underline: Container(),
               // removes the ugly underline by making it nothing
@@ -234,13 +241,15 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Color(0xFF212121)
+                  ? const Color(0xFF313131)
                   : Colors.white,
               boxShadow: selectedStall == null
                   ? null
                   : [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black.withOpacity(0.7)
+                            : Colors.grey.withOpacity(0.3),
                         spreadRadius: 1,
                         blurRadius: 4,
                         offset:
@@ -250,9 +259,10 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
             ),
             child: DropdownButton2(
               iconStyleData: IconStyleData(
-                iconEnabledColor: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black,
+                iconEnabledColor:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Theme.of(context).primaryColor,
               ),
               underline: Container(),
               // removes the ugly underline by making it nothing

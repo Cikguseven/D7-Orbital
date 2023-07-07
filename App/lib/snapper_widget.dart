@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:camera/camera.dart';
-import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+
 import 'check_food_page.dart';
 import 'classifier.dart';
 import 'config/config.dart' as config;
@@ -19,8 +20,7 @@ import 'utils.dart';
 class SnapperWidget extends StatefulWidget {
   final UserData user;
 
-  const SnapperWidget({Key? key, required this.user})
-      : super(key: key); // TODO: this is infact not required
+  const SnapperWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   State<SnapperWidget> createState() => _SnapperWidgetState();
@@ -62,7 +62,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Snap and Log'),
+        title: const Text('Snap'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -94,7 +94,10 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ElevatedButton.icon(
                         onPressed: analyseAndLogCallBack,
-                        icon: const Icon(Icons.camera_alt, color: Colors.white,),
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ),
                         label: const Text(
                           'Log it!',
                         ),
@@ -158,9 +161,9 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       context,
       MaterialPageRoute(
         builder: (context) => CheckFoodPage(
-          image: "assets/NoFood.jpg",
-          foodData: selectedFoodData,
-          user: widget.user),
+            image: "assets/NoFood.jpg",
+            foodData: selectedFoodData,
+            user: widget.user),
       ),
     );
   }
@@ -217,15 +220,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
       }
     }
 
-    Navigator.pop(context); // remove spinner
+    Navigator.pop(context);
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (BuildContext context) => CheckFoodPage(
-            image: image,
-            foodData: predictedFood,
-            user: widget.user),
+            image: image, foodData: predictedFood, user: widget.user),
       ),
     );
   }

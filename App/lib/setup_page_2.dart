@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_flutter/setup_page_3.dart';
+
 import 'user_data.dart';
 
 class SetupPage2 extends StatefulWidget {
@@ -42,8 +43,8 @@ class _SetupPage2 extends State<SetupPage2> {
             icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
             label: const Text('Next'),
             style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                  MediaQuery.of(context).size.width * 0.5)),
+              fixedSize: MaterialStateProperty.all(
+                  Size.fromWidth(MediaQuery.of(context).size.width * 0.5)),
             ),
           ),
           const SizedBox(height: 30),
@@ -54,8 +55,8 @@ class _SetupPage2 extends State<SetupPage2> {
             icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
             label: const Text('Back'),
             style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                  MediaQuery.of(context).size.width * 0.5)),
+              fixedSize: MaterialStateProperty.all(
+                  Size.fromWidth(MediaQuery.of(context).size.width * 0.5)),
             ),
           ),
         ],

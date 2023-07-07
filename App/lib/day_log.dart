@@ -5,23 +5,23 @@ class DayLog {
   List<String> postIDs;
   int caloriesIn;
   double proteinIn;
-  double fatIn;
-  double carbIn;
+  double fatsIn;
+  double carbsIn;
   double sugarIn;
 
   // List<ActivityData>? activitiesData;
   // int caloriesOut;
 
-  DayLog(this.date, this.postIDs, this.caloriesIn, this.proteinIn, this.fatIn,
-      this.carbIn, this.sugarIn);
+  DayLog(this.date, this.postIDs, this.caloriesIn, this.proteinIn, this.fatsIn,
+      this.carbsIn, this.sugarIn);
 
   Map<String, dynamic> toJson() => {
         'date': date,
         'postIDs': postIDs,
         'caloriesIn': caloriesIn,
         'proteinIn': proteinIn,
-        'fatIn': fatIn,
-        'carbIn': carbIn,
+        'fatsIn': fatsIn,
+        'carbsIn': carbsIn,
         'sugarIn': sugarIn,
       };
 
@@ -30,8 +30,8 @@ class DayLog {
       data['postIDs'].cast<String>(),
       data['caloriesIn'],
       data['proteinIn'],
-      data['fatIn'],
-      data['carbIn'],
+      data['fatsIn'],
+      data['carbsIn'],
       data['sugarIn']);
 
   static String dayLogNameFromTimeStamp(Timestamp ts) {

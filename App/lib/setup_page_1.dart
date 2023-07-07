@@ -449,10 +449,8 @@ class _SetupPage1 extends State<SetupPage1> {
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: validateForm,
-                  icon: const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Colors.white
-                  ),
+                  icon: const Icon(Icons.arrow_forward_rounded,
+                      color: Colors.white),
                   label: const Text('Next'),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -465,10 +463,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white
-                  ),
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
                   label: const Text('Log Out'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -488,7 +483,7 @@ class _SetupPage1 extends State<SetupPage1> {
     final bool isValidInputs = formKey.currentState!.validate();
     if (genderSelected.every((element) => element == false)) {
       // all false
-      Utils.showSnackBar('Select your gender!');
+      Utils.showSnackBar('Select your gender');
       return;
     }
     if (!isValidInputs) return;

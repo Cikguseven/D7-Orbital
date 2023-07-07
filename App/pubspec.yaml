@@ -101,6 +101,7 @@ dependencies:
 
   # For handling images:
   image: ^3.3.0
+  smooth_page_indicator: ^1.1.0
 
 
 dev_dependencies:

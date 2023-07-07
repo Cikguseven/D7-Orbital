@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../utils.dart';
 
 // final NUS_ORANGE = Utils.createMaterialColor(const Color(0xFFEFC700));
 final NUS_BLUE = Utils.createMaterialColor(const Color(0xFF003D7C));
-final OFF_WHITE =
-    Utils.createMaterialColor(const Color(0xFFF5F5F5));
+final OFF_WHITE = Utils.createMaterialColor(const Color(0xFFF5F5F5));
 final DARK_FRAME_BACKGROUND =
-  Utils.createMaterialColor(const Color(0xFF212121));
+    Utils.createMaterialColor(const Color(0xFF1F1F1F));
 final INPUT_BORDER_GREY = Utils.createMaterialColor(const Color(0xFFC9C9C9));
 
 ThemeData lightTheme = ThemeData(
@@ -133,7 +133,7 @@ ThemeData darkTheme = ThemeData(
       borderRadius: BorderRadius.circular(8),
     ),
     filled: true,
-    fillColor: const Color(0xFF2A2A2A),
+    fillColor: const Color(0xFF2F2F2F),
     outlineBorder: BorderSide(
       color: INPUT_BORDER_GREY,
     ),

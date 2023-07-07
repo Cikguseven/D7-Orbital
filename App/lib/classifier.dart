@@ -80,9 +80,7 @@ class Classifier {
     final resultCategories = _postProcessOutput(outputBuffer);
     final topResult = resultCategories.first;
     // Threshold of 50
-    return topResult.score < 60
-        ? ''
-        : topResult.label;
+    return topResult.score < 60 ? '' : topResult.label;
   }
 
   List<ClassifierCategory> _postProcessOutput(TensorBuffer outputBuffer) {

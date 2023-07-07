@@ -7,6 +7,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'day_log.dart';
 import 'main.dart';
+import 'nutrition_page.dart';
 import 'settings_page.dart';
 import 'user_data.dart';
 import 'utils.dart';
@@ -25,19 +26,14 @@ class _MePageState extends State<MePage> {
   int _currentCalories = 0;
   int _goalCalories = 0;
   bool canCheckIn = false;
+  late DayLog dayLog;
 
-  void loadProgress() async {
-    loadCalories();
-    loadActivities();
-  }
 
   void loadCalories() async {
-    DayLog dayLog = await Utils.getDayLogToday();
+    dayLog = await Utils.getDayLogToday();
     _currentCalories = dayLog.caloriesIn;
     _goalCalories = UserData.nutritionCalculator(widget.user)[0];
   }
-
-  void loadActivities() async {} // TODO: TO be added
 
   void checkIn() {
     if (widget.user.checkIn != '') {
@@ -54,7 +50,7 @@ class _MePageState extends State<MePage> {
 
   @override
   void initState() {
-    loadProgress();
+    loadCalories();
     checkIn();
     super.initState();
   }
@@ -87,45 +83,6 @@ class _MePageState extends State<MePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.mail_outline_rounded),
-            onPressed: () {
-              setState(
-                () {
-                  numNotifications = 0;
-                },
-              );
-            },
-          ),
-          Stack(
-            children: [
-              numNotifications != 0
-                  ? Positioned(
-                      right: 11,
-                      top: 11,
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 14,
-                          minHeight: 14,
-                        ),
-                        child: Text(
-                          '$numNotifications',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ), // Notifications
-          IconButton(
             onPressed: () {
               Navigator.push(
                   context,
@@ -136,227 +93,240 @@ class _MePageState extends State<MePage> {
           ), // Settings
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _pullRefresh,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          padding: const EdgeInsets.all(16),
-          child: Stack(
-            children: [
-              Positioned(
-                right: 0,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(widget.user.pfpURL),
-                ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(16),
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(widget.user.pfpURL),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Utils.createHeadlineMedium(
-                      // Limit the length of name displayed to 10
-                      '$greetings, \n${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!',
-                      context,
-                      align: TextAlign.start),
-                  const SizedBox(height: 26),
-                  Utils.createHeadlineSmall('Your daily overview', context),
-                  const SizedBox(height: 8),
-                  Text(
-                    'You are on track!',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: Colors.lightGreen,
-                        ),
-                  ),
-                  const SizedBox(height: 26),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Calories
-                      Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              padding:
-                                  const MaterialStatePropertyAll(EdgeInsets.zero),
-                              shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              minimumSize:
-                                  const MaterialStatePropertyAll(Size.infinite),
-                              foregroundColor:
-                                  const MaterialStatePropertyAll(Colors.black),
-                              backgroundColor:
-                                  const MaterialStatePropertyAll(Colors.orange),
-                            ),
-                            onPressed: () {
-                              Utils.showSnackBar('Calories');
-                            },
-                            child: CircularPercentIndicator(
-                              radius: MediaQuery.of(context).size.width / 6 - 4,
-                              lineWidth: 13.0,
-                              animation: true,
-                              percent: min(_currentCalories / _goalCalories, 1.0),
-                              header: Utils.createTitleSmall('Calories', context),
-                              center: const Icon(
-                                Icons.fastfood_rounded,
-                                size: 48,
-                              ),
-                              footer: Utils.createTitleSmall(
-                                  '$_currentCalories/$_goalCalories', context),
-                              circularStrokeCap: CircularStrokeCap.round,
-                              progressColor: Colors.green,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      //   Activity
-                      Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              padding:
-                                  const MaterialStatePropertyAll(EdgeInsets.zero),
-                              shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              minimumSize:
-                                  const MaterialStatePropertyAll(Size.infinite),
-                              foregroundColor:
-                                  const MaterialStatePropertyAll(Colors.black),
-                              backgroundColor:
-                                  const MaterialStatePropertyAll(Colors.purple),
-                            ),
-                            onPressed: () {
-                              Utils.showSnackBar('Activity');
-                            },
-                            child: CircularPercentIndicator(
-                              radius: MediaQuery.of(context).size.width / 6 - 4,
-                              lineWidth: 13.0,
-                              animation: true,
-                              percent: min(0.7, 1.0),
-                              header: Utils.createTitleSmall('Activity', context),
-                              center: const Icon(
-                                Icons.sports_kabaddi_rounded,
-                                size: 48,
-                              ),
-                              footer:
-                                  Utils.createTitleSmall('1463/2000', context),
-                              circularStrokeCap: CircularStrokeCap.round,
-                              progressColor: Colors.green,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: MyApp.themeNotifier.value == ThemeMode.light
-                        ? Colors.black
-                        : Colors.white,
-                  ),
-                  const SizedBox(height: 20),
-                  Utils.createHeadlineSmall('Experience', context),
-                  const SizedBox(height: 20),
-                  LinearPercentIndicator(
-                    padding: EdgeInsets.zero,
-                    // width: 170.0,
-                    animation: true,
-                    animationDuration: 100,
-                    lineHeight: 20.0,
-                    trailing: Utils.createTitleSmall(
-                        'Level $level\n $experience/$experienceForNextLevel XP',
-                        context),
-                    percent: levelPercent,
-                    center: Text('${(levelPercent * 100).toStringAsFixed(1)}%'),
-                    barRadius: const Radius.circular(16),
-                    progressColor: Colors.green,
-                    backgroundColor: const Color(0xFF888888),
-                  ),
-                  const SizedBox(height: 26),
-                  Row(
-                    children: [
-                      Expanded(
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Utils.createHeadlineMedium(
+                    // Limit the length of name displayed to 10
+                    '$greetings, \n${widget.user.firstName.substring(0, min(widget.user.firstName.length, 10))}!',
+                    context,
+                    align: TextAlign.start),
+                const SizedBox(height: 30),
+                Utils.createHeadlineSmall('Your daily overview', context),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Calories
+                    Expanded(
+                      child: AspectRatio(
+                        aspectRatio: 1,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                              padding: const MaterialStatePropertyAll(
+                                  EdgeInsets.zero),
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              minimumSize: const MaterialStatePropertyAll(
+                                  Size.infinite),
+                              foregroundColor: const MaterialStatePropertyAll(
+                                  Colors.black),
+                              backgroundColor: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const MaterialStatePropertyAll(
+                                      Colors.white12)
+                                  : const MaterialStatePropertyAll(
+                                      Colors.blueAccent)),
                           onPressed: () {
-                            if (canCheckIn) {
-                              canCheckIn = false;
-                              Utils.showSnackBar('Check in successful',
-                                  isBad: false);
-                              final DateFormat formatter =
-                                  DateFormat('dd/MM/yyyy');
-                              final String formatted =
-                                  formatter.format(DateTime.now());
-                              setState(() {
-                                Utils.updateUserData({
-                                  'experience': widget.user.experience + 10,
-                                  'checkIn': formatted,
-                                });
-                              });
-                            } else {
-                              Utils.showSnackBar('Unable to check in');
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => NutritionPage(user: widget.user, dayLog: dayLog)));
                           },
-                          child: canCheckIn
-                              ? const Text('Check in for 10 XP')
-                              : const Text('Come back tomorrow!'),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                const Text('Nutrition',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                const SizedBox(height: 6),
+                                CircularPercentIndicator(
+                                  radius:
+                                      MediaQuery.of(context).size.width / 6 -
+                                          14,
+                                  lineWidth: 10,
+                                  animation: true,
+                                  backgroundColor: const Color(0xFFF5F5F5),
+                                  percent: min(
+                                      _currentCalories / _goalCalories, 1.0),
+                                  center: const Icon(
+                                    Icons.fastfood_rounded,
+                                    size: 50,
+                                    color: Colors.white,
+                                  ),
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  progressColor: Colors.green,
+                                ),
+                                const SizedBox(height: 6),
+                                Text('$_currentCalories/$_goalCalories kcal',
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 14)),
+                              ],
+                            ),
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    height: 1,
-                    width: double.infinity,
-                    color: MyApp.themeNotifier.value == ThemeMode.light
-                        ? Colors.black
-                        : Colors.white,
-                  ),
-                  const SizedBox(height: 20),
-                  Utils.createHeadlineSmall('Badges', context),
-                  const SizedBox(height: 20),
-                  const Row(
-                    children: [
-                      // TODO: Make our own Badge class that includes original art and assign badges to userData
-                      Icon(
-                        Icons.back_hand_rounded,
-                        size: 48,
-                        color: Colors.blueAccent,
                       ),
-                      SizedBox(width: 20),
-                      Icon(Icons.camera_alt, size: 48, color: Colors.deepOrange),
-                      SizedBox(width: 20),
-                      Icon(
-                        Icons.sports_soccer_rounded,
-                        size: 48,
+                    ),
+                    const SizedBox(width: 16),
+                    //   Activity
+                    Expanded(
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              padding: const MaterialStatePropertyAll(
+                                  EdgeInsets.zero),
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              minimumSize: const MaterialStatePropertyAll(
+                                  Size.infinite),
+                              // foregroundColor:
+                              //     const MaterialStatePropertyAll(Colors.black),
+                              backgroundColor: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const MaterialStatePropertyAll(
+                                      Colors.white12)
+                                  : const MaterialStatePropertyAll(
+                                      Colors.blueAccent)),
+                          onPressed: () {
+                            Utils.showSnackBar('Diary');
+                          },
+                          child: const Column(
+                            children: [
+                              SizedBox(height: 8),
+                              Text('Diary',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                              SizedBox(height: 32),
+                              Icon(
+                                Icons.sticky_note_2_outlined,
+                                size: 60,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(width: 20),
-                      Icon(Icons.sports_gymnastics_rounded,
-                          size: 48, color: Colors.brown),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                const SizedBox(height: 20),
+                Utils.createHeadlineSmall('Experience', context),
+                const SizedBox(height: 20),
+                LinearPercentIndicator(
+                  padding: EdgeInsets.zero,
+                  // width: 170.0,
+                  animation: true,
+                  animationDuration: 100,
+                  lineHeight: 20.0,
+                  trailing: Utils.createTitleSmall(
+                      'Level $level\n $experience/$experienceForNextLevel XP',
+                      context),
+                  percent: levelPercent,
+                  center: Text('${(levelPercent * 100).toStringAsFixed(1)}%'),
+                  barRadius: const Radius.circular(16),
+                  progressColor: Colors.green,
+                  backgroundColor: const Color(0xFF888888),
+                ),
+                const SizedBox(height: 26),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (canCheckIn) {
+                            canCheckIn = false;
+                            Utils.showSnackBar('Check in successful',
+                                isBad: false);
+                            final DateFormat formatter =
+                                DateFormat('dd/MM/yyyy');
+                            final String formatted =
+                                formatter.format(DateTime.now());
+                            setState(() {
+                              Utils.updateUserData({
+                                'experience': widget.user.experience + 10,
+                                'checkIn': formatted,
+                              });
+                            });
+                          } else {
+                            Utils.showSnackBar('Unable to check in');
+                          }
+                        },
+                        child: canCheckIn
+                            ? const Text('Check in for 10 XP')
+                            : const Text('Come back tomorrow!'),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: MyApp.themeNotifier.value == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                const SizedBox(height: 20),
+                Utils.createHeadlineSmall('Badges', context),
+                const SizedBox(height: 20),
+                const Row(
+                  children: [
+                    // TODO: Make our own Badge class that includes original art and assign badges to userData
+                    Icon(
+                      Icons.back_hand_rounded,
+                      size: 48,
+                      color: Colors.blueAccent,
+                    ),
+                    SizedBox(width: 20),
+                    Icon(Icons.camera_alt,
+                        size: 48, color: Colors.deepOrange),
+                    SizedBox(width: 20),
+                    Icon(
+                      Icons.sports_soccer_rounded,
+                      size: 48,
+                    ),
+                    SizedBox(width: 20),
+                    Icon(Icons.sports_gymnastics_rounded,
+                        size: 48, color: Colors.brown),
+                  ],
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Future<void> _pullRefresh() async {
-    UserData getUser = await Utils.getUserData();
-    setState(() {
-      Future<UserData> user = Future.value(getUser);
-    });
   }
 }

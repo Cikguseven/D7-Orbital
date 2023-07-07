@@ -19,27 +19,27 @@ Future main() async {
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
-  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.system);
 
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
-      builder: (_, ThemeMode currentMode, __) {
-        return MaterialApp(
-          title: 'Make it Count',
-          debugShowCheckedModeBanner: false,
-          scaffoldMessengerKey: Utils.scaffoldKey,
-          navigatorKey: navigatorKey,
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: currentMode,
-          home: const MainPage(),
-        );
-      }
-    );
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode currentMode, __) {
+          return MaterialApp(
+            title: 'Make it Count',
+            debugShowCheckedModeBanner: false,
+            scaffoldMessengerKey: Utils.scaffoldKey,
+            navigatorKey: navigatorKey,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: currentMode,
+            home: const MainPage(),
+          );
+        });
   }
 }
 

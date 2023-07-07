@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:uuid/uuid.dart';
+
+import 'check_food_page.dart';
 import 'comment_data.dart';
 import 'post_data.dart';
 import 'star_rating.dart';
 import 'user_data.dart';
 import 'utils.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:uuid/uuid.dart';
-
-import 'check_food_page.dart';
 
 class CommentsWidget extends StatefulWidget {
   final PostData post;
@@ -70,10 +70,10 @@ class _CommentsState extends State<CommentsWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                   child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(widget.user.pfpURL),
+                    radius: 20,
+                    backgroundImage: NetworkImage(widget.user.pfpURL),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -182,8 +182,8 @@ class TopCommentCard extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(post.pfpURL),
+                  radius: 20,
+                  backgroundImage: NetworkImage(post.pfpURL),
                 ),
                 const SizedBox(width: 15),
                 Column(
@@ -257,10 +257,10 @@ class CommentCard extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 5, 15, 0),
+          padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
           child: CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(comment.pfpURL),
+            radius: 20,
+            backgroundImage: NetworkImage(comment.pfpURL),
           ),
         ),
         Expanded(

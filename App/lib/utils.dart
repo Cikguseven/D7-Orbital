@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
+
+import 'comment_data.dart';
 import 'day_log.dart';
 import 'post_data.dart';
 import 'user_data.dart';
-
-import 'comment_data.dart';
 
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
@@ -145,8 +145,7 @@ class Utils {
         .snapshots()
         .forEach((querySnapshot) {
       for (var post in querySnapshot.docs) {
-        final data = post.data();
-        posts.add(PostData.fromJson(data));
+        posts.add(PostData.fromJson(post.data()));
       }
     });
     return posts;
@@ -174,8 +173,7 @@ class Utils {
         .snapshots()
         .forEach((querySnapshot) {
       for (var comment in querySnapshot.docs) {
-        final data = comment.data();
-        comments.add(CommentData.fromJson(data));
+        comments.add(CommentData.fromJson(comment.data()));
       }
     });
     return comments;
@@ -183,9 +181,11 @@ class Utils {
 
   static Image appLogo(context) {
     if (Theme.of(context).brightness == Brightness.dark) {
-      return Image.asset('assets/logo-white-text.png', width: 0.8 * MediaQuery.of(context).size.width);
+      return Image.asset('assets/logo-white-text.png',
+          width: 0.8 * MediaQuery.of(context).size.width);
     }
-    return Image.asset('assets/logo-black-text.png', width: 0.8 * MediaQuery.of(context).size.width);
+    return Image.asset('assets/logo-black-text.png',
+        width: 0.8 * MediaQuery.of(context).size.width);
   }
 
   /// Converts Date time to string to save to database. DD/MM/YYYY

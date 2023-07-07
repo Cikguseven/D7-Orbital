@@ -63,11 +63,8 @@ class _UpdateProfilePicPageState extends State<UpdateProfilePicPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => SetupPage4(
-            image: image,
-            fromCamera: false,
-            fromUpdate: true
-          ),
+          builder: (BuildContext context) =>
+              SetupPage4(image: image, fromCamera: false, fromUpdate: true),
         ),
       );
     }

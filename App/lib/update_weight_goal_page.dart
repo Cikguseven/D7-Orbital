@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
+
 import 'utils.dart';
 
 class UpdateWeightGoalPage extends StatefulWidget {
@@ -111,7 +111,7 @@ class _UpdateWeightGoalPageState extends State<UpdateWeightGoalPage> {
       Utils.showSnackBar('Unable to save weight goal');
     } finally {
       Utils.showSnackBar('Weight goal successfully updated', isBad: false);
-      navigatorKey.currentState!.pop();
+      Navigator.pop(context);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:my_first_flutter/settings_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
@@ -46,8 +47,19 @@ class _HomeWidgetState extends State<HomeWidget> {
         builder: (context, posts) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Make it Count'),
+              title: const Text('Home'),
               centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => const SettingsPage()));
+                  },
+                  icon: const Icon(Icons.settings),
+                ), // Settings
+              ],
             ),
             body: RefreshIndicator(
               onRefresh: _pullRefresh,
@@ -125,7 +137,7 @@ class PostCard extends StatelessWidget {
             children: [
               // User profile image
               Padding(
-                padding: EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.only(top: 5),
                 child: CircleAvatar(
                     radius: 20, backgroundImage: NetworkImage(post.pfpURL)),
               ),

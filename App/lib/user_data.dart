@@ -63,10 +63,6 @@ class UserData {
     );
   }
 
-  String getProfilePic() {
-    return this.pfpURL;
-  }
-
   UserData(
       {required this.firstName,
       required this.lastName,
@@ -90,7 +86,7 @@ class UserData {
         'gender': gender,
         'birthday': birthday,
         'checkIn': checkIn,
-        'pfpURL' : pfpURL,
+        'pfpURL': pfpURL,
         'height': height,
         'weight': weight,
         'activityMultiplier': activityMultiplier,
@@ -143,7 +139,8 @@ class UserData {
       proteinMultiplier = 1.2;
     }
 
-    int rmr = (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
+    int rmr =
+        (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
 
     int proteinGoal = (proteinMultiplier * user.weight).round();
 
