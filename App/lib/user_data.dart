@@ -1,4 +1,5 @@
 import 'package:age_calculator/age_calculator.dart';
+
 import 'utils.dart';
 
 class UserData {
@@ -76,8 +77,7 @@ class UserData {
     required this.weightGoal,
   });
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'activityMultiplier': activityMultiplier,
         'birthday': birthday,
         'checkIn': checkIn,
@@ -141,7 +141,7 @@ class UserData {
     }
 
     int rmr =
-    (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
+        (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
 
     int proteinGoal = (proteinMultiplier * user.weight).round();
 
@@ -157,8 +157,12 @@ class UserData {
 
 class ActivityMultiplier {
   static double get SEDENTARY => 1.2;
+
   static double get LIGHTLY_ACTIVE => 1.375;
+
   static double get MODERATELY_ACTIVE => 1.55;
+
   static double get VERY_ACTIVE => 1.725;
+
   static double get EXTREMELY_ACTIVE => 1.9;
 }

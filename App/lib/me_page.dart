@@ -415,7 +415,6 @@ class _MePageState extends State<MePage> {
     );
   }
 
-
   void showHelpDialog(BuildContext context, String title) {
     Widget okButton = TextButton(
       child: const Text('Got it'),
@@ -467,7 +466,7 @@ class _MePageState extends State<MePage> {
           style: TextStyle(fontWeight: FontWeight.normal),
         );
       }
-    } else if (title.substring(0, 7) == 'Comment') {
+    } else if (title.substring(0, 6) == 'Commen') {
       if (title.substring(7, 8) == 'G') {
         titleText = const Text('Gold comment badge');
         contentText = const Text(

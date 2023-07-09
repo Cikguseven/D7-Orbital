@@ -53,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) => const SettingsPage()));
+                            builder: (BuildContext context) =>
+                                const SettingsPage()));
                   },
                   icon: const Icon(Icons.settings),
                 ), // Settings

@@ -14,12 +14,12 @@ class CommentData {
   });
 
   Map<String, dynamic> toJson() => {
-    'comment': comment,
-    'firstName': firstName,
-    'lastName': lastName,
-    'pfpURL': pfpURL,
-    'postTime': postTime,
-  };
+        'comment': comment,
+        'firstName': firstName,
+        'lastName': lastName,
+        'pfpURL': pfpURL,
+        'postTime': postTime,
+      };
 
   static CommentData fromJson(Map<String, dynamic> data) {
     return CommentData(

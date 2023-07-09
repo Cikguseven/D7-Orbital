@@ -237,7 +237,9 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     } finally {
       FocusManager.instance.primaryFocus?.unfocus();
       Utils.showSnackBar(
-          forDiary ? 'Successfully saved to diary!' : 'Successfully shared post!',
+          forDiary
+              ? 'Successfully saved to diary!'
+              : 'Successfully shared post!',
           isBad: false,
           duration: 1);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -254,7 +256,10 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
 
     AlertDialog alert = AlertDialog(
       title: const Text('Save options'),
-      content: const Text('Only you can see posts saved to your diary\n\nEveryone can see your shared posts', style: TextStyle(fontWeight: FontWeight.normal),),
+      content: const Text(
+        'Only you can see posts saved to your diary\n\nEveryone can see your shared posts',
+        style: TextStyle(fontWeight: FontWeight.normal),
+      ),
       actions: [
         okButton,
       ],

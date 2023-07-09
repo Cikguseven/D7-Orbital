@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DayLog {
-  final DateTime date;
+  DateTime date;
   int caloriesIn;
   double proteinIn;
   double fatsIn;
@@ -9,36 +9,51 @@ class DayLog {
   double sugarIn;
   int weekday;
 
-  // List<ActivityData>? activitiesData;
-  // int caloriesOut;
-
-  DayLog(this.date, this.caloriesIn, this.proteinIn, this.fatsIn,
-      this.carbsIn, this.sugarIn, this.weekday);
+  DayLog({
+    required this.caloriesIn,
+    required this.carbsIn,
+    required this.date,
+    required this.fatsIn,
+    required this.proteinIn,
+    required this.sugarIn,
+    required this.weekday,
+  });
 
   Map<String, dynamic> toJson() => {
-    'caloriesIn': caloriesIn,
-    'carbsIn': carbsIn,
-    'date': date,
-    'fatsIn': fatsIn,
-    'proteinIn': proteinIn,
-    'sugarIn': sugarIn,
-    'weekday': weekday,
-  };
+        'caloriesIn': caloriesIn,
+        'carbsIn': carbsIn,
+        'date': date,
+        'fatsIn': fatsIn,
+        'proteinIn': proteinIn,
+        'sugarIn': sugarIn,
+        'weekday': weekday,
+      };
 
-  static DayLog fromJson(Map<String, dynamic> data) => DayLog(
-    data['caloriesIn'],
-    data['carbsIn'],
-    data['date'].toDate(),
-    data['fatsIn'],
-    data['proteinIn'],
-    data['sugarIn'],
-    data['weekday']
-  );
+  static DayLog fromJson(Map<String, dynamic> data) {
+    return DayLog(
+      caloriesIn: data['caloriesIn'],
+      carbsIn: data['carbsIn'],
+      date: data['date'].toDate(),
+      fatsIn: data['fatsIn'],
+      proteinIn: data['proteinIn'],
+      sugarIn: data['sugarIn'],
+      weekday: data['weekday'],
+    );
+  }
 
   static String dayLogNameFromTimeStamp(Timestamp ts) {
     DateTime dt = ts.toDate();
     return '${dt.day}_${dt.month}_dayLog';
   }
 
-  DayLog.createNew(DateTime dt) : this(dt, 0, 0, 0, 0, 0, dt.weekday);
+  static DayLog createNew(DateTime dt) {
+    return DayLog(
+        caloriesIn: 0,
+        carbsIn: 0,
+        date: dt,
+        fatsIn: 0,
+        proteinIn: 0,
+        sugarIn: 0,
+        weekday: dt.weekday);
+  }
 }

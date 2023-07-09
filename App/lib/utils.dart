@@ -11,7 +11,11 @@ import 'user_data.dart';
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-  static showSnackBar(String? text, {bool isBad = true, int duration = 2,}) {
+  static showSnackBar(
+    String? text, {
+    bool isBad = true,
+    int duration = 2,
+  }) {
     if (text == null) return;
 
     final snackBar = SnackBar(
@@ -106,22 +110,21 @@ class Utils {
 
   static Future<List<DayLog>> getWeekLog() async {
     List<DayLog> logs = [];
+    final collection = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('diary');
     for (int i = 0; i < 7; i++) {
       DateTime date = DateTime.now().subtract(Duration(days: i));
-      String dayLogName = DayLog.dayLogNameFromTimeStamp(Timestamp.fromDate(date));
-      await FirebaseFirestore.instance
-          .collection('userData')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('diary')
-          .doc(dayLogName)
-          .get()
-          .then((doc) {
-            if (doc.exists) {
-              logs.add(DayLog.fromJson(doc.data()!));
-            } else {
-              logs.add(DayLog.createNew(date));
-            }
-          });
+      String dayLogName =
+          DayLog.dayLogNameFromTimeStamp(Timestamp.fromDate(date));
+      await collection.doc(dayLogName).get().then((doc) {
+        if (doc.exists) {
+          logs.add(DayLog.fromJson(doc.data()!));
+        } else {
+          logs.add(DayLog.createNew(date));
+        }
+      });
     }
     return logs;
   }

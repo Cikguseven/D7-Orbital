@@ -12,8 +12,7 @@ import 'utils.dart';
 class NutritionPage extends StatefulWidget {
   final UserData user;
 
-  const NutritionPage({Key? key, required this.user})
-      : super(key: key);
+  const NutritionPage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<NutritionPage> createState() => _NutritionPageState();
@@ -99,15 +98,13 @@ class _NutritionPageState extends State<NutritionPage> {
                   children: [
                     Utils.createHeadlineSmall('Daily progress', context),
                     const SizedBox(height: 10),
-                    progressContainer(
-                        'Calories', logs.data![0].caloriesIn,
+                    progressContainer('Calories', logs.data![0].caloriesIn,
                         UserData.nutritionCalculator(widget.user)[0], "kcal"),
                     progressContainer('Protein', logs.data![0].proteinIn,
                         UserData.nutritionCalculator(widget.user)[1], "g"),
                     progressContainer('Fats', logs.data![0].fatsIn,
                         UserData.nutritionCalculator(widget.user)[2], "g"),
-                    progressContainer(
-                        'Carbohydrates', logs.data![0].carbsIn,
+                    progressContainer('Carbohydrates', logs.data![0].carbsIn,
                         UserData.nutritionCalculator(widget.user)[3], "g"),
                     progressContainer('Sugar', logs.data![0].sugarIn,
                         UserData.nutritionCalculator(widget.user)[4], "g"),
@@ -168,8 +165,8 @@ class _NutritionPageState extends State<NutritionPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 10, 0, 0),
                                       child: Utils.createTitleSmall(
                                           title, context),
                                     ),
@@ -360,7 +357,8 @@ class _NutritionPageState extends State<NutritionPage> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    double maxValue = UserData.nutritionCalculator(widget.user)[pageIndex] * 1.25;
+    double maxValue =
+        UserData.nutritionCalculator(widget.user)[pageIndex] * 1.25;
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -379,22 +377,27 @@ class _NutritionPageState extends State<NutritionPage> {
     );
   }
 
-  List<BarChartGroupData> showingGroups(List<DayLog> weeklyLog, int pageIndex) =>
+  List<BarChartGroupData> showingGroups(
+          List<DayLog> weeklyLog, int pageIndex) =>
       List.generate(7, (i) {
         if (pageIndex == 0) {
-          return makeGroupData(i, weeklyLog[6 - i].caloriesIn.toDouble(), pageIndex,
+          return makeGroupData(
+              i, weeklyLog[6 - i].caloriesIn.toDouble(), pageIndex,
               isTouched: i == touchedIndex);
         } else if (pageIndex == 1) {
-          return makeGroupData(i, weeklyLog[6 - i].proteinIn.toDouble(), pageIndex,
+          return makeGroupData(
+              i, weeklyLog[6 - i].proteinIn.toDouble(), pageIndex,
               isTouched: i == touchedIndex);
         } else if (pageIndex == 2) {
           return makeGroupData(i, weeklyLog[6 - i].fatsIn.toDouble(), pageIndex,
               isTouched: i == touchedIndex);
         } else if (pageIndex == 3) {
-          return makeGroupData(i, weeklyLog[6 - i].carbsIn.toDouble(), pageIndex,
+          return makeGroupData(
+              i, weeklyLog[6 - i].carbsIn.toDouble(), pageIndex,
               isTouched: i == touchedIndex);
         } else if (pageIndex == 4) {
-          return makeGroupData(i, weeklyLog[6 - i].sugarIn.toDouble(), pageIndex,
+          return makeGroupData(
+              i, weeklyLog[6 - i].sugarIn.toDouble(), pageIndex,
               isTouched: i == touchedIndex);
         } else {
           throw Error;

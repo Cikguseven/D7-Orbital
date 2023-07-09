@@ -48,7 +48,8 @@ class _DiaryPageState extends State<DiaryPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) => const SettingsPage()));
+                            builder: (BuildContext context) =>
+                                const SettingsPage()));
                   },
                   icon: const Icon(Icons.settings),
                 ), // Settings
@@ -161,7 +162,7 @@ class PostCard extends StatelessWidget {
                   title: const Text(
                     'View nutritional information',
                     style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                   ),
                   children: [
                     // Nutrition bar

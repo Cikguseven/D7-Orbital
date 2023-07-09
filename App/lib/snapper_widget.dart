@@ -61,66 +61,65 @@ class _SnapperWidgetState extends State<SnapperWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Stream.fromFuture(_initializeControllerFuture),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Snap'),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  color: Colors.white,
-                  onPressed: getImageGalleryCallBack,
-                  icon: const Icon(Icons.collections),
-                ),
-              ],
-            ),
-            body: Stack(
-              fit: StackFit.expand,
-              // Might make the picture unusually elongated
-              children: [
-                CameraPreview(_controller),
-                const QRScannerOverlay(overlayColour: Colors.grey),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: null,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: ElevatedButton.icon(
-                        onPressed: analyseAndLogCallBack,
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
-                        label: const Text(
-                          'Log it!',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: ElevatedButton(
-                        onPressed: manualEntryCallBack,
-                        child: const Text(
-                          'Manual entry',
+        stream: Stream.fromFuture(_initializeControllerFuture),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Snap'),
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: getImageGalleryCallBack,
+                    icon: const Icon(Icons.collections),
+                  ),
+                ],
+              ),
+              body: Stack(
+                fit: StackFit.expand,
+                // Might make the picture unusually elongated
+                children: [
+                  CameraPreview(_controller),
+                  const QRScannerOverlay(overlayColour: Colors.grey),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: null,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: ElevatedButton.icon(
+                          onPressed: analyseAndLogCallBack,
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
+                          label: const Text(
+                            'Log it!',
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-              ],
-            ),
-          );
-        } else {
-          // Otherwise, display a loading indicator.
-          return const Center(child: CircularProgressIndicator());
-        }
-      }
-    );
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: ElevatedButton(
+                          onPressed: manualEntryCallBack,
+                          child: const Text(
+                            'Manual entry',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else {
+            // Otherwise, display a loading indicator.
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
   }
 
   Future analyseAndLogCallBack() async {
