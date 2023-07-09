@@ -463,7 +463,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  icon: const Icon(Icons.logout_rounded, color: Colors.white),
                   label: const Text('Log Out'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),

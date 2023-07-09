@@ -32,7 +32,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   Future<void> startCamera() async {
     final cameras = availableCameras();
-    cameras.then((cams) {
+    await cameras.then((cams) {
       _controller = CameraController(
         // Get a specific camera from the list of available cameras.
         cams.first,
@@ -51,36 +51,32 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await startCamera();
       setState(() {});
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Snap'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            color: Colors.white,
-            onPressed: getImageGalleryCallBack,
-            icon: const Icon(Icons.collections),
-          ),
-        ],
-      ),
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
-      body: StreamBuilder(
-        stream: Stream.fromFuture(_initializeControllerFuture),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return Stack(
+    return StreamBuilder(
+      stream: Stream.fromFuture(_initializeControllerFuture),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Snap'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  color: Colors.white,
+                  onPressed: getImageGalleryCallBack,
+                  icon: const Icon(Icons.collections),
+                ),
+              ],
+            ),
+            body: Stack(
               fit: StackFit.expand,
               // Might make the picture unusually elongated
               children: [
@@ -117,13 +113,13 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                   ],
                 ),
               ],
-            );
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+            ),
+          );
+        } else {
+          // Otherwise, display a loading indicator.
+          return const Center(child: CircularProgressIndicator());
+        }
+      }
     );
   }
 

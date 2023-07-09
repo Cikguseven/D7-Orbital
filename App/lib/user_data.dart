@@ -1,7 +1,4 @@
 import 'package:age_calculator/age_calculator.dart';
-import 'package:flutter/material.dart';
-
-import 'day_log.dart';
 import 'utils.dart';
 
 class UserData {
@@ -17,96 +14,100 @@ class UserData {
     activityMultiplier: 0,
     weightGoal: 0.0,
     experience: 0,
+    postCount: 0,
+    commentCount: 0,
   );
 
   // Basic Information
-  final String firstName;
-  final String lastName;
-  final String gender;
+  String pfpURL;
   final String birthday;
   final String checkIn;
-  String pfpURL;
+  final String firstName;
+  final String gender;
+  final String lastName;
+  final double activityMultiplier;
   final double height;
   final double weight;
-  final double activityMultiplier;
   final double weightGoal;
-
-  // Diary, separate collection
-  List<DayLog> diary;
-
-  // Miscellaneous
-  List<Badge> badgesEarned;
+  int commentCount;
+  int postCount;
   int experience;
 
   static setupNewUser({
-    required String firstName,
-    required String lastName,
-    required String gender,
     required String birthday,
+    required String firstName,
+    required String gender,
+    required String lastName,
+    required double activityMultiplier,
     required double height,
     required double weight,
-    required double activityMultiplier,
     required double weightGoal,
   }) {
     return UserData(
-      firstName: firstName,
-      lastName: lastName,
-      gender: gender,
+      activityMultiplier: activityMultiplier,
       birthday: birthday,
       checkIn: '',
-      pfpURL: '',
-      height: height,
-      weight: weight,
-      activityMultiplier: activityMultiplier,
-      weightGoal: weightGoal,
+      commentCount: 0,
       experience: 0,
+      firstName: firstName,
+      gender: gender,
+      height: height,
+      lastName: lastName,
+      pfpURL: '',
+      postCount: 0,
+      weight: weight,
+      weightGoal: weightGoal,
     );
   }
 
-  UserData(
-      {required this.firstName,
-      required this.lastName,
-      required this.gender,
-      required this.birthday,
-      required this.checkIn,
-      required this.pfpURL,
-      required this.height,
-      required this.weight,
-      required this.activityMultiplier,
-      required this.weightGoal,
-      required this.experience,
-      List<DayLog>? existingDiary,
-      List<Badge>? existingBadgesEarned})
-      : diary = existingDiary ?? List.empty(),
-        badgesEarned = existingBadgesEarned ?? List.empty();
+  UserData({
+    required this.activityMultiplier,
+    required this.birthday,
+    required this.checkIn,
+    required this.commentCount,
+    required this.experience,
+    required this.firstName,
+    required this.gender,
+    required this.height,
+    required this.lastName,
+    required this.pfpURL,
+    required this.postCount,
+    required this.weight,
+    required this.weightGoal,
+  });
 
-  Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'lastName': lastName,
-        'gender': gender,
+  Map<String, dynamic> toJson() =>
+      {
+        'activityMultiplier': activityMultiplier,
         'birthday': birthday,
         'checkIn': checkIn,
-        'pfpURL': pfpURL,
-        'height': height,
-        'weight': weight,
-        'activityMultiplier': activityMultiplier,
-        'weightGoal': weightGoal,
+        'commentCount': commentCount,
         'experience': experience,
+        'firstName': firstName,
+        'gender': gender,
+        'height': height,
+        'lastName': lastName,
+        'pfpURL': pfpURL,
+        'postCount': postCount,
+        'weight': weight,
+        'weightGoal': weightGoal,
       };
 
   static UserData fromJson(Map<String, dynamic> data) {
     return UserData(
-      firstName: data['firstName'],
-      lastName: data['lastName'],
-      gender: data['gender'],
+      activityMultiplier: data['activityMultiplier'],
       birthday: data['birthday'],
       checkIn: data['checkIn'],
-      pfpURL: data['pfpURL'],
-      height: data['height'],
-      weight: data['weight'],
-      activityMultiplier: data['activityMultiplier'],
-      weightGoal: data['weightGoal'],
+      commentCount: data['commentCount'],
       experience: data['experience'],
+      firstName: data['firstName'],
+      gender: data['gender'],
+      height: data['height'],
+      lastName: data['lastName'],
+      pfpURL: data['pfpURL'],
+      postCount: data['postCount'],
+      weight: data['weight'],
+      weightGoal: data['weightGoal'],
     );
   }
 
@@ -140,7 +141,7 @@ class UserData {
     }
 
     int rmr =
-        (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
+    (baseRMR * user.activityMultiplier + 1000 * user.weightGoal).round();
 
     int proteinGoal = (proteinMultiplier * user.weight).round();
 
@@ -154,62 +155,10 @@ class UserData {
   }
 }
 
-//
-
-// enum GoalDescription {
-//   GAIN_WEIGHT_250,
-//   GAIN_WEIGHT_500,
-//   LOSE_WEIGHT_250,
-//   LOSE_WEIGHT_500,
-// }
-
 class ActivityMultiplier {
-  /// 1.2
   static double get SEDENTARY => 1.2;
-
-  /// 1.375
   static double get LIGHTLY_ACTIVE => 1.375;
-
-  /// 1.55
   static double get MODERATELY_ACTIVE => 1.55;
-
-  /// 1.725
   static double get VERY_ACTIVE => 1.725;
-
-  /// 1.9
   static double get EXTREMELY_ACTIVE => 1.9;
 }
-
-class Badge {
-  Icon icon;
-  String description;
-
-  Badge(this.icon, this.description);
-}
-
-// class ActivityData {
-//   Activity activity;
-//   Duration duration;
-//
-//   ActivityData(this.activity, this.duration);
-//
-//   int get caloriesBurned =>
-//       ActivityToCaloriesPerHourMap[activity]! * duration.inHours;
-// }
-//
-// enum Activity {
-//   RUNNING,
-//   JOGGING,
-//   WALKING,
-//   SWIMMING,
-//   ROPE_SKIPPING,
-// }
-//
-// final ActivityToCaloriesPerHourMap = <Activity, int>{
-//   // TODO: Proper calculator
-//   Activity.RUNNING: 100,
-//   Activity.JOGGING: 200,
-//   Activity.WALKING: 300,
-//   Activity.SWIMMING: 400,
-//   Activity.ROPE_SKIPPING: 500,
-// };

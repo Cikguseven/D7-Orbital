@@ -7,7 +7,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:my_first_flutter/settings_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:uuid/uuid.dart';
 
 import 'check_food_page.dart';
 import 'comments_page.dart';
@@ -16,23 +15,22 @@ import 'star_rating.dart';
 import 'user_data.dart';
 import 'utils.dart';
 
-class HomeWidget extends StatefulWidget {
+class HomePage extends StatefulWidget {
   final UserData user;
 
-  const HomeWidget({Key? key, required this.user}) : super(key: key);
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
-  Uuid uuid = const Uuid();
+class _HomePageState extends State<HomePage> {
   late Future<List<PostData>> futurePosts;
 
   @override
   void initState() {
-    getFirstPosts();
     super.initState();
+    getFirstPosts();
   }
 
   void getFirstPosts() async {
@@ -207,7 +205,7 @@ class PostCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
       ],
     );
   }

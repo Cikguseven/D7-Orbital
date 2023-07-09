@@ -75,7 +75,7 @@ class _UpdateWeightPageState extends State<UpdateWeightPage> {
       Utils.showSnackBar('Unable to update weight');
     } finally {
       weightController.clear();
-      Utils.showSnackBar('Weight successfully updated', isBad: false);
+      Utils.showSnackBar('Successfully updated weight!', isBad: false);
       Navigator.pop(context);
     }
   }

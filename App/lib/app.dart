@@ -17,7 +17,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   static final List<String> idToMap = ['Home', 'Snap', 'Me'];
   Map<String, dynamic> screenNameToWidgetMap = {
-    'Home': (UserData userData) => HomeWidget(user: userData),
+    'Home': (UserData userData) => HomePage(user: userData),
     'Snap': (UserData userData) => SnapperWidget(user: userData),
     'Me': (UserData userData) => MePage(user: userData),
   };
@@ -51,7 +51,7 @@ class _AppState extends State<App> {
                     label: 'Home',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.restaurant_menu_rounded),
+                    icon: Icon(Icons.camera_alt),
                     label: 'Snap',
                   ),
                   BottomNavigationBarItem(

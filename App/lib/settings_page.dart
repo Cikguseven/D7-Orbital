@@ -105,17 +105,17 @@ class SettingsPage extends StatelessWidget {
                     darkModeTile(),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium('Help', context),
-                    ),
-                    settingsTile('FAQ', placeholderPage),
-                  ],
-                ),
+                // const SizedBox(height: 10),
+                // Column(
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.centerLeft,
+                //       padding: const EdgeInsets.all(16),
+                //       child: Utils.createTitleMedium('Help', context),
+                //     ),
+                //     settingsTile('FAQ', placeholderPage),
+                //   ],
+                // ),
                 // const SizedBox(height: 10),
                 // Column(
                 //   children: [
@@ -142,7 +142,7 @@ class SettingsPage extends StatelessWidget {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.logout_rounded),
                   label: const Text('Log Out'),
                 ),
                 const SizedBox(height: 52),

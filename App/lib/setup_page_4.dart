@@ -99,7 +99,7 @@ class _SetupPage4 extends State<SetupPage4> {
       } on FirebaseAuthException {
         Utils.showSnackBar('Unable to update profile picture');
       } finally {
-        Utils.showSnackBar('Profile picture successfully updated',
+        Utils.showSnackBar('Successfully updated profile picture!',
             isBad: false);
         navigatorKey.currentState!.popUntil((route) => route.isFirst);
         setState(() {

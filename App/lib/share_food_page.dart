@@ -42,7 +42,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Snap and Log'),
+        title: const Text('Save your post'),
         centerTitle: true,
       ),
       body: Column(
@@ -69,12 +69,13 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
             controller: captionController,
             decoration: const InputDecoration(
               labelText: 'Write a caption...',
+              floatingLabelBehavior: FloatingLabelBehavior.never,
               alignLabelWithHint: true,
             ),
           ),
-          const SizedBox(height: 52),
+          const SizedBox(height: 40),
           Utils.createTitleMedium('Rate your meal', context),
-          // const SizedBox(height: 16),
+          const SizedBox(height: 10),
           // Rate your meal
           Center(
             child: RatingBar.builder(
@@ -100,6 +101,12 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                IconButton(
+                  onPressed: () {
+                    showHelpDialog(context);
+                  },
+                  icon: const Icon(Icons.help_outline_rounded),
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -121,13 +128,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                                       fontSize: 18),
                                 ),
                               ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
-                            Utils.showSnackBar(
-                                'Not implemented yet!'); // TODO: Implement adding to diary
-                          },
-                          child: const Text('Add to diary'),
+                          onPressed: () => newPostSetupCallback(true),
+                          child: const Text('Save to diary'),
                         ),
                       ),
                       const SizedBox(
@@ -135,7 +137,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: newPostSetupCallback,
+                          onPressed: () => newPostSetupCallback(false),
                           child: const Text('Share!'),
                         ),
                       ),
@@ -151,7 +153,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     );
   }
 
-  Future newPostSetupCallback() async {
+  Future newPostSetupCallback(bool forDiary) async {
     String caption = captionController.text.trim();
     if (caption == '') {
       Utils.showSnackBar('Add a caption');
@@ -174,62 +176,95 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
       } else {
         imageLoc = widget.image;
       }
-      // Share with community
+      // Save post to Firebase
       final docPost =
           FirebaseFirestore.instance.collection('posts').doc(postID);
       final PostData newPost = PostData(
-        firstName: widget.user.firstName,
-        lastName: widget.user.lastName,
-        caption: caption,
-        location: 'Singapore',
-        postID: postID,
-        imageLoc: imageLoc,
-        pfpURL: widget.user.pfpURL,
-        commentCount: 0,
-        rating: _rating,
         calories: widget.foodData.energy,
-        protein: widget.foodData.protein,
-        fats: widget.foodData.fats,
+        caption: caption,
         carbs: widget.foodData.carbs,
-        sugar: widget.foodData.sugar,
-        postTime: DateTime.now(),
+        commentCount: 0,
+        fats: widget.foodData.fats,
+        firstName: widget.user.firstName,
+        forDiary: forDiary,
+        imageLoc: imageLoc,
+        lastName: widget.user.lastName,
         likedBy: [],
+        location: 'Singapore',
+        ownerID: Utils.getAuthUser()!.uid,
+        pfpURL: widget.user.pfpURL,
+        postID: postID,
+        postTime: DateTime.now(),
+        protein: widget.foodData.protein,
+        rating: _rating,
+        sugar: widget.foodData.sugar,
       );
       await docPost.set(newPost.toJson());
 
-      // Add to diary
-      final docDiary = FirebaseFirestore.instance
+      // Add to logs
+      final docLog = FirebaseFirestore.instance
           .collection('userData')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('diary')
           .doc(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
 
       late DayLog existingDayLog;
-      await docDiary.get().then((doc) {
+      await docLog.get().then((doc) {
         if (doc.exists) {
           existingDayLog = DayLog.fromJson(doc.data()!);
         } else {
-          existingDayLog = DayLog.createNew();
+          existingDayLog = DayLog.createNew(DateTime.now());
         }
       });
 
-      existingDayLog.postIDs.add(postID);
       existingDayLog.caloriesIn += widget.foodData.energy;
       existingDayLog.proteinIn += widget.foodData.protein;
       existingDayLog.fatsIn += widget.foodData.fats;
       existingDayLog.carbsIn += widget.foodData.carbs;
       existingDayLog.sugarIn += widget.foodData.sugar;
 
-      await docDiary.set(existingDayLog.toJson());
+      await docLog.set(existingDayLog.toJson());
 
       await Utils.updateUserData({
-        'experience': widget.user.experience + 50,
+        'experience': forDiary
+            ? widget.user.experience + 30
+            : widget.user.experience + 50,
+        'postCount': ++widget.user.postCount,
       });
     } on FirebaseAuthException {
-      Utils.showSnackBar('Unable to share post');
+      Utils.showSnackBar(
+          forDiary ? 'Unable to save to diary' : 'Unable to share post');
     } finally {
-      Utils.showSnackBar('Shared successfully', isBad: false);
+      FocusManager.instance.primaryFocus?.unfocus();
+      Utils.showSnackBar(
+          forDiary ? 'Successfully saved to diary!' : 'Successfully shared post!',
+          isBad: false,
+          duration: 1);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
+  }
+
+  void showHelpDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: const Text('Got it'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text('Save options'),
+      content: const Text('Only you can see posts saved to your diary\n\nEveryone can see your shared posts', style: TextStyle(fontWeight: FontWeight.normal),),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

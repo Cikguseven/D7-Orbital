@@ -6,27 +6,27 @@ class CommentData {
   final DateTime postTime;
 
   CommentData({
+    required this.comment,
     required this.firstName,
     required this.lastName,
     required this.pfpURL,
-    required this.comment,
     required this.postTime,
   });
 
   Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'lastName': lastName,
-        'pfpURL': pfpURL,
-        'comment': comment,
-        'postTime': postTime,
-      };
+    'comment': comment,
+    'firstName': firstName,
+    'lastName': lastName,
+    'pfpURL': pfpURL,
+    'postTime': postTime,
+  };
 
   static CommentData fromJson(Map<String, dynamic> data) {
     return CommentData(
+      comment: data['comment'],
       firstName: data['firstName'],
       lastName: data['lastName'],
       pfpURL: data['pfpURL'],
-      comment: data['comment'],
       postTime: data['postTime'].toDate(),
     );
   }
