@@ -129,8 +129,6 @@ class _LoginWidgetState extends State<LoginWidget> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-      // await Utils.firebaseSignIn(
-      //     emailController.text.trim(), passwordController.text.trim());
     } on FirebaseAuthException {
       Utils.showSnackBar('Enter a valid account');
     } finally {

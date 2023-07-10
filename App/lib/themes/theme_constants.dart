@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../utils.dart';
 
-// final NUS_ORANGE = Utils.createMaterialColor(const Color(0xFFEFC700));
 final NUS_BLUE = Utils.createMaterialColor(const Color(0xFF003D7C));
 final OFF_WHITE = Utils.createMaterialColor(const Color(0xFFF5F5F5));
 final DARK_FRAME_BACKGROUND =

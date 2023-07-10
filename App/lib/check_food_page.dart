@@ -108,6 +108,8 @@ class CheckFoodPage extends StatefulWidget {
 }
 
 class _CheckFoodPageState extends State<CheckFoodPage> {
+  double portionSize = 1.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,11 +144,11 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
 
           // Nutrition bar
           allFoodDataWidget(
-              widget.foodData.energy,
-              widget.foodData.protein,
-              widget.foodData.fats,
-              widget.foodData.carbs,
-              widget.foodData.sugar,
+              (widget.foodData.energy * portionSize).round(),
+              widget.foodData.protein * portionSize,
+              widget.foodData.fats * portionSize,
+              widget.foodData.carbs * portionSize,
+              widget.foodData.sugar * portionSize,
               widget.user,
               context),
 
@@ -155,6 +157,19 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
+                  ),
+                  onPressed: () {
+                    showPortionDialog(context);
+                  },
+                  child: const Text(
+                    'Edit portion size',
+                  ),
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -176,10 +191,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     'Edit food entry',
                   ),
                 ),
-
-                const SizedBox(height: 26),
-
-                // Elevated button (Confirm)
+                const SizedBox(height: 20),
                 ElevatedButton(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -192,7 +204,8 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                         builder: (BuildContext context) => ShareFoodPage(
                             image: widget.image,
                             user: widget.user,
-                            foodData: widget.foodData),
+                            foodData:
+                                widget.foodData.changePortionSize(portionSize)),
                       ),
                     );
                   },
@@ -200,12 +213,83 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     'Confirm',
                   ),
                 ),
-                const SizedBox(height: 42),
+                const SizedBox(height: 20),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void showPortionDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: const Text('Confirm'),
+      onPressed: () {
+        Navigator.of(context).pop();
+        setState(() {});
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      content: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile(
+                title: const Text(
+                  'Small (80%)',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                value: 0.8,
+                groupValue: portionSize,
+                onChanged: (value) {
+                  setState(() {
+                    portionSize = value!;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Normal (100%)',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                value: 1.0,
+                groupValue: portionSize,
+                onChanged: (value) {
+                  setState(() {
+                    portionSize = value!;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: const Text(
+                  'Large (120%)',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                value: 1.2,
+                groupValue: portionSize,
+                onChanged: (value) {
+                  setState(() {
+                    portionSize = value!;
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      ),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

@@ -27,21 +27,16 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // print('APP');
     return Scaffold(
       body: StreamBuilder(
         stream: Stream.fromFuture(Utils.getUserData()),
         builder: (BuildContext context, user) {
           if (user.data == UserData.newUser) {
-            // print('new user');
             return const SetupPage1();
           } else {
-            // print(user.data);
             if (user.data == null) {
-              // print('Null userdata');
               return const Scaffold();
             }
-            // print('Not null userdata');
             return Scaffold(
               body: screenNameToWidgetMap[selectedScreenName](user.data),
               bottomNavigationBar: BottomNavigationBar(

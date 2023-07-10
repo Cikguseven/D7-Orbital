@@ -1,16 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_first_flutter/nutrition_data.dart';
 
 import 'check_food_page.dart';
 import 'classifier.dart';
-import 'config/config.dart' as config;
 import 'food_data.dart';
 import 'manual_food_select_page.dart';
 import 'scanner_overlay.dart';
@@ -124,16 +121,12 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
   Future analyseAndLogCallBack() async {
     try {
-      // if (_image == null) throw ArgumentError('No image selected');
-      // throw UnimplementedError('Has not been implemented');
-
       // Ensure that the camera is initialized.
       await _initializeControllerFuture;
 
       // Attempt to take a picture and get the file `image`
       // where it was saved.
       final image = await _controller.takePicture();
-
       if (!mounted) return;
 
       // If the picture was taken, display it on a new screen.
@@ -186,32 +179,11 @@ class _SnapperWidgetState extends State<SnapperWidget> {
     img.Image imageInput = img.decodeImage(File(image.path).readAsBytesSync())!;
     String? foodItem = classifier?.predict(imageInput);
 
-    // Nutritionix api to query nutritional information of predicted food.
+    // Nutritionix database to query nutritional information of predicted food.
     if (foodItem != null) {
-      Uri nutritionix =
-          Uri.https('trackapi.nutritionix.com', '/v2/natural/nutrients');
-      String query = jsonEncode({'query': foodItem});
-      Response nutritionInfo = await http.post(
-        nutritionix,
-        headers: {
-          'Content-Type': 'application/json',
-          'x-app-id': config.nutritionixAppID,
-          'x-app-key': config.nutritionixAppKey
-        },
-        body: query,
-      );
-
-      if (nutritionInfo.statusCode == 200) {
-        Map<String, dynamic> nutritionixJson = jsonDecode(nutritionInfo.body);
-        predictedFood = FoodData(
-          name: foodItem,
-          energy: nutritionixJson['foods'][0]['nf_calories'].toInt(),
-          protein: nutritionixJson['foods'][0]['nf_protein'].toDouble(),
-          fats: nutritionixJson['foods'][0]['nf_total_fat'].toDouble(),
-          carbs:
-              nutritionixJson['foods'][0]['nf_total_carbohydrate'].toDouble(),
-          sugar: nutritionixJson['foods'][0]['nf_sugars'].toDouble(),
-        );
+      FoodData? findFood = NutritionData.stallToFoodMap['General']?.firstWhere((fd) => fd.name == foodItem);
+      if (findFood != null) {
+        predictedFood = findFood;
       }
     }
 

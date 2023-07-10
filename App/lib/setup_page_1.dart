@@ -503,6 +503,8 @@ class _SetupPage1 extends State<SetupPage1> {
       weightGoal: weightGoal,
     );
 
+    FocusManager.instance.primaryFocus?.unfocus();
+
     setState(
       () {
         Navigator.push(

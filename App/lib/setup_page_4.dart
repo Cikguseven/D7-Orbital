@@ -30,52 +30,47 @@ class SetupPage4 extends StatefulWidget {
 }
 
 class _SetupPage4 extends State<SetupPage4> {
-  bool done = false;
-
   @override
   Widget build(BuildContext context) {
-    return done
-        ? const App()
-        : Scaffold(
-            body: Center(
-              child: Column(
-                children: [
-                  const SizedBox(height: 100),
-                  Utils.createTitleMedium("Your profile picture", context),
-                  const SizedBox(height: 40),
-                  CircleAvatar(
-                    radius: 120,
-                    backgroundImage: FileImage(File(widget.image.path)),
-                  ),
-                  const SizedBox(height: 40),
-                  ElevatedButton(
-                    onPressed: confirmCallback,
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                          MediaQuery.of(context).size.width * 0.7)),
-                    ),
-                    child: widget.fromUpdate
-                        ? const Text('Update profile picture')
-                        : const Text('Complete sign up'),
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      if (widget.fromCamera) Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back_rounded,
-                        color: Colors.white),
-                    label: const Text('Back'),
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                          MediaQuery.of(context).size.width * 0.7)),
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 100),
+            Utils.createTitleMedium("Your profile picture", context),
+            const SizedBox(height: 40),
+            CircleAvatar(
+              radius: 120,
+              backgroundImage: FileImage(File(widget.image.path)),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: confirmCallback,
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(
+                    Size.fromWidth(MediaQuery.of(context).size.width * 0.7)),
+              ),
+              child: widget.fromUpdate
+                  ? const Text('Update profile picture')
+                  : const Text('Complete sign up'),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                if (widget.fromCamera) Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+              label: const Text('Back'),
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(
+                    Size.fromWidth(MediaQuery.of(context).size.width * 0.7)),
               ),
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 
   Future confirmCallback() async {
@@ -117,13 +112,13 @@ class _SetupPage4 extends State<SetupPage4> {
       } on FirebaseAuthException {
         Utils.showSnackBar('Unable to set up profile');
       } finally {
-        Utils.showSnackBar('Set up complete!', isBad: false);
-        setState(
-          () {
-            done = true;
-          },
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const App()),
+          (Route<dynamic> route) => false,
         );
-        Navigator.pop(context);
+        Utils.showSnackBar('Set up complete!', isBad: false);
+        // Navigator.of(context).pop();
       }
     }
   }

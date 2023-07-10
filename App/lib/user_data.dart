@@ -19,7 +19,6 @@ class UserData {
     commentCount: 0,
   );
 
-  // Basic Information
   String pfpURL;
   final String birthday;
   final String checkIn;

@@ -63,7 +63,6 @@ class Utils {
   /// Gets the current firebase authenticated user's data.
   /// Only use after signed in! (ASYNC)
   static Future<UserData> getUserData({String? uid}) async {
-    // uid optional, if not give, takes the current logged in user
     final docUser = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid ?? getAuthUser()!.uid);
@@ -79,7 +78,6 @@ class Utils {
         // new user detected, create user and proceed with setup
         return UserData.newUser;
       },
-      onError: (e) => print('Error getting document: $e'),
     );
   }
 

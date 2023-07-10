@@ -49,7 +49,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   int cooldown = 0;
-  bool canSendEmail = true;
+  bool canSendEmail = false;
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
@@ -60,7 +60,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
     try {
       await FirebaseAuth.instance.currentUser!.sendEmailVerification();
       canSendEmail = false;
-      setState(() => cooldown = 10);
+      setState(() => cooldown = 15);
       Timer.periodic(
         const Duration(seconds: 1),
         (timer) {
@@ -102,6 +102,8 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                         Size.fromWidth(
                             MediaQuery.of(context).size.width - 16 * 2),
                       ),
+                      backgroundColor: MaterialStateProperty.all(
+                          canSendEmail ? const Color(0xFF003D7C) : const Color(0xFF565656)),
                     ),
                     icon: const Icon(Icons.email_outlined, color: Colors.white),
                     label: cooldown > 0

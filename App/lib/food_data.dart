@@ -1,10 +1,10 @@
 class FoodData {
   final String name;
-  final double carbs;
-  final double fats;
-  final double protein;
-  final double sugar;
-  final int energy; // kcal
+  double carbs;
+  double fats;
+  double protein;
+  double sugar;
+  int energy; // kcal
 
   FoodData({
     required this.carbs,
@@ -40,5 +40,15 @@ class FoodData {
         name: data['name'],
         protein: data['protein'],
         sugar: data['sugar']);
+  }
+
+  FoodData changePortionSize(double portionSize) {
+    return FoodData(
+        carbs: carbs *= portionSize,
+        energy: (energy * portionSize).round(),
+        fats: fats *= portionSize,
+        name: name,
+        protein: protein *= portionSize,
+        sugar: sugar *= portionSize);
   }
 }

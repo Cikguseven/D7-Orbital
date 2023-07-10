@@ -102,25 +102,14 @@ class Classifier {
   }
 
   TensorImage _preProcessInput(Image image) {
-    // #1
     final inputTensor = TensorImage(_model.inputType);
     inputTensor.loadImage(image);
-
-    // #2
     final minLength = min(inputTensor.height, inputTensor.width);
     final cropOp = ResizeWithCropOrPadOp(minLength, minLength);
-
-    // #3
     final shapeLength = _model.inputShape[1];
     final resizeOp = ResizeOp(shapeLength, shapeLength, ResizeMethod.BILINEAR);
-
-    // #4
-    final imageProcessor =
-        ImageProcessorBuilder().add(cropOp).add(resizeOp).build();
-
+    final imageProcessor = ImageProcessorBuilder().add(cropOp).add(resizeOp).build();
     imageProcessor.process(inputTensor);
-
-    // #5
     return inputTensor;
   }
 }

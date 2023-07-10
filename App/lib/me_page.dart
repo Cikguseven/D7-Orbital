@@ -22,7 +22,7 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> {
-  static bool canCheckIn = false;
+  bool canCheckIn = false;
   late Future<DayLog> dayLog;
 
   void checkIn() {
@@ -35,7 +35,7 @@ class _MePageState extends State<MePage> {
         return;
       }
     }
-    _MePageState.canCheckIn = true;
+    canCheckIn = true;
   }
 
   @override
@@ -74,8 +74,6 @@ class _MePageState extends State<MePage> {
             : now.hour < 18
                 ? 'Good afternoon'
                 : 'Good evening';
-
-    // Text onTrackIndicator;
 
     int experience = widget.user.experience;
     int level = (sqrt(experience) * 0.25).floor() + 1;
@@ -226,8 +224,6 @@ class _MePageState extends State<MePage> {
                                     ),
                                     minimumSize: const MaterialStatePropertyAll(
                                         Size.infinite),
-                                    // foregroundColor:
-                                    //     const MaterialStatePropertyAll(Colors.black),
                                     backgroundColor:
                                         Theme.of(context).brightness ==
                                                 Brightness.dark
@@ -268,7 +264,6 @@ class _MePageState extends State<MePage> {
                       sectionHeader('Experience'),
                       LinearPercentIndicator(
                         padding: EdgeInsets.zero,
-                        // width: 170.0,
                         animation: true,
                         animationDuration: 100,
                         lineHeight: 20.0,
@@ -290,9 +285,11 @@ class _MePageState extends State<MePage> {
                             onPressed: () {
                               if (canCheckIn) {
                                 canCheckIn = false;
+                                widget.user.experience += 10;
                                 Utils.showSnackBar(
                                   'Check in successful!',
                                   isBad: false,
+                                  duration: 1,
                                 );
                                 final DateFormat formatter =
                                     DateFormat('dd/MM/yyyy');
@@ -300,7 +297,7 @@ class _MePageState extends State<MePage> {
                                     formatter.format(DateTime.now());
                                 setState(() {
                                   Utils.updateUserData({
-                                    'experience': widget.user.experience + 10,
+                                    'experience': widget.user.experience,
                                     'checkIn': formatted,
                                   });
                                 });
@@ -311,16 +308,12 @@ class _MePageState extends State<MePage> {
                                 );
                               }
                             },
-                            style: ButtonStyle(backgroundColor:
-                                MaterialStateProperty.resolveWith(
-                              (canCheckIn) {
-                                // If the button is pressed, return green, otherwise blue
-                                if (_MePageState.canCheckIn) {
-                                  return const Color(0xFF003D7C);
-                                }
-                                return const Color(0xFF565656);
-                              },
-                            )),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  canCheckIn
+                                      ? const Color(0xFF003D7C)
+                                      : const Color(0xFF565656)),
+                            ),
                             child: canCheckIn
                                 ? const Text('Check in for 10 XP')
                                 : const Text('Come back tomorrow!'),

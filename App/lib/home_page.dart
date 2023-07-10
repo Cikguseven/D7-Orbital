@@ -278,7 +278,7 @@ class _SocialContainerState extends State<SocialContainerWidget> {
             },
             icon: const Icon(Icons.comment_rounded),
             label: Text(
-                widget.post.commentCount.toString()), // add number of comments
+                widget.post.commentCount.toString()),
           ),
         ),
         // Share button
@@ -286,7 +286,7 @@ class _SocialContainerState extends State<SocialContainerWidget> {
           child: OutlinedButton.icon(
             onPressed: () => _onShare(context),
             icon: const Icon(Icons.share),
-            label: const Text('Share'), // add number of comments
+            label: const Text('Share'),
           ),
         ),
       ],
