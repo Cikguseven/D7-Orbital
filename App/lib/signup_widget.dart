@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 import 'utils.dart';
 
@@ -17,8 +17,7 @@ class SignupWidget extends StatefulWidget {
 class _SignupWidgetState extends State<SignupWidget> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
-  final passwordController =
-      TextEditingController(); // TODO: Make 2 password fields and validate that they are equals
+  final passwordController = TextEditingController();
   final password2Controller = TextEditingController();
 
   String? emailValidator(String? email) =>
@@ -26,11 +25,12 @@ class _SignupWidgetState extends State<SignupWidget> {
           ? 'Enter a valid email'
           : null;
 
-  String? passwordValidator(String? pwd) =>
-      pwd != null && pwd.length < 6 ? 'Password needs at least 6 characters' : null;
+  String? passwordValidator(String? pwd) => pwd != null && pwd.length < 6
+      ? 'Password needs at least 6 characters'
+      : null;
 
   String? password2Validator(String? pwd2) =>
-      pwd2 != passwordController.text.trim() ? "Password does not match" : null;
+      pwd2 != passwordController.text.trim() ? 'Password does not match' : null;
 
   bool obscureFlag = true;
 
@@ -51,21 +51,21 @@ class _SignupWidgetState extends State<SignupWidget> {
             key: formKey,
             child: Column(
               children: [
-                Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-                Utils.createVerticalSpace(50),
+                const SizedBox(height: 60),
+                Utils.appLogo(context),
+                const SizedBox(height: 50),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
-                      labelText: "Email",
+                      labelText: 'Email',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: emailValidator,
                   ),
                 ),
-                Utils.createVerticalSpace(16),
+                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -74,18 +74,17 @@ class _SignupWidgetState extends State<SignupWidget> {
                       suffixIcon: GestureDetector(
                         child: const Icon(
                           Icons.remove_red_eye,
-                          size: 24,
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
-                      labelText: "Password",
+                      labelText: 'Password',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: passwordValidator,
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                Utils.createVerticalSpace(16),
+                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
@@ -94,44 +93,39 @@ class _SignupWidgetState extends State<SignupWidget> {
                       suffixIcon: GestureDetector(
                         child: const Icon(
                           Icons.remove_red_eye,
-                          size: 24,
                         ),
                         onTap: () => setState(() => obscureFlag = !obscureFlag),
                       ),
-                      labelText: "Confirm Password",
+                      labelText: 'Confirm Password',
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: password2Validator,
                     obscureText: obscureFlag, // Obscure password field
                   ),
                 ),
-                Utils.createVerticalSpace(26),
+                const SizedBox(height: 25),
                 ElevatedButton(
+                  onPressed: signUpCallBack,
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 16 * 2)),
                   ),
-                  onPressed: signUpCallBack,
                   child: const Text(
-                    "Sign up",
+                    'Sign up',
                   ),
                 ),
-                Utils.createVerticalSpace(36),
-                RichText(
-                  text: TextSpan(
-                    style: Theme.of(context).textTheme.titleMedium,
-                    text: "Have an Account? ",
-                    children: [
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = widget.onClickLogIn,
-                        text: "Log in",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ],
+                const Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Text('---------- or ----------',
+                      style: TextStyle(color: Colors.grey)),
+                ),
+                ElevatedButton(
+                  onPressed: widget.onClickLogIn,
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
+                  child: const Text('Log in instead'),
                 ),
               ],
             ),
@@ -151,13 +145,10 @@ class _SignupWidgetState extends State<SignupWidget> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      //     email: emailController.text.trim(),
-      //     password: passwordController.text.trim());
       await Utils.firebaseCreateUser(
           emailController.text.trim(), passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar('Unable to create account');
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

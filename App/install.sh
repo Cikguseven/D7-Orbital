@@ -45,7 +45,7 @@ download () {
     echo "DIR: ${ANDROID_DIR}${PLATFORM}"
     # echo "ANDROID_LIB: ${ANDROID_LIB}"
     
-    curl -o "$FILE" -L "${DOWNLOAD_URL}" 
+    curl -o "$FILE" -L "${DOWNLOAD_URL}"
     mkdir -p "${ANDROID_DIR}${PLATFORM}/"
     # echo "$1 -> ${ANDROID_DIR}$PLATFORM/${ANDROID_LIB}"
     mv $FILE "${ANDROID_DIR}${PLATFORM}/${ANDROID_LIB}"

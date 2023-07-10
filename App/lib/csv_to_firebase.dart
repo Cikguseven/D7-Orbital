@@ -1,4 +1,4 @@
-/// From CSV files, parse it and upload the data to firebase collection "food_data_technoedge"
+/// From CSV files, parse it and upload the data to firebase collection 'food_data_technoedge'
 ///
 /// 1) Parse CSV file, get the fields from the 1st row headers
 /// 2) For each line, make a json with the field attributes
@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
 import 'utils.dart';
 
 class CSVUploadWidget extends StatefulWidget {
@@ -25,7 +26,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
   List<List<String>> _csvData = [];
 
   FilePickerResult? selectedFiles;
-  String selectedFileName = "";
+  String selectedFileName = '';
   int selectedFileIdx = -1;
 
   void parseCSVToTable() {
@@ -43,18 +44,18 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
     selectedFiles = await picker.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: ["csv"],
+      allowedExtensions: ['csv'],
       withData:
           true, // TODO: This is loading all of the data onto the app, it might cause cache error if file is too large!
     ); // TODO: Do single first, later make more
 
     if (selectedFiles == null) {
-      Utils.showSnackBar("No file selected");
+      Utils.showSnackBar('No file selected');
       return;
     }
 
     if (selectedFiles!.files.any((file) => file.bytes == null)) {
-      Utils.showSnackBar("One or more files are empty.");
+      Utils.showSnackBar('One or more files are empty.');
       return;
     }
 
@@ -76,7 +77,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Upload food data CSV"),
+        title: const Text('Upload food data CSV'),
       ),
       body: CustomScrollView(
         slivers: [
@@ -87,13 +88,13 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
                 TextField(
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Prefix of database",
+                    labelText: 'Prefix of database',
                   ),
                   controller: foodDBKeyController,
                 ),
-                Utils.createVerticalSpace(10),
+                const SizedBox(height: 10),
                 const Text(
-                  "Preview of CSV file",
+                  'Preview of CSV file',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 ListTile(
@@ -184,7 +185,7 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
                     onPressed: uploadToFirebaseCallback,
                     icon: const Icon(Icons.upload_file_rounded, size: 24),
                     label: const Text(
-                      "Upload to database",
+                      'Upload to database',
                     )),
               ],
             ),
@@ -203,21 +204,21 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
     try {
       String foodDBCollectionPrefix = foodDBKeyController.text.trim();
 
-      if (selectedFiles == null) throw ArgumentError("No file selected");
+      if (selectedFiles == null) throw ArgumentError('No file selected');
 
       if (foodDBCollectionPrefix.isEmpty) {
-        throw ArgumentError("Please specify database prefix");
+        throw ArgumentError('Please specify database prefix');
       }
 
       final suffix = selectedFileName
           .toLowerCase()
-          .replaceAll(" ", "_")
+          .replaceAll(' ', '_')
           .substring(0, selectedFileName.length - 4); // remove csv extension
       final db = FirebaseFirestore.instance
-          .collection("${foodDBCollectionPrefix}_$suffix");
+          .collection('${foodDBCollectionPrefix}_$suffix');
       final snapshot = await db.get();
       if (snapshot.size != 0) {
-        throw ArgumentError("Database of that name already exists!");
+        throw ArgumentError('Database of that name already exists!');
       }
 
       final headers = _csvData[0];
@@ -231,18 +232,18 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
         // print(toUpload[headers[0]]);
         // if (i == 5) break;
         await db
-            .doc(toUpload[headers[0]].replaceAll("/",
-                "")) // Name of the dish as Doc ID. NOTE: Cannot have forward slash!
+            .doc(toUpload[headers[0]].replaceAll('/',
+                '')) // Name of the dish as Doc ID. NOTE: Cannot have forward slash!
             .set(toUpload);
       }
       Utils.showSnackBar(
-          "Successfully added database with name ${"${foodDBCollectionPrefix}_$suffix"}",
+          'Successfully added database with name ${'${foodDBCollectionPrefix}_$suffix'}',
           isBad: false);
-    } on ArgumentError catch (e) {
-      Utils.showSnackBar(e.message);
+    } on ArgumentError {
+      Utils.showSnackBar('Unable to add to database');
     } on Exception catch (e) {
       //  TODO: Dont catch all
-      Utils.showSnackBar("$e\n Cancelled upload");
+      Utils.showSnackBar('$e\n Cancelled upload');
       // final collection = FirebaseFirestore.instance
       //     .collection(foodDBKeyController.text.trim());
       // final snapshots = await collection.get();

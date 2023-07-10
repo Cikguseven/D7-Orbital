@@ -1,35 +1,31 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:uuid/uuid.dart';
+
 import 'day_log.dart';
 import 'food_data.dart';
+import 'main.dart';
 import 'post_data.dart';
 import 'user_data.dart';
 import 'utils.dart';
-import 'package:uuid/uuid.dart';
-
-import 'main.dart';
 
 class ShareFoodPage extends StatefulWidget {
-  // TODO: Now, i just .popUntil(), which causes the page to go back to Snap, But i want to reset all the way back to Home Page
-  final XFile? image;
+  final dynamic image;
   final UserData user;
-
-  final FoodData fd;
-
-  final String postID;
-  final String imageURL;
+  final FoodData foodData;
 
   const ShareFoodPage(
       {Key? key,
       required this.image,
       required this.user,
-      required this.fd,
-      required this.postID,
-      required this.imageURL})
+      required this.foodData})
       : super(key: key);
 
   @override
@@ -46,7 +42,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Snap and Log"),
+        title: const Text('Save your post'),
         centerTitle: true,
       ),
       body: Column(
@@ -59,7 +55,9 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                 : BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fitWidth,
-                      image: XFileImage(widget.image!),
+                      image: widget.image is XFile
+                          ? XFileImage(widget.image)
+                          : AssetImage(widget.image) as ImageProvider,
                     ),
                   ),
           ),
@@ -70,13 +68,14 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
             minLines: 4,
             controller: captionController,
             decoration: const InputDecoration(
-              labelText: "Write a caption...",
+              labelText: 'Write a caption...',
+              floatingLabelBehavior: FloatingLabelBehavior.never,
               alignLabelWithHint: true,
             ),
           ),
-          Utils.createVerticalSpace(52),
-          Utils.createTitleMedium("Rate your meal", context),
-          // Utils.createVerticalSpace(16),
+          const SizedBox(height: 40),
+          Utils.createTitleMedium('Rate your meal', context),
+          const SizedBox(height: 10),
           // Rate your meal
           Center(
             child: RatingBar.builder(
@@ -102,6 +101,12 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                IconButton(
+                  onPressed: () {
+                    showHelpDialog(context);
+                  },
+                  icon: const Icon(Icons.help_outline_rounded),
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -123,13 +128,8 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                                       fontSize: 18),
                                 ),
                               ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
-                            Utils.showSnackBar(
-                                "Not implemented yet!"); // TODO: Implement adding to diary
-                          },
-                          child: const Text("Add to diary"),
+                          onPressed: () => newPostSetupCallback(true),
+                          child: const Text('Save to diary'),
                         ),
                       ),
                       const SizedBox(
@@ -137,14 +137,14 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: newPostSetupCallback,
-                          child: const Text("Share!"),
+                          onPressed: () => newPostSetupCallback(false),
+                          child: const Text('Share!'),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
               ],
             ),
           ),
@@ -153,63 +153,123 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
     );
   }
 
-  Future newPostSetupCallback() async {
+  Future newPostSetupCallback(bool forDiary) async {
+    String caption = captionController.text.trim();
+    if (caption == '') {
+      Utils.showSnackBar('Add a caption');
+      return;
+    }
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
+    String postID = uuid.v4();
+    String imageLoc;
     try {
-      // Share with community
+      // Store image on Firebase if it is from the user
+      if (widget.image is XFile) {
+        String imagePath = 'posts/$postID.jpg';
+        Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+        await ref.putFile(File(widget.image.path));
+        imageLoc = await ref.getDownloadURL();
+      } else {
+        imageLoc = widget.image;
+      }
+      // Save post to Firebase
       final docPost =
-          FirebaseFirestore.instance.collection('posts').doc(widget.postID);
+          FirebaseFirestore.instance.collection('posts').doc(postID);
       final PostData newPost = PostData(
-        firstName: widget.user.firstName,
-        lastName: widget.user.lastName,
-        caption: captionController.text.trim(),
-        location: 'Singapore',
-        postID: widget.postID,
-        imageURL: widget.imageURL,
+        calories: widget.foodData.energy,
+        caption: caption,
+        carbs: widget.foodData.carbs,
         commentCount: 0,
-        rating: _rating,
-        calories: widget.fd.energy,
-        protein: widget.fd.protein,
-        fats: widget.fd.fats,
-        carbs: widget.fd.carbs,
-        sugar: widget.fd.sugar,
-        postTime: DateTime.now(),
+        fats: widget.foodData.fats,
+        firstName: widget.user.firstName,
+        forDiary: forDiary,
+        imageLoc: imageLoc,
+        lastName: widget.user.lastName,
         likedBy: [],
+        location: 'Singapore',
+        ownerID: Utils.getAuthUser()!.uid,
+        pfpURL: widget.user.pfpURL,
+        postID: postID,
+        postTime: DateTime.now(),
+        protein: widget.foodData.protein,
+        rating: _rating,
+        sugar: widget.foodData.sugar,
       );
       await docPost.set(newPost.toJson());
 
-      // Add to diary
-      final docDiary = FirebaseFirestore.instance
+      // Add to logs
+      final docLog = FirebaseFirestore.instance
           .collection('userData')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("diary")
+          .collection('diary')
           .doc(DayLog.dayLogNameFromTimeStamp(Timestamp.now()));
 
       late DayLog existingDayLog;
-      await docDiary.get().then((doc) {
+      await docLog.get().then((doc) {
         if (doc.exists) {
           existingDayLog = DayLog.fromJson(doc.data()!);
         } else {
-          existingDayLog = DayLog.createNew();
+          existingDayLog = DayLog.createNew(DateTime.now());
         }
       });
 
-      existingDayLog.postIDs.add(widget.postID);
-      existingDayLog.caloriesIn += widget.fd.energy;
-      existingDayLog.proteinIn += widget.fd.protein;
-      existingDayLog.fatIn += widget.fd.fats;
-      existingDayLog.carbIn += widget.fd.carbs;
-      existingDayLog.sugarIn += widget.fd.sugar;
+      existingDayLog.caloriesIn += widget.foodData.energy;
+      existingDayLog.proteinIn += widget.foodData.protein;
+      existingDayLog.fatsIn += widget.foodData.fats;
+      existingDayLog.carbsIn += widget.foodData.carbs;
+      existingDayLog.sugarIn += widget.foodData.sugar;
 
-      docDiary.set(existingDayLog.toJson());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      await docLog.set(existingDayLog.toJson());
+
+      await Utils.updateUserData({
+        'experience': forDiary
+            ? widget.user.experience + 30
+            : widget.user.experience + 50,
+        'postCount': ++widget.user.postCount,
+      });
+    } on FirebaseAuthException {
+      Utils.showSnackBar(
+          forDiary ? 'Unable to save to diary' : 'Unable to share post');
     } finally {
+      FocusManager.instance.primaryFocus?.unfocus();
+      Utils.showSnackBar(
+          forDiary
+              ? 'Successfully saved to diary!'
+              : 'Successfully shared post!',
+          isBad: false,
+          duration: 1);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
+  }
+
+  void showHelpDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: const Text('Got it'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text('Save options'),
+      content: const Text(
+        'Only you can see posts saved to your diary\n\nEveryone can see your shared posts',
+        style: TextStyle(fontWeight: FontWeight.normal),
+      ),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

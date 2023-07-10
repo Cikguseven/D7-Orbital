@@ -2,21 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
+
+import 'comment_data.dart';
 import 'day_log.dart';
 import 'post_data.dart';
 import 'user_data.dart';
 
-import 'comment_data.dart';
-
 class Utils {
   static final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
-  static showSnackBar(String? text, {bool isBad = true}) {
+  static showSnackBar(
+    String? text, {
+    bool isBad = true,
+    int duration = 2,
+  }) {
     if (text == null) return;
 
     final snackBar = SnackBar(
       content: Text(text),
       backgroundColor: isBad ? Colors.red : Colors.green,
+      duration: Duration(seconds: duration),
     );
     scaffoldKey.currentState!
       ..removeCurrentSnackBar()
@@ -39,7 +44,7 @@ class Utils {
   /// Only use after signed in!
   static User? getAuthUser() {
     final authUser = FirebaseAuth.instance.currentUser;
-    assert(authUser != null, "No currently logged in user");
+    assert(authUser != null, 'No currently logged in user');
     return authUser;
   }
 
@@ -52,62 +57,27 @@ class Utils {
     await docUser.set(user.toJson());
 
     // Creates the diary collection
-    docUser.collection('diary').add({"First Diary": 0});
-
-    // Sets the badgesEarned collection
-    docUser.collection('badgesEarned').add({});
+    docUser.collection('diary').add({'First Diary': 0});
   }
 
   /// Gets the current firebase authenticated user's data.
   /// Only use after signed in! (ASYNC)
   static Future<UserData> getUserData({String? uid}) async {
-    // uid optional, if not give, takes the current logged in user
     final docUser = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid ?? getAuthUser()!.uid);
-
-    List<DayLog> diary = [];
-    docUser
-        .collection("diary")
-        .orderBy("date")
-        .snapshots()
-        .forEach((querySnapshot) {
-      for (final dayLog in querySnapshot.docs) {
-        diary.add(DayLog.fromJson(dayLog.data()));
-        // print(dayLog.data());
-      }
-    });
-
-    List<Badge> badgesEarned = [];
-    docUser.collection("badgesEarned").snapshots().forEach((querySnapshot) {
-      // for (final badge in querySnapshot.docs) {
-      //   // TODO: Add badge processing
-      // }
-    });
 
     return docUser.get().then(
       (DocumentSnapshot doc) {
         if (doc.exists) {
           // user has been created before, proceed to read
           final data = doc.data() as Map<String, dynamic>;
-          // Create user from firestore json data, then add a diary and badgesEarned retrieved from the nested collection.
-          // print("Doc exists");
-          // print("Hello");
-          // data.forEach((key, value) {
-          //   print("key: $key, value: $value");
-          // });
           UserData user = UserData.fromJson(data);
-          // print("User: $user");
-          user
-            ..diary = diary
-            ..badgesEarned = badgesEarned;
           return user;
-        } else {
-          // new user detected, create user and proceed with setup
-          return UserData.newUser;
         }
+        // new user detected, create user and proceed with setup
+        return UserData.newUser;
       },
-      onError: (e) => print("Error getting document: $e"),
     );
   }
 
@@ -119,7 +89,7 @@ class Utils {
     docUser.update(changes);
   }
 
-  static Future<DayLog> getDayLogToday() async {
+  static Future<DayLog> getDayLog() async {
     String dayLogName = DayLog.dayLogNameFromTimeStamp(Timestamp.now());
     final docDayLog = FirebaseFirestore.instance
         .collection('userData')
@@ -131,10 +101,46 @@ class Utils {
       if (doc.exists) {
         return DayLog.fromJson(doc.data()!);
       } else {
-        // Create one
-        return DayLog.createNew();
+        return DayLog.createNew(DateTime.now());
       }
     });
+  }
+
+  static Future<List<DayLog>> getWeekLog() async {
+    List<DayLog> logs = [];
+    final collection = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('diary');
+    for (int i = 0; i < 7; i++) {
+      DateTime date = DateTime.now().subtract(Duration(days: i));
+      String dayLogName =
+          DayLog.dayLogNameFromTimeStamp(Timestamp.fromDate(date));
+      await collection.doc(dayLogName).get().then((doc) {
+        if (doc.exists) {
+          logs.add(DayLog.fromJson(doc.data()!));
+        } else {
+          logs.add(DayLog.createNew(date));
+        }
+      });
+    }
+    return logs;
+  }
+
+  /// Gets all post data by user.
+  static Future<List<PostData>> getDiary() async {
+    List<PostData> posts = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .where('ownerID', isEqualTo: getAuthUser()!.uid)
+        .orderBy('postTime', descending: true)
+        .snapshots()
+        .forEach((querySnapshot) {
+      for (var post in querySnapshot.docs) {
+        posts.add(PostData.fromJson(post.data()));
+      }
+    });
+    return posts;
   }
 
   /// Gets all current post data.
@@ -142,12 +148,12 @@ class Utils {
     List<PostData> posts = [];
     FirebaseFirestore.instance
         .collection('posts')
+        .where('forDiary', isEqualTo: false)
         .orderBy('postTime', descending: true)
         .snapshots()
         .forEach((querySnapshot) {
       for (var post in querySnapshot.docs) {
-        final data = post.data();
-        posts.add(PostData.fromJson(data));
+        posts.add(PostData.fromJson(post.data()));
       }
     });
     return posts;
@@ -171,35 +177,41 @@ class Utils {
         .collection('posts')
         .doc(postID)
         .collection('comments')
-        .orderBy('postTime', descending: true)
+        .orderBy('postTime', descending: false)
         .snapshots()
         .forEach((querySnapshot) {
       for (var comment in querySnapshot.docs) {
-        final data = comment.data();
-        comments.add(CommentData.fromJson(data));
+        comments.add(CommentData.fromJson(comment.data()));
       }
     });
     return comments;
   }
 
-  //
-  // /// Gets the number of comments of specified post.
-  // static Future<int> getCommentCount(String postID) async {
-  //   AggregateQuerySnapshot query = await FirebaseFirestore.instance
-  //       .collection('posts')
-  //       .doc(postID)
-  //       .collection('comments')
-  //       .count()
-  //       .get();
-  //   return query.count;
-  // }
+  static Image appLogo(context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return Image.asset('assets/logo-white-text.png',
+          width: 0.8 * MediaQuery.of(context).size.width);
+    }
+    return Image.asset('assets/logo-black-text.png',
+        width: 0.8 * MediaQuery.of(context).size.width);
+  }
+
+  static Container sectionBreak(context) {
+    return Container(
+      height: 1,
+      width: double.infinity,
+      color: Theme.of(context).brightness == Brightness.light
+          ? Colors.black
+          : Colors.white,
+    );
+  }
 
   /// Converts Date time to string to save to database. DD/MM/YYYY
   static String dateTimeToString(DateTime dt) {
-    String day = dt.day.toString().padLeft(2, "0");
-    String month = dt.month.toString().padLeft(2, "0");
+    String day = dt.day.toString().padLeft(2, '0');
+    String month = dt.month.toString().padLeft(2, '0');
 
-    return "$day/$month/${dt.year}";
+    return '$day/$month/${dt.year}';
   }
 
   /// Converts the stored string taken from the database back to DT.
@@ -217,10 +229,11 @@ class Utils {
     int? day = int.tryParse(dt.substring(0, 2));
     int? month = int.tryParse(dt.substring(3, 5));
     int? year = int.tryParse(dt.substring(6, 10));
-    DateFormat format = DateFormat("dd/MM/yyyy");
+    DateFormat format = DateFormat('dd/MM/yyyy');
+    if (year! > DateTime.now().year || year < 1907) return false;
     try {
       // TODO: Fix this, dont use try catch as control flow
-      format.parseStrict("$day/$month/$year");
+      format.parseStrict('$day/$month/$year');
     } on FormatException {
       return false;
     }
@@ -301,20 +314,6 @@ class Utils {
       text,
       style: Theme.of(context).textTheme.labelLarge,
       textAlign: align,
-    );
-  }
-
-  /// Simple create vertical whitespace.
-  static Widget createVerticalSpace(double pixels) {
-    return SizedBox(
-      height: pixels,
-    );
-  }
-
-  /// Simple create horizontal whitespace.
-  static Widget createHorizontalSpace(double pixels) {
-    return SizedBox(
-      width: pixels,
     );
   }
 }

@@ -4,34 +4,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:my_first_flutter/settings_page.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
+import 'check_food_page.dart';
+import 'comments_page.dart';
 import 'post_data.dart';
 import 'star_rating.dart';
 import 'user_data.dart';
 import 'utils.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:uuid/uuid.dart';
 
-import 'check_food_page.dart';
-import 'comments_page.dart';
-
-class HomeWidget extends StatefulWidget {
+class HomePage extends StatefulWidget {
   final UserData user;
 
-  const HomeWidget({Key? key, required this.user}) : super(key: key);
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
-  Uuid uuid = const Uuid();
+class _HomePageState extends State<HomePage> {
   late Future<List<PostData>> futurePosts;
 
   @override
   void initState() {
-    getFirstPosts();
     super.initState();
+    getFirstPosts();
   }
 
   void getFirstPosts() async {
@@ -46,8 +45,20 @@ class _HomeWidgetState extends State<HomeWidget> {
         builder: (context, posts) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("Make it Count"),
+              title: const Text('Home'),
               centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const SettingsPage()));
+                  },
+                  icon: const Icon(Icons.settings),
+                ), // Settings
+              ],
             ),
             body: RefreshIndicator(
               onRefresh: _pullRefresh,
@@ -108,32 +119,28 @@ class PostCard extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fitWidth,
-              image: NetworkImage(
-                post.imageURL,
-              ),
+              image: post.imageLoc.substring(0, 4) == 'http'
+                  ? NetworkImage(post.imageLoc)
+                  : AssetImage(post.imageLoc) as ImageProvider,
             ),
           ),
         ),
 
         // Like, comment and share buttons
         SocialContainerWidget(post: post, user: user),
-        Utils.createVerticalSpace(5),
+        const SizedBox(height: 5),
 
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
           child: Row(
             children: [
               // User profile image
-              const Padding(
-                padding: EdgeInsets.only(top: 5),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
                 child: CircleAvatar(
-                    radius: 20,
-                    // Change to user's profile photo eventually
-                    backgroundImage: AssetImage(
-                      "images/Dog.jpeg",
-                    )),
+                    radius: 20, backgroundImage: NetworkImage(post.pfpURL)),
               ),
-              Utils.createHorizontalSpace(15),
+              const SizedBox(width: 15),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -144,7 +151,7 @@ class PostCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Utils.createVerticalSpace(5),
+                  const SizedBox(height: 5),
                   // Caption container
                   SizedBox(
                     width: 280,
@@ -160,7 +167,7 @@ class PostCard extends StatelessWidget {
             ],
           ),
         ),
-        Utils.createVerticalSpace(10),
+        const SizedBox(height: 10),
 
         // Rating container
         Padding(
@@ -171,7 +178,7 @@ class PostCard extends StatelessWidget {
               StarRating(
                 rating: post.rating.toDouble(),
               ),
-              Utils.createVerticalSpace(10),
+              const SizedBox(height: 10),
               // Post age container
               Padding(
                 padding: const EdgeInsets.only(left: 5),
@@ -182,26 +189,24 @@ class PostCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
-              Utils.createVerticalSpace(5),
+              const SizedBox(height: 5),
               // Nutritional information container
               ExpansionTile(
                   title: const Text(
-                    "View nutritional information",
-                    style: TextStyle(
-                        color: Color(0xFF003D7C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal),
+                    'View nutritional information',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                   ),
                   children: [
                     // Nutrition bar
                     allFoodDataWidget(post.calories, post.protein, post.fats,
                         post.carbs, post.sugar, user, context),
-                    Utils.createVerticalSpace(15),
+                    const SizedBox(height: 15),
                   ]),
             ],
           ),
         ),
-        Utils.createVerticalSpace(20),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -273,7 +278,7 @@ class _SocialContainerState extends State<SocialContainerWidget> {
             },
             icon: const Icon(Icons.comment_rounded),
             label: Text(
-                widget.post.commentCount.toString()), // add number of comments
+                widget.post.commentCount.toString()),
           ),
         ),
         // Share button
@@ -281,7 +286,7 @@ class _SocialContainerState extends State<SocialContainerWidget> {
           child: OutlinedButton.icon(
             onPressed: () => _onShare(context),
             icon: const Icon(Icons.share),
-            label: const Text('Share'), // add number of comments
+            label: const Text('Share'),
           ),
         ),
       ],
@@ -289,9 +294,9 @@ class _SocialContainerState extends State<SocialContainerWidget> {
   }
 
   void _onShare(BuildContext context) async {
-    var file = await DefaultCacheManager().getSingleFile(widget.post.imageURL);
+    var file = await DefaultCacheManager().getSingleFile(widget.post.imageLoc);
     await Share.shareXFiles([XFile(file.path)],
         text:
-            "Check out this post by ${widget.post.firstName} ${widget.post.lastName}!");
+            'Check out this post by ${widget.post.firstName} ${widget.post.lastName}!');
   }
 }

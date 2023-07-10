@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:uuid/uuid.dart';
+
+import 'check_food_page.dart';
 import 'comment_data.dart';
 import 'post_data.dart';
 import 'star_rating.dart';
 import 'user_data.dart';
 import 'utils.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:uuid/uuid.dart';
-
-import 'check_food_page.dart';
 
 class CommentsWidget extends StatefulWidget {
   final PostData post;
@@ -47,7 +47,7 @@ class _CommentsState extends State<CommentsWidget> {
     _pullRefresh();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Comments"),
+        title: const Text('Comments'),
         centerTitle: true,
       ),
       body: Column(
@@ -69,16 +69,14 @@ class _CommentsState extends State<CommentsWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                   child: CircleAvatar(
-                      radius: 20,
-                      // Change to user's profile photo eventually
-                      backgroundImage: AssetImage(
-                        "images/Dog.jpeg",
-                      )),
+                    radius: 20,
+                    backgroundImage: NetworkImage(widget.user.pfpURL),
+                  ),
                 ),
-                Utils.createHorizontalSpace(15),
+                const SizedBox(width: 15),
                 Expanded(
                   child: TextFormField(
                     controller: commentController,
@@ -88,7 +86,7 @@ class _CommentsState extends State<CommentsWidget> {
                         onPressed: newCommentSetupCallback,
                         child: const Icon(Icons.arrow_upward),
                       ),
-                      hintText: "What are your thoughts?",
+                      hintText: 'What are your thoughts?',
                       hintStyle: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
@@ -117,7 +115,7 @@ class _CommentsState extends State<CommentsWidget> {
         physics: const AlwaysScrollableScrollPhysics(),
       );
     } else {
-      return const Scaffold(body: Center(child: Text("No comments")));
+      return const Scaffold(body: Center(child: Text('No comments')));
     }
   }
 
@@ -147,12 +145,16 @@ class _CommentsState extends State<CommentsWidget> {
         CommentData currentComment = CommentData(
             firstName: widget.user.firstName,
             lastName: widget.user.lastName,
+            pfpURL: widget.user.pfpURL,
             comment: finalComment,
             postTime: DateTime.now());
         await docComment.set(currentComment.toJson());
         await docPost.update({'commentCount': ++widget.post.commentCount});
-      } on FirebaseAuthException catch (e) {
-        Utils.showSnackBar(e.message);
+        await Utils.updateUserData({
+          'commentCount': ++widget.user.commentCount,
+        });
+      } on FirebaseAuthException {
+        Utils.showSnackBar('Unable to post comment');
       } finally {
         commentController.clear();
         _pullRefresh();
@@ -182,13 +184,11 @@ class TopCommentCard extends StatelessWidget {
             Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                    radius: 20,
-                    // Change to user's profile photo eventually
-                    backgroundImage: AssetImage(
-                      "images/Dog.jpeg",
-                    )),
-                Utils.createHorizontalSpace(15),
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage(post.pfpURL),
+                ),
+                const SizedBox(width: 15),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -202,7 +202,7 @@ class TopCommentCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        Utils.createHorizontalSpace(8),
+                        const SizedBox(width: 8),
 
                         // Post age
                         Text(
@@ -213,7 +213,7 @@ class TopCommentCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Utils.createVerticalSpace(5),
+                    const SizedBox(height: 5),
 
                     Text(
                       post.caption,
@@ -221,22 +221,22 @@ class TopCommentCard extends StatelessWidget {
                       overflow: TextOverflow.visible,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    Utils.createVerticalSpace(10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ],
             ),
-            Utils.createVerticalSpace(10),
+            const SizedBox(height: 10),
             Column(
               children: [
                 StarRating(
                   rating: post.rating.toDouble(),
                 ),
-                Utils.createVerticalSpace(15),
+                const SizedBox(height: 15),
 
                 // Nutritional information container
-                Utils.createTitleMedium("Nutritional Information", context),
-                Utils.createVerticalSpace(15),
+                Utils.createTitleMedium('Nutritional Information', context),
+                const SizedBox(height: 15),
 
                 // Nutrition bar
                 allFoodDataWidget(post.calories, post.protein, post.fats,
@@ -259,14 +259,12 @@ class CommentCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(0, 5, 15, 0),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
           child: CircleAvatar(
-              radius: 20,
-              // Change to user's profile photo eventually
-              backgroundImage: AssetImage(
-                "images/Dog.jpeg",
-              )),
+            radius: 20,
+            backgroundImage: NetworkImage(comment.pfpURL),
+          ),
         ),
         Expanded(
           child: Column(
@@ -280,7 +278,7 @@ class CommentCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                Utils.createHorizontalSpace(8),
+                const SizedBox(width: 8),
 
                 // Comment age
                 Text(
@@ -290,7 +288,7 @@ class CommentCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ]),
-              Utils.createVerticalSpace(5),
+              const SizedBox(height: 5),
 
               // Comment body
               Text(

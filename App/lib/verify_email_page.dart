@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'app.dart';
 import 'utils.dart';
 
@@ -9,10 +10,10 @@ class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
 
   @override
-  _VerifyEmailPageState createState() => _VerifyEmailPageState();
+  VerifyEmailPageState createState() => VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
+class VerifyEmailPageState extends State<VerifyEmailPage> {
   bool isEmailVerified = false;
   Timer? timer;
 
@@ -48,17 +49,18 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   int cooldown = 0;
-  bool canSendEmail = true;
+  bool canSendEmail = false;
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
-      Utils.showSnackBar("Can't resend for another $cooldown seconds");
+      Utils.showSnackBar(
+          'Cannot resend for another ${cooldown > 1 ? '$cooldown seconds' : '1 second'}');
       return;
     }
     try {
       await FirebaseAuth.instance.currentUser!.sendEmailVerification();
       canSendEmail = false;
-      setState(() => cooldown = 10);
+      setState(() => cooldown = 15);
       Timer.periodic(
         const Duration(seconds: 1),
         (timer) {
@@ -69,8 +71,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           }
         },
       );
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar('Unable to send verification email');
       canSendEmail = true;
     }
   }
@@ -82,40 +84,42 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         : Scaffold(
             body: Column(
               children: [
-                Utils.createVerticalSpace(60),
-                Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-                Utils.createVerticalSpace(60),
-                Utils.createHeadlineMedium("Verify Email", context),
-                Utils.createVerticalSpace(70),
+                const SizedBox(height: 60),
+                Utils.appLogo(context),
+                const SizedBox(height: 50),
+                Utils.createHeadlineMedium('Verify Email', context),
+                const SizedBox(height: 70),
                 Utils.createTitleMedium(
-                    "A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}",
+                    'A verification email has been sent to: \n ${FirebaseAuth.instance.currentUser!.email}',
                     context),
-                Utils.createVerticalSpace(80),
+                const SizedBox(height: 80),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton.icon(
+                    onPressed: sendEmailVerification,
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all(
                         Size.fromWidth(
                             MediaQuery.of(context).size.width - 16 * 2),
                       ),
+                      backgroundColor: MaterialStateProperty.all(
+                          canSendEmail ? const Color(0xFF003D7C) : const Color(0xFF565656)),
                     ),
-                    onPressed: sendEmailVerification,
-                    icon: const Icon(Icons.email_outlined, size: 24),
-                    label:
-                        Text("Resend email\t${cooldown > 0 ? cooldown : ""}"),
+                    icon: const Icon(Icons.email_outlined, color: Colors.white),
+                    label: cooldown > 0
+                        ? Text(
+                            'Resend email in ${cooldown > 1 ? '$cooldown seconds' : '1 second'}')
+                        : const Text('Resend email'),
                   ),
                 ),
-                Utils.createVerticalSpace(26),
-                TextButton(
+                const SizedBox(height: 26),
+                ElevatedButton(
                   onPressed: () => FirebaseAuth.instance.signOut(),
-                  child: Text(
-                    "Return to log in",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
+                  child: const Text('Return to log in'),
                 ),
               ],
             ),

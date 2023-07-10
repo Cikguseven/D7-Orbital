@@ -14,10 +14,10 @@ Chiffon pie
 Riso patate e cozze
 Bazin
 Black bottom pie
-Palóc soup
+Paloc soup
 Sailor sandwich
 Tuwo shinkafa
-Carne a la tampiqueña
+Carne a la tampiquena
 Pastel azteca
 Fujian red wine chicken
 Boeber
@@ -27,7 +27,7 @@ Texas Tommy
 Har cheong gai
 Kolokythopita
 Karydopita
-Rinflajš
+Rinflajs
 Hainanese curry rice
 Sonoran hot dog
 /g/11cfty6q3
@@ -53,8 +53,8 @@ Molote
 Spongata
 Funge
 /g/1212ghsj
-Köttbullar
-Ka'ak
+Kottbullar
+Kaak
 Papet vaudois
 /g/12148tdg
 Prosciutto di Norcia
@@ -67,30 +67,30 @@ Garlic butter shrimp
 Fricasse
 Stracciatella
 /g/121b74wr
-Sartù
+Sartu
 Matelote
 Baodu
 Mattentaart
 Cartellate
 Gyeran-ppang
 Torta Pasqualina
-Caltaboș
+Caltabos
 Khanom mo kaeng
 Suimono
 Dimlama
-Tavë Kosi
+Tave Kosi
 /g/121p63r3
 /g/121slhcd
 Kalach
-Jambon persillé
+Jambon persille
 Pork Bones
 Pozharsky cutlet
-Roccocò
-Feijão de óleo de palma
+Roccoco
+Feijao de oleo de palma
 Calulu
-Bey's Soup
+Beys Soup
 /g/1226mnbh
-Thịt kho tàu
+Thit kho tau
 Bon bon chicken
 Zoque
 Bint al-sahn
@@ -111,7 +111,7 @@ Crescentina modenese
 Pansotti
 Fried eggplant
 Portuguese seafood rice
-Tripes à la mode de Caen
+Tripes a la mode de Caen
 /g/12353lp9
 Brenebon
 Gnocco fritto
@@ -128,37 +128,37 @@ Kisra
 Meat from tiblica
 /g/1hc0hhj4r
 Yufka
-Pisarei e faśö
+Pisarei e faso
 /g/1pznmr_ch
 Pampushka
 Makowiec
 Saleeg
 /m/0100fwt6
-Jókai bean soup
+Jokai bean soup
 Bookbinder soup
 Selat solo
 Kutsinta
 Sago soup
 Vinegret
 Shrimp and grits
-Sirop de Liège
+Sirop de Liege
 Woku
 Muhallebi
 Gepuk
-Fouée
+Fouee
 Octopus
 Koba
-Bò lúc lắc
-Squid lū'au
+Bo luc lac
+Squid luau
 Shrimp Louie
 Black pudding
 Cherry kebab
-Pitsi-pitsî
+Pitsi-pitsi
 Sabich salad
 Mie kocok
 Maraca pie
 Banga
-Baccalà alla lucana
+Baccala alla lucana
 Nasi tumpang
 Gratin dauphinois
 Arroz chaufa
@@ -166,7 +166,7 @@ Kuih
 Ayam goreng
 Chongos zamoranos
 /m/011c708
-Mămăligă
+Mamaliga
 Candied almonds
 Lasagne
 Pecel Lele
@@ -195,14 +195,14 @@ Wachipa
 Boat noodles
 Tantuni
 Shab Deg
-Chả giò
+Cha gio
 Ciabatta Bacon Cheeseburger
 Mie kangkung
 Tuwo masara
 Kokonte
 Akple
 /m/012vypzp
-Kwareżimal
+Kwarezimal
 Bento
 Osechi
 Okonomiyaki
@@ -215,9 +215,9 @@ Mochi
 Peppersoup
 Caldo de queso
 Dodo ikire
-Uirō
+Uiro
 Hong dou tang
-Kakigōri
+Kakigori
 Khichu
 Bolo de arroz
 Chips and dip
@@ -227,25 +227,25 @@ Zaalouk
 Mutton curry
 Mughlai paratha
 Tuo Zaafi
-Bánh bột lọc
+Banh bot loc
 /m/013f387h
 Cheeseburger
 Jelly bean
 Apple pie
 Udon
 Falafel
-Agedashi dōfu
+Agedashi dofu
 Dashi
 Tortell
 Omelette
-Crème brûlée
+Creme brulee
 Cucumber soup
 French toast
 Tripe
 Pepperoni
 Salami
 Kimchi
-Knödel
+Knodel
 Takoyaki
 Halva
 Pigs in a blanket
@@ -263,8 +263,8 @@ Waldorf salad
 Potato salad
 Satay
 Pemmican
-Mämmi
-Fideuà
+Mammi
+Fideua
 Waffle
 Pancake
 Quiche
@@ -294,10 +294,10 @@ Monte Cristo sandwich
 Kielbasa
 Polenta
 Reuben sandwich
-S'more
+Smore
 Andouille
 Beignet
-Crêpe
+Crepe
 Gulai
 Breakfast sausage
 Chorizo
@@ -312,24 +312,24 @@ Injera
 Muesli
 Meatloaf
 Fuet
-Nattō
+Natto
 Banana split
-Pączki
+Paczki
 Pound cake
 Fuqi feipian
 Nasi lemak
 Flan
 Pad thai
 Yakitori
-Amanattō
+Amanatto
 Tom kha kai
 Lokma
 Mooncake
 Idli
-Spätzle
+Spatzle
 Nopalito
 Sincronizada
-Žganci
+Zganci
 Totopo
 Folar
 Cherry pie
@@ -344,7 +344,7 @@ Kaipen
 Draw soup
 Shahan ful
 Shiro
-Ga'at
+Gaat
 Skordalia
 Budae jjigae
 Anju
@@ -369,21 +369,21 @@ Bife a cavalo
 Yaki udon
 She-crab soup
 Koozh
-Keşkek
+Keskek
 Cabidela
 Gerber sandwich
-Zagorski Štrukli
+Zagorski Strukli
 Himbasha
-Sataraš
+Sataras
 Kakuni
 Enormous Omelet Sandwich
-Turrón
+Turron
 Tsukudani
 Hawaiian haystack
 Kateh
 Stoemp
 Pajeon
-Ġbejna
+Gbejna
 Kaya toast
 Fit-fit
 Kitcha
@@ -409,7 +409,7 @@ Maafe
 Churma
 Chole bhature
 Dobos torte
-Carne de porco à alentejana
+Carne de porco a alentejana
 Khao soi
 Kissel
 Cottage loaf
@@ -425,20 +425,20 @@ Jiaozi
 Breakfast sandwich
 Tanghulu
 Black sesame soup
-Gougère
+Gougere
 Namul
 Kosambari
-Ma'amoul
+Maamoul
 Caldo de pollo
 Loukaniko
 Doberge cake
 Nasi campur
 Snack cake
 Taiyaki
-Karnıyarık
+Karnyark
 Pierogi
 Macaroni and cheese
-Huevos motuleños
+Huevos motulenos
 Chislic
 Corn dog
 Shawarma
@@ -446,8 +446,8 @@ Zongzi
 Dumpling
 Syrniki
 King cake
-Soufflé
-Gyūdon
+Souffle
+Gyudon
 Chicken nugget
 Bulgogi
 Eggs Benedict
@@ -477,7 +477,7 @@ Yakisoba
 Dagwood sandwich
 Cheesecake
 Samosa
-Devil's food cake
+Devils food cake
 Shashlik
 Horseshoe sandwich
 City chicken
@@ -499,11 +499,11 @@ Pincho
 Gundruk
 Chilorio
 Koulourakia
-Bryndzové halušky
+Bryndzove halusky
 Imagawayaki
 Vasilopita
-Strapačky
-Po' boy
+Strapacky
+Po boy
 Capirotada
 Beef Manhattan
 Sandwich loaf
@@ -534,7 +534,7 @@ Kulolo
 Oxtail soup
 Pantua
 Corn relish
-Pogača
+Pogaca
 Qubani-ka-Meetha
 Boondi
 Arrosticini
@@ -545,17 +545,17 @@ Crispy fried chicken
 Steamed meatball
 Lobio
 Suman
-Hōtō
+Hoto
 Matbukha
 /m/02rgjs1
-Açorda
+Acorda
 Makdous
 Soto
 Frangollo
 Patty melt
 Taro dumpling
 Entomatada
-Bánh cuốn
+Banh cuon
 Corunda
 Zhaliang
 Cassoulet
@@ -600,7 +600,7 @@ Puto
 Dal makhani
 Mixiote
 Bagel dog
-Bún riêu
+Bun rieu
 Feijoada
 Pho
 Milk toast
@@ -616,7 +616,7 @@ Youmian
 Avgolemono
 Pork roll
 Tart
-Leberkäse
+Leberkase
 Kalakukko
 Mustamakkara
 Baba ghanoush
@@ -629,7 +629,7 @@ Blaa
 Risotto
 Funnel cake
 Fried dough
-Consommé
+Consomme
 Clam chowder
 Tartiflette
 Red curry
@@ -662,8 +662,8 @@ Kalakand
 Ghevar
 Sussex pond pudding
 Lontong
-Bánh bèo
-Pringá
+Banh beo
+Pringa
 Bull roast
 Stuffed ham
 Lablabi
@@ -692,10 +692,10 @@ Soan papdi
 Baek-kimchi
 Chicken riggies
 Afelia
-Gulyásleves
+Gulyasleves
 Marie biscuit
-Café liégeois
-Chè
+Cafe liegeois
+Che
 Pootharekulu
 Escalope
 Rajma
@@ -707,7 +707,7 @@ Rose hip soup
 Veggie burger
 Steak tartare
 Bologna sausage
-Pâté
+Pate
 Bibimbap
 Shahi paneer
 Fufu
@@ -721,9 +721,9 @@ Korovai
 Churrasco
 Pasulj
 Mitraillette
-Salată de boeuf
+Salata de boeuf
 Rice pudding
-Rösti
+Rosti
 Naryn
 Kaldereta
 Makroudh
@@ -742,7 +742,7 @@ Shark fin soup
 Pozole
 Pakora
 Chantilly cake
-Krówki
+Krowki
 Russian tea cake
 Ox-tongue pastry
 Sachertorte
@@ -760,7 +760,7 @@ Upma
 Panjiri
 Eggs Sardou
 Shanghai fried noodles
-Quarkkäulchen
+Quarkkaulchen
 Cupcake
 Snickerdoodle
 Farl
@@ -790,8 +790,8 @@ Rassolnik
 Jeongol
 Cantonese seafood soup
 Eggplant Salad
-Kürtőskalács
-Pölsa
+Kurtoskalacs
+Polsa
 Lobster roll
 Sloppy joe
 Schnitzel
@@ -803,8 +803,8 @@ Liver soup
 Panocha
 Chakapuli
 Sklandrausis
-Liver pâté
-Rullepølse
+Liver pate
+Rulleplse
 Frikadeller
 Frikandel
 Cinnamon roll
@@ -813,7 +813,7 @@ Hot wiener
 Wodzionka
 Greek salad
 Raita
-Dong'an chicken
+Dongan chicken
 Boortsog
 Coca
 Champon
@@ -829,8 +829,8 @@ Fatteh
 Speculaas
 Karasumi
 Brandy snaps
-Trdelník
-Cocido madrileño
+Trdelnik
+Cocido madrileno
 Red velvet cake
 Kringle
 Quenelle
@@ -854,7 +854,7 @@ Dahi vada
 Mother-in-law
 Blondie
 Guk
-Hiyashi chūka
+Hiyashi chuka
 Sweet shells
 Salisbury steak
 Poffertjes
@@ -869,13 +869,13 @@ Potbrood
 Burkinabe cuisine
 Taralli
 Carbonade flamande
-Xôi
+Xoi
 Sauerbraten
 Spiedie
 Gimbap
 Czernina
 Kroppkaka
-Buddha's delight
+Buddhas delight
 Pain au chocolat
 Goetta
 German chocolate cake
@@ -891,7 +891,7 @@ Bologna sandwich
 Cobbler
 Kouign-amann
 Char kway teow
-Rostbrätel
+Rostbratel
 Doenjang-jjigae
 Tharid
 Hainanese chicken rice
@@ -900,8 +900,8 @@ Cabbage roll
 Runza
 Bananas Foster
 Kozhukkatta
-Kūčiukai
-Smørrebrød
+Kuciukai
+Smrrebrd
 Kutia
 Deviled egg
 Buchteln
@@ -917,11 +917,11 @@ Rolled oyster
 Asam pedas
 Mi krop
 Patoleo
-Rigó Jancsi
+Rigo Jancsi
 Ollada
 Garbure
 Sabudana Khichadi
-Potée
+Potee
 Phanaeng curry
 Madeleine
 Mashed pumpkin
@@ -938,18 +938,18 @@ Frozen banana
 Psarosoupa
 Mekitsa
 Sanna
-Qazı
+Qaz
 Sorbetes
-Potatoes O'Brien
+Potatoes OBrien
 Tom yum
 Balushahi
 Arroz a la cubana
 Jalebi
 Sopaipilla
 Ukha
-Svíčková
-Túrós csusza
-Pinnekjøtt
+Svickova
+Turos csusza
+Pinnekjtt
 Salty liquorice
 Lemon ice box pie
 Knickerbocker glory
@@ -960,7 +960,7 @@ Shoofly pie
 Bhakri
 Apple cake
 Orange chicken
-Jamón serrano
+Jamon serrano
 Bundt cake
 Bara brith
 Hot pot
@@ -975,8 +975,8 @@ Rice Krispies Treats
 Liangpi
 Prinskorv
 Salmorejo
-Chicken Française
-Fläskkorv
+Chicken Francaise
+Flaskkorv
 Glorified rice
 /m/04zzsvg
 Stinky tofu
@@ -986,9 +986,9 @@ Chicken fingers
 Pecan pie
 Eba
 Parfait
-Ndolé
+Ndole
 Cheese sandwich
-Carne de vinha d'alhos
+Carne de vinha dalhos
 Bob Andy pie
 Cincinnati chili
 Frico
@@ -1030,9 +1030,9 @@ French onion soup
 Tres leches cake
 Torta caprese
 Black Forest gateau
-Pâté aux pommes de terre
-Lâpa
-Bündner Nusstorte
+Pate aux pommes de terre
+Lapa
+Bundner Nusstorte
 Hachee
 Spaghetti aglio e olio
 Whoopie pie
@@ -1066,12 +1066,12 @@ Stottie cake
 London broil
 Fasolada
 Strudel
-Øllebrød
+llebrd
 Tamago kake gohan
 Hot water corn bread
 Philippine adobo
 Hulatang
-Dyrlægens natmad
+Dyrlgens natmad
 Chistorra
 Polkagris
 Galbi-tang
@@ -1105,11 +1105,11 @@ Cornish game hen
 Beef on weck
 Tompouce
 Caldo de siete mares
-Millionbøf
+Millionbf
 Chicago-style hot dog
 Risalamande
 Alinazik kebab
-Medisterpølse
+Medisterplse
 Sarson da saag
 Liangfen
 Pistolette
@@ -1124,8 +1124,8 @@ Cochinita pibil
 Buddha Jumps Over the Wall
 Sfouf
 Ham and cheese sandwich
-"""Peanut butter"
-"""Bacon"
+Peanut butter
+Bacon
 Chicken karahi
 Maple bacon donut
 Litti
@@ -1150,11 +1150,11 @@ Barbacoa
 Hushpuppy
 Luther Burger
 Ragout
-Bánh bao
+Banh bao
 Moronga
 Hayashi rice
-Zürcher Geschnetzeltes
-Éclair
+Zurcher Geschnetzeltes
+Eclair
 Colcannon
 Bear claw
 Francesinha
@@ -1174,7 +1174,7 @@ Yong tau foo
 Chai tow kway
 Machaca
 Ugali
-Arròs negre
+Arros negre
 Kimchi fried rice
 Frybread
 Halo-halo
@@ -1182,15 +1182,15 @@ Shiokara
 Janssons frestelse
 Hot Brown
 Torta
-Ćevapi
+Cevapi
 Salt water taffy
-Çılbır
+Clbr
 Murtabak
 Tahu goreng
 Soto ayam
 Mee siam
 Submarine sandwich
-Halušky
+Halusky
 Kimchi-jjigae
 Fish ball
 Blodpalt
@@ -1201,11 +1201,11 @@ Shrikhand
 Yakiniku
 Huevos divorciados
 Nihari
-Sautéed reindeer
+Sauteed reindeer
 Hasty pudding
 Mission burrito
 Sweet and sour pork
-Rødgrød
+Rdgrd
 Booyah
 Bienenstich
 Dressed herring
@@ -1221,11 +1221,11 @@ New Haven-style pizza
 California-style pizza
 Wrap
 Puri
-Jamón
+Jamon
 Khash
 Beef bourguignon
 Truffade
-Bò nướng lá lốt
+Bo nuong la lot
 Ful medames
 Aligot
 Kolach
@@ -1240,8 +1240,8 @@ American goulash
 Gofio
 Soup alla Canavese
 Red beans and rice
-Rössypottu
-Fläskpannkaka
+Rossypottu
+Flaskpannkaka
 Hyderabadi biryani
 Baeckeoffe
 Eton mess
@@ -1278,7 +1278,7 @@ Pap
 Umngqusho
 Malva pudding
 Vichyssoise
-Zōni
+Zoni
 Maxwell Street Polish
 Vetkoek
 Mealie bread
@@ -1290,7 +1290,7 @@ Coney Island hot dog
 Tirokafteri
 Fesikh
 Boston cream pie
-Buttermilk koldskål
+Buttermilk koldskal
 White boiled shrimp
 Bagnun
 Buntil
@@ -1301,20 +1301,20 @@ Al pastor
 St. Paul sandwich
 Melonpan
 Haupia
-Lángos
-Étouffée
+Langos
+Etouffee
 Galaktoboureko
-Börek
+Borek
 Suya
 Rye bread
-Escudella i carn d'olla
+Escudella i carn dolla
 Gari
 Tilkut
 Botok
 Tatws Pum Munud
 Char siu
 Burgoo
-Cacık
+Cack
 Barfi
 Mulligan stew
 Biangbiang noodles
@@ -1324,9 +1324,9 @@ Chinese sausage
 Veal
 Curry bread
 Pastry heart
-Crème caramel
+Creme caramel
 Panada
-Pie à la Mode
+Pie a la Mode
 Bonus Jack
 Princess cake
 Harihari-nabe
@@ -1356,7 +1356,7 @@ Bolani
 Pork and beans
 Nian gao
 Oysters Rockefeller
-Tavče gravče
+Tavce gravce
 Bakkwa
 Xacuti
 Sarapatel
@@ -1368,7 +1368,7 @@ Nshima/Nsima
 Pollock roe
 Slinger
 Japchae
-St. Honoré cake
+St. Honore cake
 Barm cake
 Tulumba
 Xiaolongbao
@@ -1384,27 +1384,27 @@ Lung fung soup
 Dirty rice
 Urnebes
 Andouillette
-Landjäger
-Fisherman's soup
+Landjager
+Fishermans soup
 Romeritos
 Lane cake
 Pork jelly
 Idiyappam
-Smörgåstårta
-Smažený sýr
+Smorgastarta
+Smazeny syr
 Arroz con pollo
 /m/08xmsn
-Petit gâteau
+Petit gateau
 Tea egg
 Cocada amarela
 Japanese curry
 Qeema
 Unagi
-Hoppin' John
-Gyūhi
+Hoppin John
+Gyuhi
 Clafoutis
 Green curry
-Gỏi cuốn
+Goi cuon
 Chilli crab
 Lo mai gai
 Lo mein
@@ -1426,7 +1426,7 @@ Carnitas
 Chinese steamed eggs
 Oyster omelette
 Garden salad
-Salade niçoise
+Salade nicoise
 Dal bhat
 Biscuits and gravy
 Omurice
@@ -1454,9 +1454,9 @@ Fish head curry
 Podvarak
 Pihtije
 Popara
-Kačamak
+Kacamak
 Seolleongtang
-Gołąbki
+Goabki
 Szaloncukor
 Kalduny
 Zrazy
@@ -1472,22 +1472,22 @@ Mee pok
 Jjigae
 Pizza bagel
 Tteok
-Brændende kærlighed
+Brndende krlighed
 Beaten biscuit
-Æbleflæsk
+bleflsk
 Chicken paprikash
 Tangyuan
 Tuna pot
 Burnt ends
-Jamón ibérico
+Jamon iberico
 Rakfisk
 Zarangollo
-Túró Rudi
+Turo Rudi
 Flummery
 Cecina
-Galinha à portuguesa
+Galinha a portuguesa
 Ankimo
-Galinha à africana
+Galinha a africana
 Cha siu bao
 Fugu chiri
 Assidat Zgougou
@@ -1496,14 +1496,14 @@ Laping
 Chaku
 Caldillo de perro
 Sopa de Gato
-Keledoş
-Mücver
+Keledos
+Mucver
 Brotzeit
 Shekerbura
 Oeufs en meurette
 Pappa al pomodoro
 Teurgoule
-Bánh xèo
+Banh xeo
 Musakhan
 Maqluba
 Bob chorba
@@ -1524,13 +1524,13 @@ Obi non
 Garganelli
 Kig ha farz
 Mississippi mud pie
-Eve's pudding
+Eves pudding
 Amala
 Okinawa soba
 Lamian
 Soki
 Chicken Maryland
-Chanpurū
+Chanpuru
 Mlinci
 Smyrna meatballs
 Tavern sandwich
@@ -1539,11 +1539,11 @@ Qutab
 Dum Aloo
 Queijo do Pico
 Cocada
-Calf's liver and bacon
+Calfs liver and bacon
 Moules-frites
 Anarsa
 Tlayuda
-Šakotis
+Sakotis
 Jollof rice
 Moin moin
 Jam roly-poly
@@ -1562,15 +1562,15 @@ Sayur lodeh
 Memela
 Wenchang chicken
 Galinhada
-Lecsó
+Lecso
 Gypsy tart
 Bougatsa
-Germknödel
+Germknodel
 Haystack
 Yule log
 Butter cookie
-Chicken à la King
-Méchoui
+Chicken a la King
+Mechoui
 Croquette
 Shami kebab
 Chicken and waffles
@@ -1580,7 +1580,7 @@ Turtle soup
 Kansar
 Glamorgan sausage
 Mango pudding
-Bánh canh
+Banh canh
 Caparrones
 Zopf
 Bath bun
@@ -1606,7 +1606,7 @@ Beondegi
 Tsoureki
 Tiropita
 Pljeskavica
-Karađorđeva šnicla
+Karaoreva snicla
 Kokoretsi
 Skilpadjies
 Corn chowder
@@ -1636,15 +1636,15 @@ Scotch broth
 Pea soup
 Kitfo
 Gored gored
-Bánh chưng
-Bún bò Huế
-Bò 7 món
-Cơm tấm
+Banh chung
+Bun bo Hue
+Bo 7 mon
+Com tam
 Ambrosia
-Rönttönen
-Balchão
+Ronttonen
+Balchao
 Gibassier
-Bacalhau à Zé do Pipo
+Bacalhau a Ze do Pipo
 Pane di Altamura
 Mykyrokka
 Paska
@@ -1655,7 +1655,7 @@ Francesinha poveira
 Picadillo
 Runeberg torte
 Khakhra
-Ohn no khao swè
+Ohn no khao swe
 Sultsina
 /m/0crv0m
 Paella
@@ -1663,7 +1663,7 @@ Espetada
 Pathiri
 Horumonyaki
 Khubz
-Ciorbă
+Ciorba
 Kimchi-buchimgae
 Sesame chicken
 Thukpa
@@ -1678,14 +1678,14 @@ Namasu
 Wonton noodles
 Johnnycake
 Panellets
-Manjū
+Manju
 Mandi
 Fortune cookie
 Noppe
 Slavink
 Cockle bread
 Caruru
-Chả lụa
+Cha lua
 Pan bagnat
 Sardenara
 Enchilada
@@ -1694,15 +1694,15 @@ Pistachio pudding
 Chikki
 Champorado
 Coconut cake
-Kaassoufflé
+Kaassouffle
 Carne pizzaiola
-Khauk swè thoke
+Khauk swe thoke
 Gamja-tang
 Kadhi
 Green bean casserole
 Apple dumpling
 Cozonac
-Pissaladière
+Pissaladiere
 Phat si-io
 Drunken noodles
 Jing Jiang Rou Si
@@ -1726,7 +1726,7 @@ Vispipuuro
 Bakso
 Canjica
 Fougasse
-Fool's Gold Loaf
+Fools Gold Loaf
 Blueberry pie
 Pickled cucumber
 Ogbono soup
@@ -1734,7 +1734,7 @@ Champ
 Oysters en brochette
 Paskha
 Shish taouk
-Acarajé
+Acaraje
 Ras malai
 San-nakji
 Bungeo-ppang
@@ -1742,9 +1742,9 @@ Skilandis
 Gosh-e Fil
 Nasi dagang
 Gheimeh
-Fesenjān
-Bacalhau à Gomes de Sá
-Fårikål
+Fesenjan
+Bacalhau a Gomes de Sa
+Farikal
 Bedfordshire clanger
 Tonkatsu
 Thai fried rice
@@ -1797,8 +1797,8 @@ Ploye
 Sayur asem
 Trinxat
 Nikuman
-Cozido à portuguesa
-Bacalhau à Brás
+Cozido a portuguesa
+Bacalhau a Bras
 Tomato compote
 Sesame seed candy
 Dhebra
@@ -1814,18 +1814,18 @@ Queso flameado
 Black and white cookie
 Red braised pork belly
 Krofne
-Uštipci
-Rožata
+Ustipci
+Rozata
 Punjena paprika
 Fusi
-Maneštra
-Kroštule
+Manestra
+Krostule
 Fritule
 Protein bar
 Cordon bleu
 Pirog
 Pachi Pulusu
-Frigărui
+Frigarui
 Chhena poda
 Poornalu
 Ponganalu
@@ -1841,18 +1841,18 @@ Trifle
 Rat na
 Borlengo
 Gazpachuelo
-Esterházy torte
+Esterhazy torte
 Magenbrot
 Detroit-style pizza
 Fuling jiabing
 Lakhamari
-Mućkalica
+Muckalica
 Sukhdi
 Kilishi
 Baji
 Peanut butter cookie
 Rabbit pie
-Paling in 't groen
+Paling in t groen
 Chataamari
 Lawar
 Arisa Pitha
@@ -1861,9 +1861,9 @@ Carne asada fries
 Takikomi gohan
 Kamameshi
 Pasta salad
-Fasole cu cârnați
+Fasole cu carnati
 Zelnik
-Plăcintă
+Placinta
 Tongseng
 Soto mie
 Sarburma
@@ -1878,7 +1878,7 @@ Tahu sumedang
 Pichelsteiner
 Bread soup
 Scotcheroos
-Kartoffelkäse
+Kartoffelkase
 Schuxen
 Caramel
 Zwetschgenkuchen
@@ -1904,29 +1904,29 @@ Melomakarono
 Cocido lebaniego
 Koi
 Stir-fried tomato and scrambled eggs
-Flæskesteg
-Beggar's Chicken
+Flskesteg
+Beggars Chicken
 /m/0hzpvf0
 Konkonte
 Stuffed squash
 Kaeng som
 Kentucky jam cake
-Murături
-Tochitură
+Muraturi
+Tochitura
 Urap
-Cornulețe
+Cornulete
 Quad City-style pizza
 Paneer tikka
-Ciorbă de perișoare
+Ciorba de perisoare
 /m/0j66841
 Shaker lemon pie
 Doodhpak
 Ceviche
 Cabbage soup
 Nasi timbel
-Pa amb tomàquet
+Pa amb tomaquet
 Escalivada
-Međimurska gibanica
+Meimurska gibanica
 Khanom chan
 Ohaw
 Baghrir
@@ -1936,13 +1936,13 @@ Doughnut
 Hummus
 Nimono
 Chocolate chip cookie
-Bún ốc
+Bun oc
 Cheese straw
 Sausage
 Frogeye salad
 Senate bean soup
 Botifarra
-Leberknödel
+Leberknodel
 Laziji
 Quzi
 Chazuke
@@ -1953,14 +1953,14 @@ Pico de gallo
 Oden
 Tostada
 Chilaquiles
-Cocido montañés
+Cocido montanes
 Lontong Cap Go Meh
 Porra antequerana
 Kedjenou
 Tourin
-Attiéké
+Attieke
 Dak-bokkeum-tang
-Žemlovka
+Zemlovka
 Dovga
 Rice and gravy
 Sai ua
@@ -1976,12 +1976,12 @@ Pieds paquets
 Tinginys
 Sunnundallu
 Lapskaus
-Caldo tlalpeño
+Caldo tlalpeno
 Milho frito
 Kalu dodol
 Poppyseed muffin
 Peanut soup
-Tarte à la Bouillie
+Tarte a la Bouillie
 Caldo gallego
 Samay Baji
 Limburger sandwich
@@ -1994,7 +1994,7 @@ Florina pepper
 Oysters Bienville
 Cronut
 Duck rice
-Sulu köfte
+Sulu kofte
 Toyga soup
 Majjige huli
 Ikan goreng

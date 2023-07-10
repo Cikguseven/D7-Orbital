@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'forgot_password_page.dart';
+
 import 'main.dart';
+import 'reset_password_page.dart';
 import 'utils.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -33,19 +34,19 @@ class _LoginWidgetState extends State<LoginWidget> {
           hasScrollBody: false,
           child: Column(
             children: [
-              Utils.createVerticalSpace(60),
-              Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-              Utils.createVerticalSpace(50),
+              const SizedBox(height: 60),
+              Utils.appLogo(context),
+              const SizedBox(height: 50),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                    labelText: "Email",
+                    labelText: 'Email',
                   ),
                 ),
               ),
-              Utils.createVerticalSpace(16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
@@ -54,21 +55,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                     suffixIcon: GestureDetector(
                       child: const Icon(
                         Icons.remove_red_eye,
-                        size: 24,
+                        color: Colors.white,
                       ),
                       onTap: () => setState(() => obscureFlag = !obscureFlag),
                     ),
-                    labelText: "Password",
+                    labelText: 'Password',
                   ),
                   obscureText: obscureFlag, // Obscure password field
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(18, 6, 0, 0),
+                padding: const EdgeInsets.fromLTRB(18, 10, 0, 0),
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   child: const Text(
-                    "Forgot Password",
+                    'Forgot Password',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Colors.blueAccent,
@@ -78,14 +79,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                     navigatorKey.currentState!.push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const ForgotPasswordPage();
+                          return const ResetPasswordPage();
                         },
                       ),
                     );
                   },
                 ),
               ),
-              Utils.createVerticalSpace(20),
+              const SizedBox(height: 22),
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(Size.fromWidth(
@@ -93,12 +94,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 onPressed: signInCallBack,
                 child: const Text(
-                  "Log in",
+                  'Log in',
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.all(12),
-                child: Text("---------- or ----------",
+                child: Text('---------- or ----------',
                     style: TextStyle(color: Colors.grey)),
               ),
               ElevatedButton(
@@ -108,7 +109,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 onPressed: widget.onClickSignUp,
                 child: const Text(
-                  "Sign up",
+                  'Sign up',
                 ),
               ),
             ],
@@ -128,10 +129,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-      // await Utils.firebaseSignIn(
-      //     emailController.text.trim(), passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+    } on FirebaseAuthException {
+      Utils.showSnackBar('Enter a valid account');
     } finally {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

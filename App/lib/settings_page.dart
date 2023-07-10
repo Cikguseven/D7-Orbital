@@ -1,5 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_first_flutter/update_profile_pic_page.dart';
+import 'package:my_first_flutter/update_weight_goal_page.dart';
+import 'package:my_first_flutter/update_weight_page.dart';
+
+import 'main.dart';
 import 'utils.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -7,6 +12,18 @@ class SettingsPage extends StatelessWidget {
 
   Widget placeholderPage() {
     return const Placeholder();
+  }
+
+  Widget updateWeightWidget() {
+    return const UpdateWeightPage();
+  }
+
+  Widget updateWeightGoalWidget() {
+    return const UpdateWeightGoalPage();
+  }
+
+  Widget updateProfilePicWidget() {
+    return const UpdateProfilePicPage();
   }
 
   @override
@@ -20,7 +37,9 @@ class SettingsPage extends StatelessWidget {
           child: Utils.createTitleSmall(text, context),
         ),
         trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-        tileColor: Colors.white,
+        tileColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF111111)
+            : Colors.white,
         onTap: () {
           Navigator.push(
               context,
@@ -30,9 +49,24 @@ class SettingsPage extends StatelessWidget {
       );
     }
 
+    ListTile darkModeTile() {
+      return ListTile(
+        leading: Container(
+          width: 300, // necessary hack for text to be aligned properly
+          height: 300,
+          alignment: Alignment.centerLeft,
+          child: Utils.createTitleSmall('Toggle dark mode', context),
+        ),
+        trailing: const DarkModeSwitch(),
+        tileColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF111111)
+            : Colors.white,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: const Text('Settings'),
         centerTitle: true,
       ),
       body: CustomScrollView(
@@ -50,72 +84,103 @@ class SettingsPage extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
                       child:
-                          Utils.createTitleMedium("Account Settings", context),
+                          Utils.createTitleMedium('Account Settings', context),
                     ),
-                    settingsTile("Configure Profile", placeholderPage),
-                    settingsTile("Change Email/Password", placeholderPage),
-                    settingsTile("Privacy Settings", placeholderPage),
+                    settingsTile('Update weight', updateWeightWidget),
+                    settingsTile('Update weight goal', updateWeightGoalWidget),
+                    settingsTile(
+                        'Update profile picture', updateProfilePicWidget),
+                    // settingsTile('Privacy Settings', placeholderPage),
                   ],
                 ),
-                Utils.createVerticalSpace(10),
+                const SizedBox(height: 10),
                 Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("Preferences", context),
+                      child: Utils.createTitleMedium('Preferences', context),
                     ),
-                    settingsTile("Notification", placeholderPage),
-                    settingsTile("Dark Mode", placeholderPage),
+                    // settingsTile('Notifications', placeholderPage),
+                    darkModeTile(),
                   ],
                 ),
-                Utils.createVerticalSpace(10),
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("Help", context),
-                    ),
-                    settingsTile("FAQ", placeholderPage),
-                    settingsTile("Contact Us", placeholderPage),
-                  ],
-                ),
-                Utils.createVerticalSpace(10),
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium("About", context),
-                    ),
-                    settingsTile("Private Policy", placeholderPage),
-                    settingsTile("Terms of Use", placeholderPage),
-                  ],
-                ),
-                Utils.createVerticalSpace(52),
+                // const SizedBox(height: 10),
+                // Column(
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.centerLeft,
+                //       padding: const EdgeInsets.all(16),
+                //       child: Utils.createTitleMedium('Help', context),
+                //     ),
+                //     settingsTile('FAQ', placeholderPage),
+                //   ],
+                // ),
+                // const SizedBox(height: 10),
+                // Column(
+                //   children: [
+                //     Container(
+                //       alignment: Alignment.centerLeft,
+                //       padding: const EdgeInsets.all(16),
+                //       child: Utils.createTitleMedium('About', context),
+                //     ),
+                //     settingsTile('Private Policy', placeholderPage),
+                //     settingsTile('Terms of Use', placeholderPage),
+                //   ],
+                // ),
+                const SizedBox(height: 52),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(
                         Theme.of(context).textTheme.titleMedium),
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 16 * 2)),
+                        MediaQuery.of(context).size.width - 20 * 2)),
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back, size: 24),
-                  label: const Text("Log Out"),
+                  icon: const Icon(Icons.logout_rounded),
+                  label: const Text('Log Out'),
                 ),
-                Utils.createVerticalSpace(52),
+                const SizedBox(height: 52),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class DarkModeSwitch extends StatefulWidget {
+  const DarkModeSwitch({super.key});
+
+  @override
+  State<DarkModeSwitch> createState() => _SwitchState();
+}
+
+class _SwitchState extends State<DarkModeSwitch> {
+  bool isDarkMode = MyApp.themeNotifier.value == ThemeMode.dark;
+
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      // This bool value toggles the switch.
+      value: isDarkMode,
+      activeColor: Colors.black12,
+      onChanged: (bool value) {
+        // This is called when the user toggles the switch.
+        setState(() {
+          MyApp.themeNotifier.value =
+              MyApp.themeNotifier.value == ThemeMode.light
+                  ? ThemeMode.dark
+                  : ThemeMode.light;
+          isDarkMode = value;
+        });
+      },
     );
   }
 }

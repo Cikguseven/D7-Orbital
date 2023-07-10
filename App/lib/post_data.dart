@@ -1,93 +1,85 @@
 class PostData {
-  static final PostData testPost = PostData(
-    firstName: 'John',
-    lastName: 'Doe',
-    caption:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam odio quam, sed congue purus pulvinar blandit.',
-    location: 'Singapore',
-    postID: 'testPost',
-    commentCount: 0,
-    rating: 5,
-    calories: 1000,
-    protein: 20.2,
-    fats: 1.1,
-    carbs: 99.3,
-    sugar: 13.3,
-    postTime: DateTime.now(),
-    likedBy: [],
-    imageURL:
-        'https://firebasestorage.googleapis.com/v0/b/d7orbital-13611.appspot.com/o/ezgif-3-c4210ba1cd.jpg?alt=media&token=ff2c7484-9fdf-4fe0-9b6c-c1eca6f36092',
-  );
-
-  final String firstName;
-  final String lastName;
-  final String caption;
-  final String location;
-  final String postID;
-  final String imageURL;
-  int commentCount;
-  final int rating;
-  final int calories;
-  final double protein;
-  final double fats;
-  final double carbs;
-  final double sugar;
   final DateTime postTime;
   final List<String> likedBy;
+  final String caption;
+  final String firstName;
+  final String imageLoc;
+  final String lastName;
+  final String location;
+  final String ownerID;
+  final String pfpURL;
+  final String postID;
+  final bool forDiary;
+  final double carbs;
+  final double fats;
+  final double protein;
+  final double sugar;
+  final int calories;
+  final int rating;
+  int commentCount;
 
   PostData({
-    required this.firstName,
-    required this.lastName,
-    required this.caption,
-    required this.location,
-    required this.postID,
-    required this.imageURL,
-    required this.commentCount,
-    required this.rating,
     required this.calories,
-    required this.protein,
-    required this.fats,
+    required this.caption,
     required this.carbs,
-    required this.sugar,
-    required this.postTime,
+    required this.commentCount,
+    required this.fats,
+    required this.firstName,
+    required this.forDiary,
+    required this.imageLoc,
+    required this.lastName,
     required this.likedBy,
+    required this.location,
+    required this.ownerID,
+    required this.pfpURL,
+    required this.postID,
+    required this.postTime,
+    required this.protein,
+    required this.rating,
+    required this.sugar,
   });
 
   Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'lastName': lastName,
-        'caption': caption,
-        'location': location,
-        'postID': postID,
-        'imageURL': imageURL,
-        'commentCount': commentCount,
-        'rating': rating,
         'calories': calories,
-        'protein': protein,
-        'fats': fats,
+        'caption': caption,
         'carbs': carbs,
-        'sugar': sugar,
-        'postTime': postTime,
+        'commentCount': commentCount,
+        'fats': fats,
+        'firstName': firstName,
+        'forDiary': forDiary,
+        'imageLoc': imageLoc,
+        'lastName': lastName,
         'likedBy': likedBy,
+        'location': location,
+        'pfpURL': pfpURL,
+        'postID': postID,
+        'ownerID': ownerID,
+        'postTime': postTime,
+        'protein': protein,
+        'rating': rating,
+        'sugar': sugar,
       };
 
   static PostData fromJson(Map<String, dynamic> data) {
     return PostData(
-      firstName: data['firstName'],
-      lastName: data['lastName'],
-      caption: data['caption'],
-      location: data['location'],
-      postID: data['postID'],
-      imageURL: data['imageURL'],
-      commentCount: data['commentCount'],
-      rating: data['rating'],
       calories: data['calories'],
-      protein: data['protein'],
-      fats: data['fats'],
+      caption: data['caption'],
       carbs: data['carbs'],
-      sugar: data['sugar'],
-      postTime: data['postTime'].toDate(),
+      commentCount: data['commentCount'],
+      fats: data['fats'],
+      firstName: data['firstName'],
+      forDiary: data['forDiary'],
+      imageLoc: data['imageLoc'],
+      lastName: data['lastName'],
       likedBy: data['likedBy'].cast<String>(),
+      location: data['location'],
+      pfpURL: data['pfpURL'],
+      postID: data['postID'],
+      postTime: data['postTime'].toDate(),
+      protein: data['protein'],
+      ownerID: data['ownerID'],
+      rating: data['rating'],
+      sugar: data['sugar'],
     );
   }
 }

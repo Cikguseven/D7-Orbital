@@ -1,19 +1,20 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 import 'utils.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
@@ -37,31 +38,34 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Utils.createVerticalSpace(60),
-              Image.asset("assets/logo-black-text.png", width: 0.9 * MediaQuery.of(context).size.width,),
-              Utils.createVerticalSpace(50),
-              Utils.createHeadlineMedium("Reset Password", context),
-              Utils.createVerticalSpace(25),
+              const SizedBox(height: 60),
+              Utils.appLogo(context),
+              const SizedBox(height: 50),
+              Utils.createHeadlineMedium('Reset Password', context),
+              const SizedBox(height: 25),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                    labelText: "Email",
+                    labelText: 'Email',
                   ),
                   validator: emailValidator,
                 ),
               ),
-              Utils.createVerticalSpace(35),
+              const SizedBox(height: 35),
               ElevatedButton.icon(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 15 * 2)),
                   ),
                   onPressed: sendResetEmailCallback,
-                  icon: const Icon(Icons.email_outlined, size: 24),
+                  icon: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.white,
+                  ),
                   label: const Text(
-                    "Send email",
+                    'Send email',
                   )),
             ],
           ),
@@ -82,11 +86,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      Utils.showSnackBar("Password reset email sent!");
+      Utils.showSnackBar('Password reset email sent!', isBad: false);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
-      navigatorKey.currentState!.pop();
+    } on FirebaseAuthException {
+      Utils.showSnackBar('Unable to reset password');
+      Navigator.pop(context);
     }
   }
 }
