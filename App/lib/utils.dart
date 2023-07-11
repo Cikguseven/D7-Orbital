@@ -230,9 +230,10 @@ class Utils {
     int? month = int.tryParse(dt.substring(3, 5));
     int? year = int.tryParse(dt.substring(6, 10));
     DateFormat format = DateFormat('dd/MM/yyyy');
-    if (year! > DateTime.now().year || year < 1907) return false;
+    if (year != null) {
+      if (year > DateTime.now().year || year < 1907) return false;
+    }
     try {
-      // TODO: Fix this, dont use try catch as control flow
       format.parseStrict('$day/$month/$year');
     } on FormatException {
       return false;

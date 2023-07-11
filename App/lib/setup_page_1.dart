@@ -216,7 +216,7 @@ class _SetupPage1 extends State<SetupPage1> {
                           DateTime? newDate = await showDatePicker(
                             context: context,
                             initialDate: today,
-                            firstDate: DateTime(1970),
+                            firstDate: DateTime(1907),
                             lastDate: today,
                           );
 

@@ -57,7 +57,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ElevatedButton.icon(
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 15 * 2)),
+                        MediaQuery.of(context).size.width - 16 * 2)),
                   ),
                   onPressed: sendResetEmailCallback,
                   icon: const Icon(
@@ -66,6 +66,22 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   ),
                   label: const Text(
                     'Send email',
+                  )),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                  style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                        MediaQuery.of(context).size.width - 16 * 2)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Return to log in',
                   )),
             ],
           ),

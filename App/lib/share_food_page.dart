@@ -61,7 +61,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
                     ),
                   ),
           ),
-
+          const SizedBox(height: 5),
           // Caption
           TextFormField(
             maxLines: 4,
@@ -73,7 +73,7 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
               alignLabelWithHint: true,
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 35),
           Utils.createTitleMedium('Rate your meal', context),
           const SizedBox(height: 10),
           // Rate your meal

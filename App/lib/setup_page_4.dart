@@ -115,10 +115,9 @@ class _SetupPage4 extends State<SetupPage4> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const App()),
-          (Route<dynamic> route) => false,
+              (Route<dynamic> route) => false,
         );
         Utils.showSnackBar('Set up complete!', isBad: false);
-        // Navigator.of(context).pop();
       }
     }
   }

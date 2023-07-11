@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +14,7 @@ import 'manual_food_select_page.dart';
 import 'scanner_overlay.dart';
 import 'user_data.dart';
 import 'utils.dart';
+
 
 class SnapperWidget extends StatefulWidget {
   final UserData user;
@@ -181,7 +183,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
 
     // Nutritionix database to query nutritional information of predicted food.
     if (foodItem != null) {
-      FoodData? findFood = NutritionData.stallToFoodMap['General']?.firstWhere((fd) => fd.name == foodItem);
+      FoodData? findFood = NutritionData.stallToFoodMap['General']?.firstWhereOrNull((fd) => fd.name == foodItem);
       if (findFood != null) {
         predictedFood = findFood;
       }

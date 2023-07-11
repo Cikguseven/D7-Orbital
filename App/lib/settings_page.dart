@@ -7,13 +7,14 @@ import 'package:my_first_flutter/update_weight_page.dart';
 import 'main.dart';
 import 'utils.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
-  Widget placeholderPage() {
-    return const Placeholder();
-  }
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
 
+class _SettingsPageState extends State<SettingsPage> {
   Widget updateWeightWidget() {
     return const UpdateWeightPage();
   }
@@ -74,60 +75,24 @@ class SettingsPage extends StatelessWidget {
           SliverFillRemaining(
             hasScrollBody: false,
             child: Column(
-              // Testing out to see if this will make the code more
-              // readable. In the main container I have multiple Containers to contain
-              // a section each, and within each container also arranged in Column
               children: [
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child:
-                          Utils.createTitleMedium('Account Settings', context),
-                    ),
-                    settingsTile('Update weight', updateWeightWidget),
-                    settingsTile('Update weight goal', updateWeightGoalWidget),
-                    settingsTile(
-                        'Update profile picture', updateProfilePicWidget),
-                    // settingsTile('Privacy Settings', placeholderPage),
-                  ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.all(16),
+                  child:
+                      Utils.createTitleMedium('Account Settings', context),
                 ),
+                settingsTile('Update weight', updateWeightWidget),
+                settingsTile('Update weight goal', updateWeightGoalWidget),
+                settingsTile(
+                    'Update profile picture', updateProfilePicWidget),
                 const SizedBox(height: 10),
-                Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(16),
-                      child: Utils.createTitleMedium('Preferences', context),
-                    ),
-                    // settingsTile('Notifications', placeholderPage),
-                    darkModeTile(),
-                  ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.all(16),
+                  child: Utils.createTitleMedium('Preferences', context),
                 ),
-                // const SizedBox(height: 10),
-                // Column(
-                //   children: [
-                //     Container(
-                //       alignment: Alignment.centerLeft,
-                //       padding: const EdgeInsets.all(16),
-                //       child: Utils.createTitleMedium('Help', context),
-                //     ),
-                //     settingsTile('FAQ', placeholderPage),
-                //   ],
-                // ),
-                // const SizedBox(height: 10),
-                // Column(
-                //   children: [
-                //     Container(
-                //       alignment: Alignment.centerLeft,
-                //       padding: const EdgeInsets.all(16),
-                //       child: Utils.createTitleMedium('About', context),
-                //     ),
-                //     settingsTile('Private Policy', placeholderPage),
-                //     settingsTile('Terms of Use', placeholderPage),
-                //   ],
-                // ),
+                darkModeTile(),
                 const SizedBox(height: 52),
                 ElevatedButton.icon(
                   style: ButtonStyle(
@@ -138,9 +103,9 @@ class SettingsPage extends StatelessWidget {
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 20 * 2)),
                   ),
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    navigatorKey.currentState!.popUntil((route) => route.isFirst);
                   },
                   icon: const Icon(Icons.logout_rounded),
                   label: const Text('Log Out'),

@@ -109,7 +109,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 onPressed: widget.onClickSignUp,
                 child: const Text(
-                  'Sign up',
+                  'Sign up here',
                 ),
               ),
             ],

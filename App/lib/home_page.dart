@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               title: const Text('Home'),
               centerTitle: true,
+              automaticallyImplyLeading: false,
               actions: [
                 IconButton(
                   onPressed: () {
