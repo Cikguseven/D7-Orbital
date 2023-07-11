@@ -45,9 +45,8 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
       allowMultiple: true,
       type: FileType.custom,
       allowedExtensions: ['csv'],
-      withData:
-          true, // TODO: This is loading all of the data onto the app, it might cause cache error if file is too large!
-    ); // TODO: Do single first, later make more
+      withData: true,
+    );
 
     if (selectedFiles == null) {
       Utils.showSnackBar('No file selected');
@@ -242,7 +241,6 @@ class _CSVUploadWidgetState extends State<CSVUploadWidget> {
     } on ArgumentError {
       Utils.showSnackBar('Unable to add to database');
     } on Exception catch (e) {
-      //  TODO: Dont catch all
       Utils.showSnackBar('$e\n Cancelled upload');
       // final collection = FirebaseFirestore.instance
       //     .collection(foodDBKeyController.text.trim());

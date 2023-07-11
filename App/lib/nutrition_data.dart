@@ -17,7 +17,7 @@ class NutritionData {
       'Vegetarian',
       'Western',
     ],
-    'General food items': ['Asian Delights'],
+    'General food items': ['General'],
   };
   static final stallToFoodMap = {
     'Asian Delights': [

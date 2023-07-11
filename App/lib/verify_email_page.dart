@@ -49,7 +49,7 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   int cooldown = 0;
-  bool canSendEmail = false;
+  bool canSendEmail = true;
 
   Future sendEmailVerification() async {
     if (!canSendEmail) {
@@ -113,13 +113,17 @@ class VerifyEmailPageState extends State<VerifyEmailPage> {
                   ),
                 ),
                 const SizedBox(height: 26),
-                ElevatedButton(
+                ElevatedButton.icon(
                   onPressed: () => FirebaseAuth.instance.signOut(),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(
                         MediaQuery.of(context).size.width - 16 * 2)),
                   ),
-                  child: const Text('Return to log in'),
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                  ),
+                  label: const Text('Return to log in'),
                 ),
               ],
             ),

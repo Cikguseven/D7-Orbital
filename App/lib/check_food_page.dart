@@ -92,7 +92,7 @@ Widget allFoodDataWidget(int calories, double protein, double fats,
 }
 
 class CheckFoodPage extends StatefulWidget {
-  final dynamic image;
+  dynamic image;
   FoodData foodData;
   final UserData user;
 
@@ -117,108 +117,117 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
         title: const Text('Snap'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          // Image
-          Container(
-            height: 200,
-            width: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: widget.image is XFile
-                    ? XFileImage(widget.image)
-                    : AssetImage(widget.image) as ImageProvider,
-              ),
-            ),
-          ),
-          const SizedBox(height: 26),
-
-          // Name of Food headline text
-          Utils.createHeadlineMedium(widget.foodData.name, context),
-          const SizedBox(height: 26),
-
-          // Nutritional information regular
-          Utils.createHeadlineSmall('Nutritional Information', context),
-          const SizedBox(height: 16),
-
-          // Nutrition bar
-          allFoodDataWidget(
-              (widget.foodData.energy * portionSize).round(),
-              widget.foodData.protein * portionSize,
-              widget.foodData.fats * portionSize,
-              widget.foodData.carbs * portionSize,
-              widget.foodData.sugar * portionSize,
-              widget.user,
-              context),
-
-          // Elevated button (Edit food item)
-          Expanded(
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 16 * 2)),
-                  ),
-                  onPressed: () {
-                    showPortionDialog(context);
-                  },
-                  child: const Text(
-                    'Edit portion size',
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 16 * 2)),
-                  ),
-                  onPressed: () async {
-                    FoodData? newFD = await Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const ManualFoodSelectPage()),
-                    );
-                    setState(() {
-                      if (newFD != null) {
-                        widget.foodData = newFD;
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Edit food entry',
+                // Image
+                Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: widget.image is XFile
+                          ? XFileImage(widget.image)
+                          : AssetImage(widget.image) as ImageProvider,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size.fromWidth(
-                        MediaQuery.of(context).size.width - 16 * 2)),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ShareFoodPage(
-                            image: widget.image,
-                            user: widget.user,
-                            foodData:
-                                widget.foodData.changePortionSize(portionSize)),
+                const SizedBox(height: 26),
+
+                // Name of Food headline text
+                Utils.createHeadlineSmall(widget.foodData.name, context),
+                const SizedBox(height: 26),
+
+                // Nutritional information regular
+                Utils.createTitleMedium('Nutritional Information', context),
+                const SizedBox(height: 16),
+
+                // Nutrition bar
+                allFoodDataWidget(
+                    (widget.foodData.energy * portionSize).round(),
+                    widget.foodData.protein * portionSize,
+                    widget.foodData.fats * portionSize,
+                    widget.foodData.carbs * portionSize,
+                    widget.foodData.sugar * portionSize,
+                    widget.user,
+                    context),
+
+                const SizedBox(height: 26),
+
+                // Elevated button (Edit food item)
+                Expanded(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                              MediaQuery.of(context).size.width - 16 * 2)),
+                        ),
+                        onPressed: () {
+                          showPortionDialog(context);
+                        },
+                        child: const Text(
+                          'Edit portion size',
+                        ),
                       ),
-                    );
-                  },
-                  child: const Text(
-                    'Confirm',
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                              MediaQuery.of(context).size.width - 16 * 2)),
+                        ),
+                        onPressed: () async {
+                          FoodData? newFD = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const ManualFoodSelectPage()),
+                          );
+                          setState(() {
+                            if (newFD != null) {
+                              widget.foodData = newFD;
+                              widget.image = "assets/NoFood.jpg";
+                            }
+                          });
+                        },
+                        child: const Text(
+                          'Edit food entry',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all(Size.fromWidth(
+                              MediaQuery.of(context).size.width - 16 * 2)),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => ShareFoodPage(
+                                  image: widget.image,
+                                  user: widget.user,
+                                  foodData: widget.foodData
+                                      .changePortionSize(portionSize)),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Confirm',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
               ],
             ),
-          ),
-        ],
-      ),
+          )
+        ]
+      )
     );
   }
 

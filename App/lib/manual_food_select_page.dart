@@ -68,7 +68,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: const Text('Select canteen'),
+              hint: const Text('Select canteen/category'),
             ),
           ),
           Container(
@@ -165,7 +165,6 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               hint: const Text('Select food'),
             ),
           ),
-          // const SizedBox(height: MediaQuery.of(context).size.height * 2/5), // TODO: Magic number
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
