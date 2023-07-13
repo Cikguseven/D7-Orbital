@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'day_log.dart';
+import 'day_log_data.dart';
 import 'user_data.dart';
 import 'utils.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'me_page.dart';
 import 'setup_page_1.dart';
-import 'snapper_widget.dart';
+import 'snap_page.dart';
 import 'user_data.dart';
 import 'utils.dart';
 

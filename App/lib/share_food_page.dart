@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:uuid/uuid.dart';
 
-import 'day_log.dart';
+import 'day_log_data.dart';
 import 'food_data.dart';
 import 'main.dart';
 import 'post_data.dart';
