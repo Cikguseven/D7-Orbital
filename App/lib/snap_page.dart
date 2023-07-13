@@ -80,6 +80,40 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                 // Might make the picture unusually elongated
                 children: [
                   CameraPreview(_controller),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: <Widget>[
+                            // Stroked text as border.
+                            Text(
+                              'Frame your food within the white grid box',
+                              style: TextStyle(
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 2
+                                  ..color = Colors.black,
+                              ),
+                            ),
+                            // Solid text as fill.
+                            Text(
+                              'Frame your food within the white grid box',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+
+                    // Column(
+                    //     children: [
+                    //       const Text("Frame your food within the white grid box"),
+                    //     ]
+                    // ),
+                  ),
                   const QRScannerOverlay(overlayColour: Colors.grey),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,

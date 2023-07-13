@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' hide Badge;
 import 'package:intl/intl.dart';
 
 import 'comment_data.dart';
-import 'day_log.dart';
+import 'day_log_data.dart';
 import 'post_data.dart';
 import 'user_data.dart';
 

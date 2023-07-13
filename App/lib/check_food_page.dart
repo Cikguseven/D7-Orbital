@@ -156,7 +156,7 @@ class _CheckFoodPageState extends State<CheckFoodPage> {
                     widget.user,
                     context),
 
-                const SizedBox(height: 26),
+                const SizedBox(height: 30),
 
                 // Elevated button (Edit food item)
                 Expanded(

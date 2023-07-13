@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'day_log.dart';
-import 'diary.dart';
+import 'day_log_data.dart';
+import 'diary_page.dart';
 import 'nutrition_page.dart';
 import 'settings_page.dart';
 import 'user_data.dart';
