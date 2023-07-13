@@ -56,7 +56,9 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               // removes the ugly underline by making it nothing
               isExpanded: true,
               items: NutritionData.canteens
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  .map((e) => DropdownMenuItem(value: e, child: Text(e, style: TextStyle(color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,),)))
                   .toList(),
               value: selectedCanteen,
               onChanged: (String? canteen) {
@@ -104,7 +106,9 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               underline: Container(),
               isExpanded: true,
               items: NutritionData.canteenToStallMap[selectedCanteen]
-                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e, style: TextStyle(color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,),)))
                   .toList(),
               value: selectedStall,
               onChanged: (String? stall) {
@@ -115,7 +119,7 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
                   },
                 );
               },
-              hint: const Text('Select stall'),
+              hint: const Text('Select stall/category'),
             ),
           ),
           Container(
@@ -152,7 +156,9 @@ class _ManualFoodSelectPageState extends State<ManualFoodSelectPage> {
               // removes the ugly underline by making it nothing
               isExpanded: true,
               items: NutritionData.stallToFoodMap[selectedStall]
-                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e.name)))
+                  ?.map((e) => DropdownMenuItem(value: e, child: Text(e.name, style: TextStyle(color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,),)))
                   .toList(),
               value: selectedFood,
               onChanged: (FoodData? food) {

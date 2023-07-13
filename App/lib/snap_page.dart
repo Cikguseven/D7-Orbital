@@ -81,7 +81,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                 children: [
                   CameraPreview(_controller),
                   Padding(
-                    padding: EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Column(
                       children: [
                         Stack(
@@ -97,7 +97,7 @@ class _SnapperWidgetState extends State<SnapperWidget> {
                               ),
                             ),
                             // Solid text as fill.
-                            Text(
+                            const Text(
                               'Frame your food within the white grid box',
                               style: TextStyle(
                                 color: Colors.white,

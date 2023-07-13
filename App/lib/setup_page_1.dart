@@ -47,7 +47,7 @@ class _SetupPage1 extends State<SetupPage1> {
 
   String? birthdayValidator(String? birthday) {
     if (!Utils.validDateTime(birthday!)) {
-      return 'Please enter a valid birthday (dd/mm/yyyy)';
+      return 'Please enter a valid date of birth (dd/mm/yyyy)';
     }
     return null;
   }
@@ -124,7 +124,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     },
                     controller: firstNameController,
                     decoration: const InputDecoration(
-                      labelText: 'First Name',
+                      labelText: 'First name',
                     ),
                     // autovalidateMode: AutovalidateMode.onUserInteraction,
                     // validator: emailValidator,
@@ -140,7 +140,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: lastNameController,
                     decoration: const InputDecoration(
-                      labelText: 'Last Name',
+                      labelText: 'Last name',
                     ),
                   ),
                 ),
@@ -234,7 +234,7 @@ class _SetupPage1 extends State<SetupPage1> {
                           }
                         },
                       ),
-                      labelText: 'dd/mm/yyyy',
+                      labelText: 'Date of birth (dd/mm/yyyy)',
                     ),
                   ),
                 ),
@@ -464,7 +464,7 @@ class _SetupPage1 extends State<SetupPage1> {
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.logout_rounded, color: Colors.white),
-                  label: const Text('Log Out'),
+                  label: const Text('Log out'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                     fixedSize: MaterialStateProperty.all(Size.fromWidth(

@@ -103,6 +103,7 @@ dependencies:
   image: ^3.3.0
   smooth_page_indicator: ^1.1.0
   fl_chart: ^0.63.0
+  path_provider: ^2.0.15
 
 
 dev_dependencies:
