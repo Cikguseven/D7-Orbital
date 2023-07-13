@@ -108,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     navigatorKey.currentState!.popUntil((route) => route.isFirst);
                   },
                   icon: const Icon(Icons.logout_rounded),
-                  label: const Text('Log Out'),
+                  label: const Text('Log out'),
                 ),
                 const SizedBox(height: 52),
               ],

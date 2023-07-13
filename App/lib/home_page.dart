@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:my_first_flutter/settings_page.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -295,9 +297,18 @@ class _SocialContainerState extends State<SocialContainerWidget> {
   }
 
   void _onShare(BuildContext context) async {
-    var file = await DefaultCacheManager().getSingleFile(widget.post.imageLoc);
-    await Share.shareXFiles([XFile(file.path)],
-        text:
-            'Check out this post by ${widget.post.firstName} ${widget.post.lastName}!');
+    String shareCaption = 'Check out this post by ${widget.post.firstName} ${widget.post.lastName}!';
+    if (widget.post.imageLoc.substring(0, 4) != 'http') {
+      final ByteData bytes = await rootBundle.load('assets/NoFood.jpg');
+      final Uint8List list = bytes.buffer.asUint8List();
+      final directory = (await getExternalStorageDirectory())?.path;
+      File imgFile = File('$directory/screenshot.png');
+      imgFile.writeAsBytesSync(list);
+      await Share.shareFiles(['$directory/screenshot.png'], text: shareCaption);
+    } else {
+      var file = await DefaultCacheManager().getSingleFile(
+          widget.post.imageLoc);
+      await Share.shareXFiles([XFile(file.path)], text: shareCaption);
+    }
   }
 }

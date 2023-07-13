@@ -55,7 +55,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                     suffixIcon: GestureDetector(
                       child: const Icon(
                         Icons.remove_red_eye,
-                        color: Colors.white,
                       ),
                       onTap: () => setState(() => obscureFlag = !obscureFlag),
                     ),
