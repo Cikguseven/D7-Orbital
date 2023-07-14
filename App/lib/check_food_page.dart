@@ -65,7 +65,7 @@ Widget foodDataWidget(
               ? Colors.white
               : Colors.black,
           height: 1.0,
-          width: 62,
+          width: MediaQuery.of(context).size.width * 0.16,
         ),
         const SizedBox(height: 5),
         Utils.createTitleSmall('$percentIntake%', context),

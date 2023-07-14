@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ListTile settingsTile(String text, Widget Function() onTapPage) {
       return ListTile(
         leading: Container(
-          width: 300, // necessary hack for text to be aligned properly
+          width: 300,
           height: 300,
           alignment: Alignment.centerLeft,
           child: Utils.createTitleSmall(text, context),
@@ -53,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ListTile darkModeTile() {
       return ListTile(
         leading: Container(
-          width: 300, // necessary hack for text to be aligned properly
+          width: 300,
           height: 300,
           alignment: Alignment.centerLeft,
           child: Utils.createTitleSmall('Toggle dark mode', context),

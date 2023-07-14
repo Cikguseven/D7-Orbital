@@ -5,7 +5,6 @@ class PostData {
   final String firstName;
   final String imageLoc;
   final String lastName;
-  final String location;
   final String ownerID;
   final String pfpURL;
   final String postID;
@@ -29,7 +28,6 @@ class PostData {
     required this.imageLoc,
     required this.lastName,
     required this.likedBy,
-    required this.location,
     required this.ownerID,
     required this.pfpURL,
     required this.postID,
@@ -50,7 +48,6 @@ class PostData {
         'imageLoc': imageLoc,
         'lastName': lastName,
         'likedBy': likedBy,
-        'location': location,
         'pfpURL': pfpURL,
         'postID': postID,
         'ownerID': ownerID,
@@ -72,7 +69,6 @@ class PostData {
       imageLoc: data['imageLoc'],
       lastName: data['lastName'],
       likedBy: data['likedBy'].cast<String>(),
-      location: data['location'],
       pfpURL: data['pfpURL'],
       postID: data['postID'],
       postTime: data['postTime'].toDate(),
