@@ -190,7 +190,6 @@ class _ShareFoodPageState extends State<ShareFoodPage> {
         imageLoc: imageLoc,
         lastName: widget.user.lastName,
         likedBy: [],
-        location: 'Singapore',
         ownerID: Utils.getAuthUser()!.uid,
         pfpURL: widget.user.pfpURL,
         postID: postID,

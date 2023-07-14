@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               builder: (context, child) {
                 return MediaQuery(
-                  child: child!,
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!,
                 );
               },
               title: 'Make it Count',

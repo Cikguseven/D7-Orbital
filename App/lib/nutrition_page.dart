@@ -248,7 +248,7 @@ class _NutritionPageState extends State<NutritionPage> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: barValue.toString() + units,
+                  text: barValue.toStringAsFixed(1) + units,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
