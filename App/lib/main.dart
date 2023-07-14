@@ -30,14 +30,21 @@ class MyApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
-            title: 'Make it Count',
-            debugShowCheckedModeBanner: false,
-            scaffoldMessengerKey: Utils.scaffoldKey,
-            navigatorKey: navigatorKey,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: currentMode,
-            home: const MainPage(),
+              builder: (context, child) {
+                return MediaQuery(
+                  child: child!,
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                );
+              },
+              title: 'Make it Count',
+              debugShowCheckedModeBanner: false,
+              scaffoldMessengerKey: Utils.scaffoldKey,
+              navigatorKey: navigatorKey,
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              themeMode: currentMode,
+              home: const MainPage(),
+
           );
         });
   }
