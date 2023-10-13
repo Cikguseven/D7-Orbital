@@ -1,4 +1,4 @@
-![Logo2](https://github.com/Cikguseven/D7-Orbital/assets/40373653/b79891e1-9d5e-4d9c-947e-d9f15895a6d8)
+![](/App/assets/logo-white-text.png)
 
 # Make it Count
 
